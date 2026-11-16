@@ -1,0 +1,1622 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+           "http://www.w3.org/TR/REC-html40/loose.dtd"><HTML>
+<META NAME="GENERATOR" CONTENT="TtH 1.57">                                                       
+<title>Visualizing Categorical Data</title>
+<body>
+<H1 align=center>Visualizing Categorical Data<a href="#tthFtNtAAB" name=tthFrefAAB><sup>*</sup></a></H1>
+
+
+<H3 align=center>Michael Friendly <br>
+York University <br>
+Toronto, Ontario <br>
+</H3>
+<p>
+<p><a name=tthFtNtAAB></a><a href="#tthFrefAAB"><sup>*</sup></a> To appear as Chapter 20 (pp. 319-348) in
+<em>Cognition and Survey Research</em>, edited by M. G. Sirken, D. J. Hermann,
+S. Schechter, N. Schwartz, J. M. Tanur, and R Tourangeau, 1999, John Wiley
+and Sons, Inc.  ISBN 0-471-24138-5.
+This copy reflects the submitted draft, but not editorial changes in the final copy.  I am grateful to Douglas Hermann for helpful comments on the manuscript.
+<hr>
+<H3 align=center></H3>
+<H2> Abstract</H2>
+<blockquote>
+Graphical methods for quantitative data are well-developed,
+and widely used in both data analysis (e.g., detecting outliers,
+verifying model assumptions)
+and data presentation.  Graphical methods for categorical data,
+however, are only now being developed, and are not widely used.
+
+<p>
+This paper outlines a general framework for data visualization methods
+in terms of communication goal (analysis vs. presentation),
+display goal, and the psychological and graphical design principles
+which graphical methods for different purposes should adhere to.
+
+<p>
+These ideas are illustrated with a variety of graphical methods
+for categorical data, some old and some relatively new, with particular
+emphasis on methods designed for large, multi-way contingency tables.
+Some methods (sieve diagrams, mosaic displays) are well-suited for
+detecting and patterns of association in the process of model building;
+others are useful in model diagnosis, or as graphical summaries for
+presentation of results. 
+</blockquote>
+<p>
+
+<H2>Contents </H2>
+<blockquote>
+<A href="#tth_sEc1"
+>1&nbsp; Introduction</A><br>
+<A href="#tth_sEc2"
+>2&nbsp; Goals and Design Principles for Visual Data Display</A><br>
+<A href="#tth_sEc3"
+>3&nbsp; Some Graphical Methods for Categorical Data</A><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<A href="#tth_sEc3.1"
+>3.1&nbsp; Sieve diagrams</A><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<A href="#tth_sEc3.2"
+>3.2&nbsp; Mosaic displays for n-way tables</A><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A href="#tth_sEc3.2.1"
+>3.2.1&nbsp; Enhanced mosaics</A><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A href="#tth_sEc3.2.2"
+>3.2.2&nbsp; Multi-way tables</A><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A href="#tth_sEc3.2.3"
+>3.2.3&nbsp; Fitting models</A><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A href="#tth_sEc3.2.4"
+>3.2.4&nbsp; Color scales for residuals</A><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<A href="#tth_sEc3.3"
+>3.3&nbsp; Fourfold Display</A><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A href="#tth_sEc3.3.1"
+>3.3.1&nbsp; Multiple strata</A><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A href="#tth_sEc3.3.2"
+>3.3.2&nbsp; Visualization principles</A><br>
+<A href="#tth_sEc4"
+>4&nbsp; Example: NAEP 1992 Grade 12 Mathematics</A><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<A href="#tth_sEc4.1"
+>4.1&nbsp; Analysis of [Ethnicity, Poverty, Achievement Level]</A><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<A href="#tth_sEc4.2"
+>4.2&nbsp; Analysis of the Full Table</A><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<A href="#tth_sEc4.3"
+>4.3&nbsp; Other displays</A><br>
+<A href="#tth_sEc5"
+>5&nbsp; Effect Ordering for Data Displays</A><br>
+<A href="#tth_sEc6"
+>6&nbsp; Mosaic Matrices and Coplots for Categorical Data</A><br>
+</blockquote>
+ 
+<p>
+<H2><A NAME="tth_sEc1">
+1</A>&nbsp;&nbsp;Introduction</H2><A NAME="sec:intro">
+</A>
+For some time I have wondered why graphical methods for categorical
+data are so poorly developed and little used compared with methods
+for quantitative data.  For quantitative data, graphical methods are
+commonplace adjuncts to all aspects of statistical analysis, from the
+basic display of data in a scatterplot, to diagnostic methods for
+assessing assumptions and finding transformations, to the final
+presentation of results.  In contrast, graphical methods for
+categorical data are still in infancy.  There are not many methods, and
+those that are available in the literature are not accessible in
+common statistical software; consequently they are not widely
+used.
+
+<p>
+What has made this contrast puzzling is the fact that the statistical
+methods for categorical data, are in many respects, discrete analogs
+of corresponding methods for quantitative data:  log-linear models
+and logistic regression, for example, are such close parallels of
+analysis of variance and regression models that they can all be seen
+as special cases of generalized linear models.
+
+<p>
+Several possible explanations for this apparent puzzle may be
+suggested.  First, it may just be that those who have worked with and
+developed methods for categorical data are just more comfortable with
+tabular data, or that frequency tables, representing sums over all
+cases in a dataset are more easily apprehended in tables than
+quantitative data.  Second, it may be argued that graphical methods
+for quantitative data are easily generalized; for example, the
+scatterplot for two variables provides the basis for visualizing any
+number of variables in a scatterplot matrix;  available graphical
+methods for categorical data tend to be more specialized.  
+
+<p>
+However, a
+more fundamental reason may be that
+quantitative  and categorical data display are best served by
+different visual metaphors. Quantitative data rely on the 
+natural visual
+representation of magnitude  by length or position along a
+scale; for categorical data, it will be seen that a count is more
+naturally displayed by an area or by the visual density of an area.
+
+<p>
+To make the contrast clear, Section&nbsp;<A href="#sec:methods">3</A> describes and illustrates several graphical methods
+for categorical data, some old and some relatively novel, with particular
+emphasis on methods designed for large, multi-way contingency tables.
+Some methods (sieve diagrams, mosaic displays) are well-suited for
+detecting and patterns of association in the process of model building;
+others are useful in model diagnosis, or as graphical summaries for
+presentation of results. 
+A more substantive illustration follows in Section&nbsp;<A href="#sec:naep">4</A>.
+A final section describes some ideas for effective visual presentation.  
+But first I will outline
+a general framework for data visualization methods
+in terms of communication goal (analysis vs. presentation),
+display goal, and the psychological and graphical design principles
+which graphical methods for different purposes should adhere to.
+
+<p>
+<H2><A NAME="tth_sEc2">
+2</A>&nbsp;&nbsp;Goals and Design Principles for Visual Data Display</H2><A NAME="sec:goals">
+</A>
+
+<p>
+Designing good graphics is surely an art, but equally surely, it is
+one that ought to be informed by science.
+In constructing a graph, quantitative and qualitative information is
+encoded by visual features, such as position, size, texture, symbols
+and color. This translation is reversed when a person studies a
+graph. The representation of numerical magnitude and categorical
+grouping, and the aperception of patterns and their <em>meaning</em> must be extracted from the visual display.  
+
+<p>
+There are many views of graphs, of graphical perception, and of
+the roles of data visualization in discovering and communicating
+information.
+On the one hand, one may regard a graphical display as a 'stimulus' -
+a package of information to be conveyed to an idealized observer.
+From this perspective certain questions are of interest:  which
+form or graphic aspect promotes greater accuracy or speed of judgment
+(for a particular task or question)?  What aspects lead to greatest
+memorability or impact? 
+Cleveland [<a href="#ClevelandMcGill:84b" name=CITEClevelandMcGill:84b>7:1984:Cleveland and McGill</a>,<a href="#ClevelandMcGill:85" name=CITEClevelandMcGill:85>8:1985:Cleveland and McGill</a>,<a href="#Cleveland:93:JCGS" name=CITECleveland:93:JCGS>5:1993a:Cleveland</a>],
+Lewandowsky and
+Spence
+[<a href="#LewandowskySpence:89" name=CITELewandowskySpence:89>22:1989:Lewandowsky and Spence</a>,<a href="#Spence:90" name=CITESpence:90>27:1990:Spence</a>] have made important contributions to our understanding of
+these aspects of graphical display.
+
+<p>
+An alternative view regards a graphical display as an act
+of communication-like a narrative, or even a poetic text or work of art. 
+This perspective places the greatest emphasis on the desired
+communication goal, and judges the effectiveness of a graphical
+display in how well that goal is achieved.
+[<a href="#Kosslyn:85" name=CITEKosslyn:85>20:1985:Kosslyn</a>,<a href="#Kosslyn:89" name=CITEKosslyn:89>21:1989:Kosslyn</a>] 
+has articulated this perspective most clearly
+from a cognitive perspective.
+
+<p>
+In this view,
+an effective graphical display, like good writing, requires an
+understanding of its purpose-what aspects of the data are to be
+communicated to the viewer.  In writing we communicate most
+effectively when we know our audience and tailor the message
+appropriately. So too, we may construct a graph in different ways to
+use ourselves, to present at a conference or meeting of our
+colleagues, or to publish in a research report, or a communication
+to a general audience
+[<a href="#Friendly:91" name=CITEFriendly:91>11:1991:Friendly</a>].
+
+<p>
+Figure&nbsp;<A href="#fig:datadisp">1</A>
+shows one organization of visualization methods in terms
+of the primary use or intended communication goal,
+the functional presentation goal, and suggested corresponding
+design principles.
+
+<p><A NAME="tth_fIg1">
+</A> 
+<p>
+  <center>      <img src="fig/datadisp.gif"><br>   <center>      Figure 1: Basic functions of data display.</center><A NAME="fig:datadisp">
+</A>
+</center><p>
+<p>
+The first distinction identifies <i><b>Analysis</b></i> or 
+<i><b>Presentation</b></i> as the primary
+communication goal of a data graphic
+(with the understanding that a given graph may serve both purposes-or neither).
+Among graphical methods designed to help study or understand
+a body of data, I distinguish those designed for:
+
+<UL>
+<p>
+
+<li> <i><b>reconnaissance</b></i>-a preliminary examination, or an overview of a possibly complex terrain;
+
+<li> <i><b>exploration</b></i>-graphs designed to help detect patterns or unusual
+circumstances, or to suggest hypotheses, analyses or models;
+
+<li> <i><b>diagnosis</b></i>-graphs designed to summarize or critique
+a numerical statistical summary.
+</UL>
+<p>
+Presentation graphics have different presentation goals as well.
+We may wish to stimulate, or to persuade, or simply to inform.
+As in writing, it is usually a good idea to know what it is you
+want to say with a graph, and tailor its message to that goal.
+(In what follows, my presentation goal is primarily didactic.)
+
+<p>
+<H2><A NAME="tth_sEc3">
+3</A>&nbsp;&nbsp;Some Graphical Methods for Categorical Data</H2><A NAME="sec:methods">
+</A>
+<A NAME="sec:catdata">
+</A>
+
+<p>
+One-way frequency tables may be conveniently displayed in
+a variety of ways: typically as bar charts
+(though the bars should often be ordered by frequency,
+rather than by bar-label),
+dot charts [<a href="#Cleveland:VisData" name=CITECleveland:VisData>6:1993b:Cleveland</a>]
+or pie charts (when percent of total is important).
+
+<p>
+For two- (and higher-) way tables, however, the design principles
+of perception, detection, and comparison imply that
+we should try to show the observed frequencies in the cells
+in relation to what we would expect those frequencies to be
+under a reasonable null model - for example, the
+hypothesis that the row and column variables are unassociated.
+
+<p>
+To this end, several schemes for representing contingency tables 
+graphically are
+based on the fact that when the row and column variables are
+independent, the estimated expected frequencies, m<sub>ij</sub>, are
+products of the row and column totals (divided by the grand total):
+ m<sub>ij</sub> = n<sub>i+</sub> n<sub>+j</sub> / n<sub>++</sub> . 
+Then, each cell can be represented by a rectangle whose area shows
+the cell frequency, n<sub>ij</sub>,  or the deviation from independence.
+
+<p>
+      <H3><A NAME="tth_sEc3.1">
+3.1</A>&nbsp;&nbsp;Sieve diagrams</H3><A NAME="sec:Sieve">
+</A>
+
+<p>
+Table&nbsp;<A href="#tab:hairdat">1</A> shows data
+on the relation between hair color and eye color among 592 subjects
+(students in a statistics course) collected by 
+[<a href="#Snee:74" name=CITESnee:74>26:1974:Snee</a>].
+.
+The
+Pearson <font face=symbol>c</font
+><sup>2</sup> for these data is 138.3 with nine degrees of freedom,
+indicating substantial departure from independence.  Assume the goal is
+to understand the <em>nature</em> of the association between hair
+and eye color.
+
+<p><A NAME="tth_tAb1">
+</A> 
+<p>
+ <center>      Table 1: Hair-color eye-color data.</center><A NAME="tab:hairdat">
+</A>
+
+<center>
+<p>
+
+<table border><tr><td>
+<tr><td></td><td colspan=4 align=center>Hair Color        </td><td>
+<tr><td>Eye     </td><td></td><td></td><td></td><td></td><td>
+<tr><td>Color   </td><td>BLACK  </td><td>BROWN  </td><td>RED  </td><td>BLOND  </td><td>Total 
+<tr><td>Green   </td><td>5  </td><td>29  </td><td>14  </td><td>16  </td><td>64 
+<tr><td>Hazel   </td><td>15  </td><td>54  </td><td>14  </td><td>10  </td><td>93 
+<tr><td>Blue    </td><td>20  </td><td>84  </td><td>17  </td><td>94  </td><td>215 
+<tr><td>Brown   </td><td>68  </td><td>119  </td><td>26  </td><td>7  </td><td>220 
+<tr><td>Total   </td><td>108  </td><td>286  </td><td>71  </td><td>127  </td><td>592 </table>
+
+</center>
+<p>
+<p>For any two-way table, the expected frequencies under independence
+can be represented by rectangles whose widths are proportional to the
+total frequency in each column, n<sub>+j</sub>, and whose heights are
+proportional to the total frequency in each row, n<sub>i+</sub>; the area
+of each rectangle is then proportional to m<sub>ij</sub>.  Figure&nbsp;<A href="#fig:sieve0">2</A>
+shows the expected frequencies for the hair and eye color
+data.
+Each rectangle is ruled proportionally to the expected frequency,
+and we note that the visual densities are equal in all cells.
+
+<p><A NAME="tth_fIg2">
+</A> 
+<p>
+  <center>      <img src="fig/sieve0.gif"><br>   <center>      Figure 2: Expected
+  frequencies under independence.  Each box has area equal to its
+  expected frequency, and is cross-ruled proportionally to the
+  expected frequency.</center><A NAME="fig:sieve0">
+</A>
+</center><p>
+<p>
+[<a href="#RiedwylSchupbach:83" name=CITERiedwylSchupbach:83>24:1983:Riedwyl and Sch&#252;pbach</a>,<a href="#RiedwylSchupbach:94" name=CITERiedwylSchupbach:94>25:1994:Riedwyl and Sch&#252;pbach</a>]
+proposed a 
+<i><b>sieve diagram</b></i> 
+(later called a <i><b>parquet diagram</b></i>) based on
+this principle.  In this display the area of each rectangle is
+proportional to expected frequency,
+as in Figure&nbsp;<A href="#fig:sieve0">2</A>,  but observed frequency is shown by
+the number of squares in each rectangle.  Hence, the difference
+between observed and expected frequency appears as the density of
+shading, using color to indicate whether the deviation from
+independence is positive or negative.  (In monochrome versions,
+positive residuals are shown by solid lines, negative by broken
+lines.)  The sieve diagram for hair color and eye color is shown in
+Figure&nbsp;<A href="#fig:sieve1">3</A>.
+
+<p><A NAME="tth_fIg3">
+</A> 
+<p>
+  <center>      <img src="fig/sieve1.gif"><br>   <center>      Figure 3: Sieve diagram for hair-color, eye-color data.  Observed frequencies are equal to the number
+  squares in each cell, so departure from independence appears as variations
+  in shading density.</center><A NAME="fig:sieve1">
+</A>
+</center><p>
+<p>
+      <H3><A NAME="tth_sEc3.2">
+3.2</A>&nbsp;&nbsp;Mosaic displays for n-way tables</H3><A NAME="sec:Mosaics">
+</A>
+
+<p>
+The mosaic display, proposed by [<a href="#HartiganKleiner:81" name=CITEHartiganKleiner:81>18:1981:Hartigan and Kleiner</a>,<a href="#HartiganKleiner:84" name=CITEHartiganKleiner:84>19:1984:Hartigan and Kleiner</a>], and
+extended by 
+[<a href="#Friendly:92b" name=CITEFriendly:92b>12:1992:Friendly</a>,<a href="#Friendly:94a" name=CITEFriendly:94a>14:1994b:Friendly</a>]
+represents the counts in a contingency
+table directly by tiles whose area is proportional to the <em>observed</em>
+cell
+frequency.  One important design goal is that this display
+should apply extend naturally to three-way and higher-way
+tables.  Another design feature is to serve both exploratory
+goals (by showing the pattern of observed frequencies in the
+full table),
+and model building goals (by displaying the residuals
+from a given log-linear model).
+
+<p>
+One form of this plot, called the <i><b>condensed mosaic display</b></i>,
+is similar to a divided bar chart.  The width of each column of
+tiles in Figure&nbsp;<A href="#fig:mos31">4</A> is proportional to the marginal
+frequency of hair colors; the height of each tile is determined by
+the conditional probabilities of eye color in each column.  Again,
+the area of each box is proportional to the cell frequency, and
+independence is shown when the tiles in each row all have
+the same height.
+
+<p><A NAME="tth_fIg4">
+</A> 
+<p>
+  <center>      <img src="fig/mos31.gif"><br>   <center>      Figure 4: Condensed
+  mosaic for Hair-color, Eye-color data.  Each column is divided
+  according to the conditional frequency of eye color given hair
+  color.  The area of each rectangle is proportional to observed
+  frequency in that cell.</center><A NAME="fig:mos31">
+</A>
+</center><p>
+<p>
+       <H4><A NAME="tth_sEc3.2.1">
+3.2.1</A>&nbsp;&nbsp;Enhanced mosaics</H4>
+The enhanced mosaic display
+[<a href="#Friendly:92b" name=CITEFriendly:92b>12:1992:Friendly</a>,<a href="#Friendly:94a" name=CITEFriendly:94a>14:1994b:Friendly</a>]
+achieves greater visual impact by using
+color and shading to reflect the size of the residual from
+independence and by reordering rows and columns to make the pattern
+of association
+more coherent.  The resulting display shows both the observed
+frequencies and the pattern of deviations from a specified model.
+
+<p>
+Figure&nbsp;<A href="#fig:mos32">5</A> gives the extended the mosaic plot, showing
+the standardized (Pearson) residual from independence, 
+d<sub>ij</sub> = (n<sub>ij</sub> - m<sub>ij</sub>) / <font face=symbol>Ö</font>{ m<sub>ij</sub> } by the color and shading of each
+rectangle: cells with positive residuals are outlined with solid lines
+and filled with slanted lines; negative residuals are outlined with
+broken lines and filled with grayscale.  The absolute value of the
+residual is portrayed by shading density: cells with absolute values
+less than 2 are empty; cells with <font face=symbol>|</font
+> d<sub>ij</sub> <font face=symbol>|</font
+>  <font face=symbol>³</font
+> 2 are filled;
+those with <font face=symbol>|</font
+> d<sub>ij</sub> <font face=symbol>|</font
+>  <font face=symbol>³</font
+> 4 are filled with a darker pattern.<a href="#tthFtNtAAD" name=tthFrefAAD><sup>1</sup></a>
+Under the assumption of independence, these values roughly correspond
+to two-tailed probabilities p <font face=symbol> &lt; </font
+> .05 and p <font face=symbol> &lt; </font
+> .0001 that a
+given value of <font face=symbol>|</font
+> d<sub>ij</sub> <font face=symbol>|</font
+> exceeds 2 or 4.  For exploratory
+purposes, we do not usually make adjustments (e.g., Bonferroni) for
+multiple tests because the goal is to display the pattern of
+residuals in the table as a whole.  However, the number and values of
+these cutoffs can be easily set by the user.
+
+<p><A NAME="tth_fIg5">
+</A> 
+<p>
+  <center>     <img src="fig/mos32.gif"><br>   <center>      Figure 5: Condensed mosaic,
+  reordered and shaded.  Deviations from independence are shown by
+  color and shading.  The two levels of shading density correspond to
+  standardized deviations greater than 2 and 4 in absolute value.
+  This form of the display generalizes readily to multi-way
+  tables.</center><A NAME="fig:mos32">
+</A>
+</center><p>
+<p>
+When the row or column variables are unordered, we are also free to
+rearrange the corresponding categories in the plot to help show the
+nature of association.  For example, in Figure&nbsp;<A href="#fig:mos32">5</A>, the
+eye color categories have been permuted so that the residuals from
+independence have an opposite-corner pattern, with positive values
+running from bottom-left to top-right corners, negative values along
+the opposite diagonal.  Coupled with size and shading of the tiles,
+the excess in the black-brown and blond-blue cells, together with the
+underrepresentation of brown-haired blonds and people with black hair
+and blue eyes is now quite apparent.  Though the table was reordered
+based on the d<sub>ij</sub> values, both dimensions in
+Figure&nbsp;<A href="#fig:mos32">5</A> are ordered from dark to light, suggesting
+an explanation for the association.  (In this example the eye-color
+categories could be reordered by inspection.  A general method
+[<a href="#Friendly:94a" name=CITEFriendly:94a>14:1994b:Friendly</a>]
+uses category scores on the largest correspondence
+analysis dimension.)
+
+<p>
+       <H4><A NAME="tth_sEc3.2.2">
+3.2.2</A>&nbsp;&nbsp;Multi-way tables</H4> 
+Like the scatterplot matrix for
+quantitative data, the mosaic plot generalizes readily to the display
+of multi-dimensional contingency tables.  Imagine that each cell of
+the two-way table for hair and eye color is further classified by one
+or more additional variables-sex and level of education, for
+example.  Then each rectangle
+in Figure&nbsp;<A href="#fig:mos32">5</A> can be divided vertically to show
+the proportion of males and females in that cell, and each of those
+portions can be subdivided again to show the
+proportions of people at each educational level in the hair-eye-sex
+group.
+
+<p>
+       <H4><A NAME="tth_sEc3.2.3">
+3.2.3</A>&nbsp;&nbsp;Fitting models</H4>
+When three or more variables are
+represented in the mosaic, we can fit several different models of
+independence and display the residuals from that model.  We treat
+these models as null or baseline models, which may not fit the data
+particularly well.  The deviations of observed frequencies from
+expected, displayed by shading, will often suggest terms to be added
+to an explanatory model that achieves a better fit. Two examples are:
+
+<p>
+
+<UL>
+<li> <i><b>Complete independence</b></i>:  The model of complete independence
+       asserts that all joint probabilities are products of the
+       one-way marginal probabilities:
+ <A NAME="eq:mabc">
+</A>
+<centEr><table border=0 align=center><tr><td>
+<Table align=left><tr><td nowrap align=center>
+  <font face=symbol>p</font
+><sub>ijk</sub> = <font face=symbol>p</font
+><sub>i++</sub> &nbsp;<font face=symbol>p</font
+><sub>+j+</sub> &nbsp;<font face=symbol>p</font
+><sub>++k</sub> </td></Table>
+</td><td width=100 align=right>(1)</td></table></centEr>
+
+
+for all i , j , k in a
+       three-way table.  This corresponds to the log-linear model
+       [A] &nbsp;[B] &nbsp;[C].  Fitting this model puts all higher
+       terms, and hence all association among the variables, into the
+       residuals, displayed in the mosaic.
+
+<li> <i><b>Joint independence</b></i>:  Another possibility is to fit the model in
+       which variable C is jointly independent of variables A
+       and B,
+         <A NAME="eq:jabc">
+</A>
+<centEr><table border=0 align=center><tr><td>
+<Table align=left><tr><td nowrap align=center>
+  <font face=symbol>p</font
+><sub>ijk</sub> = <font face=symbol>p</font
+><sub>ij+</sub> &nbsp;<font face=symbol>p</font
+><sub>++k</sub> . </td></Table>
+</td><td width=100 align=right>(2)</td></table></centEr>
+
+
+         This corresponds to the log-linear model 
+[ A B ] &nbsp;[ C].  Residuals from this model show the extent to which
+variable C is related to the combinations of variables
+A and B but they do not show any association between
+A and B.
+</UL>
+<p>
+For example, with the data from Table&nbsp;<A href="#tab:hairdat">1</A> broken down
+by sex, fitting the joint independence
+model [HairEye][Sex] allows us to see the extent
+to which the joint distribution of hair-color and eye-color is
+associated with sex.  For this model, the likelihood-ratio G<sup>2</sup> is
+19.86 on 15 df (p = .178), indicating an acceptable overall fit.
+The three-way mosaic, shown in Figure&nbsp;<A href="#fig:mos33">6</A>, highlights
+two cells: 
+among blue-eyed blonds, there are more females (and fewer males)
+than would be if hair color and eye color were jointly independent
+of sex.
+Except for these cells hair color and eye color appear
+unassociated with sex.
+
+<p><A NAME="tth_fIg6">
+</A> 
+<p>
+  <center>     <img src="fig/mos33.gif"><br>   <center>      Figure 6: Three-way mosaic display for hair color, eye
+color, and sex.  
+Residuals from
+the model of joint independence, [HE]&nbsp;[S] are shown by
+shading.
+G<sup>2</sup> = 19.86 on 15 df.  
+The only lack of fit is 
+an overabundance of females among blue-eyed blonds.</center><A NAME="fig:mos33">
+</A>
+</center><p>
+<p>
+For higher-way tables, there are many more possible models that
+can be fit.  However, they have the characteristic that, for any
+given table (or marginal subtable), the size of tiles in the
+mosaic always shows the same observed frequencies, while the
+shading (showing the sign and magnitude of the residuals)
+varies from one model to another.
+Because a good-fitting model will have all or mostly small
+residuals, and these are shown unfilled, a search for
+an adequate explanatory model can be thought of as
+``cleaning the mosaic''.
+
+<p>
+       <H4><A NAME="tth_sEc3.2.4">
+3.2.4</A>&nbsp;&nbsp;Color scales for residuals</H4>
+The design of the mosaic display shares some features with
+the use of statistical maps to display quantitative information,
+and it is appropriate (and perhaps instructive) to consider
+my use of color and shading in a area-based display.
+
+<p>
+When we display <em>signed</em> magnitudes, such as residuals from
+a fitted model or differences between time points on a
+mosaic or a map, the goal
+is usually to convey both magnitude (how big a difference?)
+and direction (is it more or less?).
+For this use, a double-ended color scale, using opposing
+colors such as red and blue, with darker, more saturated colors
+at the extremes, is usually most effective.
+In the mosaic display I use the color scheme
+[<a href="#Cleveland:VisData" name=CITECleveland:VisData>6:1993b:Cleveland</a>]
+ refers to as ``two-hues,
+varying lightness'', and which
+[<a href="#Carr:94" name=CITECarr:94>21:994:Carr</a>]  uses quite effectively in the display of
+residuals on a map.
+
+<p>
+The choice of opposing colors and assignment  to positive and negative,
+requires care and consideration of the intended audience, however.
+I use red for negative ``deficit'' values and blue for positive
+``excesses'';  [<a href="#Carr:94" name=CITECarr:94>21:994:Carr</a>]  in displays of rates
+of disease assigns red to positive ``hot spots'' and cooler
+blue to negative values.
+Various government agencies have other conventions about the
+assignment of color. Unfortunately,
+black and white reproduction of red/blue displays folds red and
+blue to approximately equal gray levels.
+In the mosaic displays, I usually prepare different versions-using gray level and pattern fills
+for figures to be shown in black and white.
+Color versions of the figures shown here are available on the 
+WWW at, well, here!. .
+
+<p>
+      <H3><A NAME="tth_sEc3.3">
+3.3</A>&nbsp;&nbsp;Fourfold Display</H3><A NAME="sec:Fourfold">
+</A>
+
+<p>
+A third graphical method based on area as the visual
+mapping of cell frequency is the ``fourfold display'' 
+designed for the display of 2 &times;2 (or 
+2&times;2 &times;k) tables.  In this display the frequency
+n<sub>ij</sub> in each cell of a fourfold table is shown by a quarter
+circle, whose radius is proportional to <font face=symbol>Ö</font>{ n<sub>ij</sub> }, so the
+area is proportional to the cell count.
+
+<p>
+For a single 2 &times;2 table the fourfold display described
+here also shows the frequencies by area, but scaled in a way that
+depicts the sample odds ratio, 
+[^(<font face=symbol>q</font
+>)] = (n<sub>11</sub> / n<sub>12</sub> )<font face=symbol>¸</font
+>(n<sub>21</sub> / n<sub>22</sub> ).  An association between the variables
+(<font face=symbol>q</font
+> <font face=symbol>¹</font
+> 1) is shown by the tendency of diagonally opposite
+cells in one direction to differ in size from those in the opposite
+direction, and the display uses color or shading to show this
+direction.  Confidence rings for the observed <font face=symbol>q</font
+> allow a
+visual test of the hypothesis H<sub>0</sub> : <font face=symbol>q</font
+> = 1.  They have
+the property that the rings for adjacent quadrants overlap <em>iff</em>
+the observed counts are consistent with the null hypothesis.
+
+<p>
+As an example, Figure&nbsp;<A href="#fig:pie2x2g">7</A> shows aggregate data on
+applicants to graduate school at Berkeley for the six largest
+departments in 1973 classified by admission and sex.  At issue is
+whether the data show evidence of sex bias in admission practices
+[<a href="#Bickel-etal:75" name=CITEBickel-etal:75>1:1975:Bickel et&nbsp;al.Bickel, Hammel, and O'Connell</a>].
+The figure shows the observed cell frequencies
+numerically in the corners of the display.  Thus there were 2691 male
+applicants, of whom 1193 (44.4%) were admitted, compared with 1855
+female applicants of whom 557 (30.0%) were admitted.  Hence the
+sample odds ratio, Odds (Admit<font face=symbol>|</font
+>Male) / (Admit<font face=symbol>|</font
+>Female) is 1.84
+indicating that males were almost twice as likely to be admitted.
+
+<p><A NAME="tth_fIg7">
+</A> 
+<p>
+  <center>     <img src="fig/pie2x2g.gif"><br>   <center>      Figure 7: Four-fold display for Berkeley
+admissions: Evidence for sex bias?  The area of each shaded quadrant shows the frequency,
+standardized to equate the margins for sex and admission.  Circular
+arcs show the limits of a 99% confidence interval for the odds ratio.</center><A NAME="fig:pie2x2g">
+</A> 
+</center><p>
+<p>
+The frequencies displayed graphically by shaded quadrants in
+Figure&nbsp;<A href="#fig:pie2x2g">7</A> are not the raw frequencies.  Instead, the
+frequencies have been standardized (by iterative proportional
+fitting) so that all table margins are equal, while preserving the
+odds ratio.  Each quarter circle is then drawn to have an area
+proportional to this standardized cell frequency.  This makes it
+easier to see the association between admission and sex without being
+influenced by the overall admission rate or the differential tendency
+of males and females to apply.  With this standardization the four
+quadrants will align when the odds ratio is 1, regardless of the
+marginal frequencies.
+
+<p>
+The shaded quadrants in Figure&nbsp;<A href="#fig:pie2x2g">7</A> do not align and
+the 99% confidence rings around each quadrant do not overlap,
+indicating that the odds ratio differs significantly from 1-putative
+evidence of gender bias.  The
+width of the confidence rings gives a visual indication of the
+precision of the data-if we stopped here, we might feel quite confident of
+this conclusion.
+
+<p>
+       <H4><A NAME="tth_sEc3.3.1">
+3.3.1</A>&nbsp;&nbsp;Multiple strata</H4>
+In the case of a 
+2 &times;2&times;k table, the last dimension typically corresponds to
+``strata'' or populations, and it is typically of interest to see if
+the association between the first two variables is homogeneous across
+strata.  The fourfold display is designed to allow easy visual comparison of the
+pattern of association between two dichotomous variables across two
+or more populations.
+
+<p>
+For example,
+the admissions data shown in Figure&nbsp;<A href="#fig:pie2x2g">7</A> were obtained
+from a sample of six departments; 
+Figure&nbsp;<A href="#fig:pie2x2b">8</A> displays the data
+for each department.  The departments
+are labelled so that the overall acceptance rate is highest for
+Department A and decreases steadily to Department F.  Again each
+panel is standardized to equate the marginals for sex and admission.
+This standardization also equates for the differential total
+applicants across departments, facilitating visual comparison.
+
+<p><A NAME="tth_fIg8">
+</A> 
+<p>
+  <center>     <img src="fig/pie2x2b.gif"><br>   <center>      Figure 8: Fourfold display of Berkeley
+admissions, by department.  In each panel the confidence rings for
+adjacent quadrants overlap if the odds ratio for admission and sex
+does not differ significantly from 1.  The data in each panel have
+been standardized as in Figure&nbsp;<A href="#fig:pie2x2g">7</A>.</center><A NAME="fig:pie2x2b">
+</A> 
+</center><p>
+<p>
+Surprisingly, Figure&nbsp;<A href="#fig:pie2x2b">8</A> shows that, for five of the
+six departments, the odds of admission is essentially identical for
+men and women applicants.  Department A appears to differs from
+the others, with women approximately 2.86 (
+ = ( 313/19 ) /(512/89)) times <em>more</em> likely to gain admission.  This appearance is
+confirmed by the confidence rings, which in Figure&nbsp;<A href="#fig:pie2x2b">8</A> 
+are <em>joint</em> 99% intervals for 
+<font face=symbol>q</font
+><sub>c</sub> , &nbsp;c = 1, ..., 6.
+
+<p>
+This result, which contradicts the display for the aggregate data in
+Figure&nbsp;<A href="#fig:pie2x2g">7</A>, is a nice example of Simpson's paradox.
+The resolution of this contradiction can be found in the large
+differences in admission rates among departments.  Men and women
+apply to different departments differentially, and in these data
+women apply in larger numbers to departments that have a low
+acceptance rate.  The aggregate results are misleading because they
+falsely assume men and women are equally likely to apply in each
+field.<a href="#tthFtNtAAE" name=tthFrefAAE><sup>2</sup></a>
+
+<p>
+       <H4><A NAME="tth_sEc3.3.2">
+3.3.2</A>&nbsp;&nbsp;Visualization principles</H4>
+An important principle in the display of large, complex datasets
+is <i><b>controlled comparison</b></i>-we want to make comparisons 
+against a clear standard, with
+other things held constant.
+The fourfold display 
+differs from a pie chart in that it holds the
+angles of the segments constant and varies the radius,
+whereas the pie chart varies the angles and holds the radius constant.
+An important consequence is that we can quite easily compare a
+series of fourfold displays for different strata, since corresponding
+cells of the table are always in the same position.
+As a result, an array of fourfold displays serve the goals of comparison and 
+detection better than an array of pie charts.
+Moreover, it allows the observed frequencies to be standardized
+by equating either the row or column totals, while preserving
+the odds ratio.
+In Figure&nbsp;<A href="#fig:pie2x2b">8</A>, for example,
+the proportion of men and women, and the proportion
+of accepted applicants were equated visually in each department.  
+This provides a clear standard which 
+also greatly facilitates controlled comparison.
+
+<p>
+Another principle is <i><b>visual impact</b></i>-we want the important 
+features
+of the display to be easily distinguished from the less important
+[<a href="#Tukey:93" name=CITETukey:93>28:1993:Tukey</a>].
+In Figure&nbsp;<A href="#fig:pie2x2b">8</A> distinguishes the one department for which
+the odds ratio differs significantly from 1 by shading intensity,
+even though the same information can be found by inspection of the
+confidence rings.
+
+<p>
+      <H2><A NAME="tth_sEc4">
+4</A>&nbsp;&nbsp;Example: NAEP 1992 Grade 12 Mathematics</H2><A NAME="sec:naep">
+</A>
+
+<p>
+The previous section used simple examples to illustrate these
+somewhat novel techniques themselves.
+This section illustrates the use of these graphical methods in
+attempting to understand a large, complex dataset of the sort
+often found in public policy research, and which often defies
+standard visualization methods.
+ 
+<p>
+Table&nbsp;<A href="#tab:naepdata">2</A>
+is a four-way classification of over 3.5 million examinees from
+the 1992 National Assessment of Educational Proficiency
+,
+classified by their high school program (Academic, Non Academic),
+their economic status (Not Poor vs. Poor), and ethnic group
+(White, Asian, Hispanic, Black).  Students in the background groupings
+are then classified by their performance on the NAEP Mathematics test,
+recorded here as Advanced, Proficient, Basic or Below Basic.
+<p>
+
+<p><A NAME="tth_tAb2">
+</A>  <center>      Table 2: National Assessment of Educational Proficiency, 1992 Mathematics.  Counts of Achievement Levels by Program, Poverty and Ethnicity.</center><A NAME="tab:naepdata">
+</A>
+
+<center>
+<p>
+  
+<table border><tr><td>
+<tr><td> </td><td></td><td colspan=4 align=center><font size="+1">Not Poor</font> </td><td colspan=4 align=center><font size="+1">Poor</font>   
+<tr><td></td><td></td><td>White  </td><td>Asian </td><td>Black </td><td>Hispanic </td><td>White  </td><td>Asian </td><td>Black </td><td>Hispanic 
+<tr><td> 
+</td><td>Advanced   </td><td>23403  </td><td>1711  </td><td>0     </td><td>1050     </td><td>6814   </td><td>542   </td><td>0      </td><td>633 
+<tr><td></td><td>Proficient </td><td>224723 </td><td>15145 </td><td>4591  </td><td>5716     </td><td>96442  </td><td>5654  </td><td>3308   </td><td>7500 
+<tr><td></td><td>Basic      </td><td>679319 </td><td>30590 </td><td>32937 </td><td>26709    </td><td>439109 </td><td>27276 </td><td>64451  </td><td>42726 
+<tr><td></td><td>BelowBasic </td><td>102849 </td><td>3645  </td><td>23983 </td><td>20596    </td><td>135919 </td><td>7974  </td><td>132421 </td><td>52327 
+<tr><td>   
+<p>
+   </td><td></td><td>White  </td><td>Asian </td><td>Black </td><td>Hispanic </td><td>White </td><td>Asian </td><td>Black </td><td>Hispanic 
+<tr><td></td><td>Advanced   </td><td>1866   </td><td>0     </td><td>0     </td><td>0        </td><td>0 </td><td>0 </td><td>0 </td><td>0 
+<tr><td></td><td>Proficient </td><td>24317  </td><td>2518  </td><td>1039  </td><td>570      </td><td>716 </td><td>557 </td><td>0 </td><td>482 
+<tr><td></td><td>Basic      </td><td>208710 </td><td>13142 </td><td>14271 </td><td>16338    </td><td>151369 </td><td>5478 </td><td>9229 </td><td>23551 
+<tr><td></td><td>BelowBasic </td><td>244240 </td><td>7149  </td><td>60868 </td><td>35233    </td><td>254734 </td><td>3315 </td><td>134874 </td><td>81356 </table>
+
+</center>
+<p>
+<p>One glance at Table&nbsp;<A href="#tab:naepdata">2</A> shows two things:
+First, very few students achieve Advanced level, none in Non Academic
+Programs (save a few Not Poor white students);
+as a result, the analysis below combines Advanced and Proficient,
+labelled ``Proficient+''.
+Second, the usefulness of this table as a data display is nil,
+except as a record of the results.
+<p>
+Mosaic displays are constructed sequentially, with the variables
+arranged in a particular order, and it usually makes sense to
+order the variables in a quasi-causal, or predictor-response fashion.
+Here I consider Ethnicity and Poverty as (partial) determinants
+of academic Program, and all three of these as potential
+predictors of achievement level.
+
+<p>
+      <H3><A NAME="tth_sEc4.1">
+4.1</A>&nbsp;&nbsp;Analysis of [Ethnicity, Poverty, Achievement Level]</H3>
+For simplicity, we begin with an analysis of the marginal
+table of Ethnicity, Poverty and Level, collapsing over Program.
+Figure&nbsp;<A href="#fig:naep1">9</A> shows the mosaic for (the marginal table of) Ethnicity and Poverty,
+fitting the independence model.
+If Poverty were unrelated to Ethnic group, the tiles would all be equally
+wide in each column.
+There is, of course, a pronounced association between Poverty and Ethnic
+Group
+(G<sup>2</sup> (3) = 193.95),  as shown by the shading pattern of the residuals:
+Asians and Whites are more
+frequently NotPoor and Hispanics and Blacks are more frequently Poor,
+than would be the case if these variables were independent.<a href="#tthFtNtAAF" name=tthFrefAAF><sup>3</sup></a>
+
+<p><A NAME="tth_fIg9">
+</A> 
+<p>
+  <center>     <img src="fig/naep1.gif"><br>   <center>      Figure 9: 
+Mosaic display of Ethnicity and Poverty.
+Residuals show  the pattern of (marginal) association
+between these two variables.</center><A NAME="fig:naep1">
+</A>
+</center><p>
+<p>
+Figure&nbsp;<A href="#fig:naep2">10</A> shows the relation between Achievement Level and Ethnicity and Poverty,
+fitting a model [(EthPov)(Level)] which says that Level is independent
+of the combinations of Ethnicity and Poverty jointly.  The shading
+pattern shows how violently this model is contradicted by the data
+(G<sup>2</sup> (14) = 553,568):
+
+<UL>
+<p>
+
+<li> Among NotPoor Whites, an over-abundance are in Basic level or higher; 
+for Poor Whites, however, frequencies significantly greater than 
+expected under this model of joint independence occur only in the Basic level.
+
+<p>
+
+<li> Among Asians, there are greater than expected frequencies in all but
+the Below Basic category, independent of Poverty.
+
+<p>
+
+<li> Among both Hispanics and Blacks, there are greater than expected
+frequencies in the Below Basic level.
+</UL>
+<p>
+It is depressingly striking how few 12th grade children are classified in the Advanced or Proficient categories.
+
+<p><A NAME="tth_fIg10">
+</A> 
+<p>
+  <center>     <img src="fig/naep2.gif"><br>   <center>      Figure 10: 
+NAEP data, Ethnicity and Poverty vs. Achievement Level.
+Residuals display the dependence of Level on both Ethnicity
+and Poverty.</center><A NAME="fig:naep2">
+</A>
+</center><p>
+<p>
+      <H3><A NAME="tth_sEc4.2">
+4.2</A>&nbsp;&nbsp;Analysis of the Full Table</H3>
+With some understanding among the relations among Poverty, Ethnicity and
+Achievement Level, we proceed to fitting sequential models of joint
+independence to the full table.  The analysis goal is not to provide an
+adequate model, but simply to remove the associations we have already
+seen, thereby revealing the associations which remain.<a href="#tthFtNtAAG" name=tthFrefAAG><sup>4</sup></a>
+
+<p>
+Figure&nbsp;<A href="#fig:naep3">11</A> shows the relation between Academic Program and the combinations
+of Ethnicity and Poverty; residuals show how Program is associated with
+the categories of the other two variables:
+
+<p><A NAME="tth_fIg11">
+</A> 
+<p>
+  <center>     <img src="fig/naep3.gif"><br>   <center>      Figure 11: 
+NAEP data, Ethnicity and Poverty vs. Academic Program.
+Residuals display how  Academic Program depends on both Ethnicity
+and Poverty.</center><A NAME="fig:naep3">
+</A>
+</center><p>
+<p>
+
+<UL>
+<li> NotPoor Whites are more likely to be in Academic programs, while the
+reverse is true for Poor Whites.
+
+<p>
+
+<li> Asians are more likely to be in Academic programs.
+This result holds regardless of Poverty.
+
+<p>
+
+<li> Hispanics and Blacks are more likely to be in NonAcademic programs,
+also independent of Poverty.
+</UL>
+<p>
+Figure&nbsp;<A href="#fig:naep4">12</A> shows the relation between NAEP Achievement Level and the combinations of
+Ethnicity, Poverty, and academic Program jointly.
+The associations among the three background variables just observed
+(Figure&nbsp;<A href="#fig:naep3">11</A>) have been eliminated and
+the residuals now
+show how Achievement Level is associated with the combinations of the other three
+variables.
+This is admittedly a complex display, but
+a few moments study reveals the following:
+
+<UL>
+<p>
+
+<li> NotPoor Whites in Academic programs are more likely to achieve Basic
+level or above; NotPoor Whites in NonAcademic programs are more likely to
+be classified Below Basic level.  
+
+<li> Approximately the same pattern obtains for Poor Whites.
+(More detailed analysis shows them less likely than NotPoor Whites
+to achieve Advanced level.)
+
+<p>
+
+<li> Asians in Academic programs are more likely to achieve Basic level or
+above; Asians in NonAcademic programs are most likely to achieve just
+Basic level.  Both statements apply independently of Poverty.
+</UL>
+<p>
+
+<p><A NAME="tth_fIg12">
+</A>   <center>     <img src="fig/naep4.gif"><br>   <center>      Figure 12: 
+NAEP data, Ethnicity, Poverty and Academic Program vs. Achievement.</center><A NAME="fig:naep4">
+</A>
+</center><p>
+<p>
+The patterns for Blacks and Hispanics diverge here for the first time:
+
+<UL>
+<p>
+
+<li> Blacks are most likely to achieve Below Basic level, independent of 
+Program and Poverty, except that NotPoor Blacks in Academic programs are
+more likely to achieve in Basic level.
+
+<p>
+
+<li> Hispanics are similar, except that NotPoor Hispanics in Academic
+programs are more likely to achieve Advanced standing than the model of
+joint independence predicts.
+</UL>
+<p>
+      <H3><A NAME="tth_sEc4.3">
+4.3</A>&nbsp;&nbsp;Other displays</H3>
+The NAEP data is a 2 &times;2 &times;4 &times;4 table, which
+we can regard as a collection of 2 &times;2 tables,
+showing the relation between Poverty and Academic Program
+for each of the 16 Ethnicity by Achievement Level groups.
+Figure&nbsp;<A href="#fig:naep4fold">13</A> shows one fourfold display of these
+data.  In each panel lower left quadrant represents the most
+advantaged students, and the upper right represents the least
+advantaged. Thus, a positive association between Poverty and
+Non Academic Program is shown by tick marks in the 45<sup><font face=symbol>°</font
+></sup> direction,
+and we see that nearly all associations are positive.
+
+<p>
+In order to adjust for the great imbalance in the numbers of
+examinees in the different Poverty-Ethnic group combinations,
+the data in Table&nbsp;<A href="#tab:naepdata">2</A> were standardized to
+equate the column totals in that table.
+These standardized frequencies are displayed directly in 
+Figure&nbsp;<A href="#fig:naep4fold">13</A>, scaled so that the largest
+such frequency has unit radius.
+As a result, the distributions across the columns and rows
+may be readily compared.
+
+<p><A NAME="tth_fIg13">
+</A> 
+<p>
+  <center>     <img src="fig/naep4fold2-1.gif"><br>   <center>      Figure 13: 
+NAEP data, fourfold display.</center><A NAME="fig:naep4fold">
+</A>
+</center><p>
+<p>
+It is immediately apparent that the greatest proportion
+of all students performed at the lowest achievement
+levels, and that, at the very lowest level the largest
+proportion are in Non Academic programs, particularly
+among Hispanics and Blacks.
+Second, those who achieve Proficient level are much more likely
+Not Poor, and taking Academic programs.
+Finally (and sadly) the dearth of students achieving Advanced level
+stands out clearly.
+
+<p>
+In closing this section, I'll comment on more traditional
+statistical analyses and graphical displays of such data.
+One statistical analysis would
+be to fit a more ``meaningful'' log-linear model than
+the baseline models used earlier.
+When this is done,
+we find that the only (barely) tenable model (short of the saturated model, which must fit perfectly) is
+the all-three-way-interaction model, symbolized as 
+
+<centEr><table border=0 align=center><tr><td>
+<Table align=left><tr><td nowrap align=center>
+(EthPovProg)(EthPovLev) (EthProgLev) (PovProgLev)</td></Table>
+</td></table></centEr>
+
+  
+If Ethnicity, Poverty and
+Program are all regarded as predictors of achievement Level, this model
+says that achievement level depends on the combinations of Ethnicity and
+Poverty, the combinations of Ethnicity and academic Program, and the
+combinations of Poverty and Program.
+Unfortunately, this analysis is not helpful in understanding <em>how</em>
+achievement Level depends on those factors,
+although tables of parameter estimates from this model could be interpreted
+to reveals some of the effects shown in the mosaic displays.
+
+<p>
+Alternatively, a logistic regression might attempt to model
+achievement level in relation to the predictors.
+As an example,
+consider a model for the probability that a student achieves
+at least Basic level.  The logistic model of equivalent complexity
+to the log-linear model can be expressed as
+<A NAME="eq:logis">
+</A>						
+<centEr><table border=0 align=center><tr><td>
+<Table align=left><tr><td nowrap align=center>
+Pr (Basic or better)  <font face=symbol> ~ </font>Poverty +Ethnicity +Program + Poverty &times;Ethnicity +Poverty &times;Program +Ethnicity &times;Program</td></Table>
+</td><td width=100 align=right>(3)</td></table></centEr>
+
+
+where <font face=symbol> ~ </font
+> means ``is modelled by''.
+These results provide a sensible and relatively simple way to display
+these data, which may serve a presentation goal
+better than the novel displays shown previously.
+The idea is to plot the
+predicted probabilities or predicted log-odds from the model.
+Figure&nbsp;<A href="#fig:naeplogis">14</A> shows these results in one
+possible format, plotting the log odds directly,
+but with a probability scale on the right for those
+who are more comfortable with probabilities than logits.
+
+<p><A NAME="tth_fIg14">
+</A> 
+<p>
+  <center>     <img src="fig/naeplogis.gif"><br>   <center>      Figure 14: 
+NAEP data, Logistic regression.</center><A NAME="fig:naeplogis">
+</A>
+</center><p>
+<p>
+This figure shows most of the relations between Achievement Level
+and the predictors discussed earlier, but shows none of
+the relations among the predictors.  The interaction terms
+in model  stem from the fact that the
+profiles in Figure&nbsp;<A href="#fig:naeplogis">14</A> are not parallel.
+For students in Non Academic programs, the effect of Poverty
+increases as achievement level decreases and
+is far greater for Hispanics than for Asians.
+For students in Academic programs,  the effect of Poverty 
+is larger for both Asians and Hispanics than for Whites and Blacks.
+This graph displays these more subtle aspects of the fitted
+logistic model, but the dominant message is clear:
+An Academic program greatly increases the likelihood of at least
+Basic achievement; being Poor greatly decreases it.
+
+<p>
+      <H2><A NAME="tth_sEc5">
+5</A>&nbsp;&nbsp;Effect Ordering for Data Displays</H2>
+One reason why graphs of quantitative data are effective is that
+graphing values on quantitative axes automatically orders those
+values so that  ``less'' and ``more'' are given visually ordered
+positions in the display.
+However, when data values are classified by ``factors'',
+the ordering of the levels of the factor variables has considerable
+impact on graphical display.
+Ordered factors (such as age, level of education, etc.)
+are usually (though not always) most sensibly arranged in their
+natural order for all presentation goals.
+
+<p>
+Unordered factors (disease classification, geographic region)
+deserve more careful thought.  For a geographic classification
+(states, provinces) is it common to arrange the units alphabetically
+or (as is common in Canada) from east to west.
+When the goal of presentation is detection or comparison
+(as opposed to table lookup), this is almost always a bad idea.
+
+<p>
+Instead, I suggest a general rule for arranging the levels of
+unordered factors in visual displays - tables as well as graphs:
+<i><b>sort the data by the effects to be observed</b></i>.
+Sorting has both global and local effects:
+globally, a more coherent pattern appears, making it easier to spot
+exceptions; locally, effect-ordering brings similar items together,
+making them easier to compare.  See de Falguerolles <em>etal</em>
+[<a href="#Falguerolles-etal:97" name=CITEFalguerolles-etal:97>9:1997:de&nbsp;Falguerolles et&nbsp;al.de&nbsp;Falguerolles, Fredrich, and Sawitzki</a>] for related ideas.
+
+<p>
+The use of this principle is illustrated by the following:
+
+<UL>
+<p>
+
+<li> <i><b>Main-effects ordering</b></i>:
+For quantitative data where the goal is to see ``typical'' values,
+sort the units in boxplots, dotplots and tables by means, medians,
+or by row and column effects.  (If the goal is to see differences
+in variability, sort by standard deviation or interquartile range.)
+
+<p>
+For example, Figure&nbsp;<A href="#fig:barley2">15</A> shows a Trellis dotplot display
+[<a href="#Cleveland:VisData" name=CITECleveland:VisData>6:1993b:Cleveland</a>] of data on barley yields
+in a three-factor design: Year by Site by Variety.
+All three factors have been ordered in the panels by median overall
+yield.
+With this arrangement, the plot shows a startling anomaly
+which is not apparent in conventional plots:
+for all sites and for all varieties, yields in 1931 were greater
+than in 1932, except at the Morris site, where this difference
+is reversed.
+[<a href="#Wainer:93" name=CITEWainer:93>29:1993:Wainer</a>] and 
+[<a href="#Carr:96" name=CITECarr:96>3:1996:Carr and Olsen</a>] have presented similar arguments for the effectiveness of such orderings
+on detection.
+
+<p>
+
+<p><A NAME="tth_fIg15">
+</A>   <center>  <img src="fig/barley2.gif"><br>   
+<center>      Figure 15: Three factor data, each factor ordered by median overall yield.</center><A NAME="fig:barley2">
+</A> 
+</center><p>
+<p>
+
+<li> <i><b>Discriminant ordering</b></i>:
+For multivariate data, where the goal is to compare different
+groups in their means on a (possibly large) number of variables,
+arrange the <em>variables</em> in tables or visual displays
+according to the weights of those variables on the dimensions
+which best discriminate among the groups (canonical discriminant
+dimensions).
+
+<p>
+Figure&nbsp;<A href="#fig:mstarmaut">16</A> shows the means for various characteristics of automobiles (1972 data from
+<a href="#Chambers-etal:83>">Chambers <em>et-al.</em> (1983) </a>), classified by region of manufacture.
+The variables have been scaled so that longer rays represent
+``better'' for all variables, and 
+arranged around the circle according to their positions on the largest discriminant dimension.
+The figure makes it immediately clear that American cars are mainly
+larger and heavier, Japanese cars are better in price, mileage and
+repair record, while European cars have intermediate and mixed patterns.
+The same idea of ordering variables could be used in a profile plot or
+parallel coordinates plot.
+
+<p><A NAME="tth_fIg16">
+</A> 
+<p>
+  <center>     <img src="fig/mstaraut.gif"><br>   
+<center>      Figure 16: The star-shaped figures show the means for various characteristics of automobiles, classified by region of manufacture.
+The variables have been arranged around the circle according to their positions on the largest discriminant dimension.  Error bars show the (univariate) least significant difference.</center><A NAME="fig:mstarmaut">
+</A> 
+</center><p>
+<p>
+
+<li> <i><b>Correlation ordering</b></i>:
+A related idea is that in the display of multivariate data
+by glyph plots, star plots, parallel coordinate plots and so
+forth, the variables should be ordered according to the largest principal
+component or biplot [<a href="#Gabriel:80" name=CITEGabriel:80>16:1980:Gabriel</a>,<a href="#Gabriel:81" name=CITEGabriel:81>17:1981:Gabriel</a>] dimension(s).
+This arrangement brings similar variables together,
+where similarity is defined in terms of patterns of correlation.
+
+<p>
+
+<li> <i><b>Association ordering</b></i>:
+For categorical data, where the goal is to understand the 
+pattern of association among variables,
+order the levels of factors according to 
+their position on the largest correspondence analysis
+dimension
+[<a href="#Friendly:94a" name=CITEFriendly:94a>14:1994b:Friendly</a>].
+</UL>
+<p>
+      <H2><A NAME="tth_sEc6">
+6</A>&nbsp;&nbsp;Mosaic Matrices and Coplots for Categorical Data</H2><A NAME="sec:mosmat">
+</A>
+A second reason for the wide usefulness of graphs of quantitative data
+has been the 
+recognition that combining multiple views of data
+into a single display allows detection of patterns which could
+not readily be discerned from a series of separate graphs.
+The scatterplot matrix shows all pairwise (marginal) views of a set of variables
+in a coherent display, whose design goal is to show the interdependence
+among the collection of variables as a whole.
+The conditioning plot, or <em>coplot</em>
+[<a href="#Cleveland:VisData" name=CITECleveland:VisData>6:1993b:Cleveland</a>]
+shows a collection of (conditional) views of several variables,
+conditioned by the values of one or more other variables.
+The design goal is to visualize how a relationship depends on
+or changes with one or more additional factors.
+These ideas can be readily extended to categorical data.
+
+<p>
+One analog of the scatterplot matrix for categorical data
+is a matrix of mosaic displays showing some aspect of the
+bivariate relation between all pairs of variables.
+The simplest case shows, for each pair of variables, the marginal relation, summed over
+all other variables.
+For example, Figure&nbsp;<A href="#fig:mosmat9a">17</A> shows the pairwise marginal
+relations among the variables
+Admit, Gender and Department in the Berkeley
+data shown earlier in fourfold displays
+(Figure&nbsp;<A href="#fig:pie2x2g">7</A> and Figure&nbsp;<A href="#fig:pie2x2b">8</A>).
+The panel in row 2, column 1 shows that Admission and Gender are 
+strongly associated marginally, as we saw in Figure&nbsp;<A href="#fig:pie2x2g">7</A>,
+and overall, males are more often admitted.
+The diagonally-opposite panel (row 1, column 2) shows the
+same relation, splitting first by gender.
+
+<p><A NAME="tth_fIg17">
+</A> 
+<p>
+  <center>     <img src="fig/mosmat9a.gif"><br>   <center>      Figure 17: Mosaic matrix of Berkeley
+admissions.  Each panel shows the marginal relation,
+fitting an independence model between the row and column variable, collapsed over other variable(s)</center><A NAME="fig:mosmat9a">
+</A> 
+</center><p>
+<p>
+The panels in the third column (and third row)
+illuminate the explanation for the paradoxical
+result (Figure&nbsp;<A href="#fig:pie2x2b">8</A>) that, within all but department A,
+the likelihood of admission is equal for men and women.
+The (1,3) panel shows
+the marginal relation between Admission and Department; departments A and B have the greatest
+overall admission rate, departments E and F the least.
+The (2, 3) panel shows that men apply in much greater numbers to
+departments A and B, while women apply in greater numbers to
+the departments with the lowest overall rate of admission.
+
+<p>
+Several further extensions are now possible.
+First, we need not show the marginal relation between
+each pair of variables in the mosaic matrix.
+For example, Figure&nbsp;<A href="#fig:mosmat9b">18</A> shows the pairwise <em>conditional</em>
+relations among these variables, in each case fitting a model
+of conditional independence with the remaining variable controlled.
+Thus, the (1,2) and (2,1) panels shows the fit of the model
+[Admit,Dept] [Gender, Dept],
+which asserts that Admission and Gender are independent, given (controlling
+for) department.  Except for Department A, this model fits quite well,
+again indicating lack of gender bias.
+
+<p><A NAME="tth_fIg18">
+</A> 
+<p>
+  <center>     <img src="fig/mosmat9b.gif"><br>   <center>      Figure 18: Conditional mosaic matrix of Berkeley
+admissions.  Each panel shows the conditional relation,
+fitting a model of conditional independence model between the row and column variable, controlling for other variable(s)</center><A NAME="fig:mosmat9b">
+</A> 
+</center><p>
+<p>
+Second, the framework of the scatterplot matrix can now be used
+as a general method for displaying marginal or conditional relations
+among a mixture of quantitative and categorical variables.
+For marginal plots, pairs of quantitative variables are shown as
+a scatterplot, while pairs of categorical variables are shown as
+a mosaic display.
+Pairs consisting of one quantitative and one categorical variable
+can be shown as a set of boxplots for each level of the categorical
+variable.
+For conditional plots, we fit a model predicting the
+row variable from the column variable, partialing out (or conditioning on)
+all other
+variables from each.
+For quantitative variables, this is just the partial regression
+plot.
+
+<p>
+Finally,
+an analog of the coplot for categorical data is an array of plots of the
+dependence among two or more variables, conditioned (or stratified) by
+the values of one or more <em>given</em> variables.
+Each such panel then shows the <em>partial</em> associations among the
+foreground variables;  the collection of such plots show how these
+as the given variables vary.  Figure&nbsp;<A href="#fig:pie2x2b">8</A> and Figure&nbsp;<A href="#fig:naep4fold">13</A>
+are two examples of this idea, using the fourfold display to represent
+the association in 2 &times;2 tables.
+
+<p>
+Figure&nbsp;<A href="#fig:mospart9a">19</A> and Figure&nbsp;<A href="#fig:mospart9b">20</A> show two further
+examples, using the mosaic display to show the partial relations
+[Admit][Dept] given Gender, and [Admit][Gender] given Dept,
+respectively.
+Figure&nbsp;<A href="#fig:mospart9b">20</A> shows the same results displayed in Figure&nbsp;<A href="#fig:pie2x2b">8</A>: no association between Admission and Gender,
+except in Dept. A, where females are relatively more likely to
+gain admission.
+
+<p><A NAME="tth_fIg19">
+</A> 
+<p>
+  <center>     <img src="fig/mospart9a.gif"><br>   <center>      Figure 19: Mosaic coplot of Berkeley
+admissions, given Gender. Each panel shows the partial relation,
+fitting a model of independence model between Admission and Department.</center><A NAME="fig:mospart9a">
+</A> 
+</center><p>
+<p>
+
+<p><A NAME="tth_fIg20">
+</A>   <center>     <img src="fig/mospart9b.gif"><br>   <center>      Figure 20: Mosaic coplot of Berkeley
+admissions, given Department  Each panel shows the partial relation,
+fitting a model of independence model between Admission and Gender.</center><A NAME="fig:mospart9b">
+</A> 
+</center><p>
+<p>
+Figure&nbsp;<A href="#fig:mospart9a">19</A> shows that there is a very strong association
+between Admission and Department-different rates of admission,
+but also shows two things not seen in other displays:
+First, the <em>pattern</em> of association is qualitatively similar
+for both men and women; second the association is quantitatively stronger
+for men than women-larger differences in admission rates across departments.
+
+<p>
+
+<H2>About the Author</H2>
+Michael Friendly is Associate Professor of
+Psychology and Coordinator of the Statistical
+Consulting Service at York University.
+He is an Associate Editor of the <i>Journal of Computational and
+Graphical Statistics</i>, and has been
+working on the development of graphical methods for categorical data. 
+For further information, see <a href="http://datavis.ca">http://datavis.ca</a>,
+which contains links to most of the software developed for the
+graphical methods described here.
+There are also Web-based interfaces to sieve diagrams and mosaic displays
+accessible at
+<a href="/online/">/online/</a>.
+<p>
+Preparation of this chapter was aided by the
+National Sciences and Engineering Research Council of Canada,
+Grant OGP0138748.
+
+<p>
+<H2>References</H2>
+<DL compact>
+<dt>[<a href="#CITEBickel-etal:75" name=Bickel-etal:75>1:1975:Bickel et&nbsp;al.Bickel, Hammel, and O'Connell</a>]</dt><dd>
+Bickel, P.&nbsp;J., Hammel, J.&nbsp;W., and O'Connell, J.&nbsp;W.
+ Sex bias in graduate admissions: Data from Berkeley.
+ <em>Science</em>, 187: 398-403, 1975.
+
+<p>
+<dt>[<a href="#CITECarr:94" name=Carr:94>2:1994:Carr</a>]</dt><dd>
+Carr, D.
+ Color perception, the importance of gray and residuals, on a
+  chloropleth map.
+ <em>Statistical Computing &amp; Statistical Graphics Newsletter</em>,
+  5 (1): 16-21, 1994.
+
+<p>
+<dt>[<a href="#CITECarr:96" name=Carr:96>3:1996:Carr and Olsen</a>]</dt><dd>
+Carr, D. and Olsen, A.
+ Simplifying visual appearance by sorting: An example using 159
+  AVHRR classes.
+ <em>Statistical Computing &amp; Statistical Graphics Newsletter</em>,
+  7 (1): 10-16, 1996.
+
+<p>
+<dt>[<a name=Chambers-etal:83>4:1983:Chambers et&nbsp;al.Chambers, Cleveland, Kleiner, and Tukey</a>]</dt><dd>
+Chambers, J.&nbsp;M., Cleveland, W.&nbsp;S., Kleiner, B., and Tukey, P.&nbsp;A.
+ <em>Graphical Methods for Data Analysis</em>.
+ Wadsworth, Belmont, CA, 1983.
+
+<p>
+<dt>[<a href="#CITECleveland:93:JCGS" name=Cleveland:93:JCGS>5:1993a:Cleveland</a>]</dt><dd>
+Cleveland, W.&nbsp;S.
+ A model for studying display methods of statistical graphics.
+ <em>Journal of Computational and Statistical Graphics</em>, 2:
+  323-343, 1993.
+
+<p>
+<dt>[<a href="#CITECleveland:VisData" name=Cleveland:VisData>6:1993b:Cleveland</a>]</dt><dd>
+Cleveland, W.&nbsp;S.
+ <em>Visualizing Data</em>.
+ Hobart Press, Summit, NJ, 1993.
+
+<p>
+<dt>[<a href="#CITEClevelandMcGill:84b" name=ClevelandMcGill:84b>7:1984:Cleveland and McGill</a>]</dt><dd>
+Cleveland, W.&nbsp;S. and McGill, R.
+ Graphical perception: Theory, experimentation and application to the
+  development of graphical methods.
+ <em>Journal of the American Statistical Association</em>, 79:
+  531-554, 1984.
+
+<p>
+<dt>[<a href="#CITEClevelandMcGill:85" name=ClevelandMcGill:85>8:1985:Cleveland and McGill</a>]</dt><dd>
+Cleveland, W.&nbsp;S. and McGill, R.
+ Graphical perception and graphical methods for analyzing scientific
+  data.
+ <em>Science</em>, 229: 828-833, 1985.
+
+<p>
+<dt>[<a href="#CITEFalguerolles-etal:97" name=Falguerolles-etal:97>91997de&nbsp;Falguerolles et&nbsp;al.de&nbsp;Falguerolles, Fredrich, and Sawitzki</a>]</dt><dd>
+de&nbsp;Falguerolles, A., Fredrich, F., and Sawitzki, G.
+ A tribute to J. Bertin's graphical data analysis.
+ In Bandilla, W. and Faulbaum, F., editors, <em>SoftStat '97,
+  Advances in Statistical Software</em>, pages 11-20. Lucius and Lucius,
+  Stutgart, 1997.
+
+<p>
+<dt>[<a href="#CITEFienberg:75" name=Fienberg:75>10:1975:Fienberg</a>]</dt><dd>
+Fienberg, S.&nbsp;E.
+ Perspective canada as a social report.
+ <em>Social Indicators Research</em>, 2: 153-174, 1975.
+
+<p>
+<dt>[<a href="#CITEFriendly:91" name=Friendly:91>11:1991:Friendly</a>]</dt><dd>
+Friendly, M.
+ <em>SAS System for Statistical Graphics</em>.
+ SAS Institute Inc, Cary, NC, 1st edition, 1991.
+
+<p>
+<dt>[<a href="#CITEFriendly:92b" name=Friendly:92b>12:1992:Friendly</a>]</dt><dd>
+Friendly, M.
+ Mosaic displays for loglinear models.
+ In <em>ASA, Proceedings of the Statistical Graphics Section</em>,
+  pages 61-68, Alexandria, VA, 1992.
+
+<p>
+<dt>[<a href="#CITEFriendly:94b" name=Friendly:94b>13:1994a:Friendly</a>]</dt><dd>
+Friendly, M.
+ A fourfold display for 2 by 2 by K tables.
+ Technical Report 217, York University, Psychology Dept,
+  1994.
+
+<p>
+<dt>[<a href="#CITEFriendly:94a" name=Friendly:94a>14:1994b:Friendly</a>]</dt><dd>
+Friendly, M.
+ Mosaic displays for multi-way contingency tables.
+ <em>Journal of the American Statistical Association</em>, 89:
+  190-200, 1994.
+
+<p>
+<dt>[<a href="#CITEFriendly:94c" name=Friendly:94c>15:1994c:Friendly</a>]</dt><dd>
+Friendly, M.
+ SAS/IML graphics for fourfold displays.
+ <em>Observations</em>, 3 (4): 47-56,
+  1994.
+
+<p>
+<dt>[<a href="#CITEGabriel:80" name=Gabriel:80>16:1980:Gabriel</a>]</dt><dd>
+Gabriel, K.&nbsp;R.
+ Biplot.
+ In Johnson, N.&nbsp;L. and Kotz, S., editors, <em>Encyclopedia of
+  Statistical Sciences</em>, volume&nbsp;1, pages 263-271. John Wiley and Sons, New
+  York, 1980.
+
+<p>
+<dt>[<a href="#CITEGabriel:81" name=Gabriel:81>17:1981:Gabriel</a>]</dt><dd>
+Gabriel, K.&nbsp;R.
+ Biplot display of multivariate matrices for inspection of data and
+  diagnosis.
+ In Barnett, V., editor, <em>Interpreting Multivariate Data</em>,
+  chapter&nbsp;8, pages 147-173. John Wiley and Sons, London, 1981.
+
+<p>
+<dt>[<a href="#CITEHartiganKleiner:81" name=HartiganKleiner:81>18:1981:Hartigan and Kleiner</a>]</dt><dd>
+Hartigan, J.&nbsp;A. and Kleiner, B.
+ Mosaics for contingency tables.
+ In Eddy, W.&nbsp;F., editor, <em>Computer Science and Statistics:
+  Proceedings of the 13th Symposium on the Interface</em>, pages 286-273.
+  Springer-Verlag, New York, NY, 1981.
+
+<p>
+<dt>[<a href="#CITEHartiganKleiner:84" name=HartiganKleiner:84>19:1984:Hartigan and Kleiner</a>]</dt><dd>
+Hartigan, J.&nbsp;A. and Kleiner, B.
+ A mosaic of television ratings.
+ <em>The American Statistician</em>, 38: 32-35, 1984.
+
+<p>
+<dt>[<a href="#CITEKosslyn:85" name=Kosslyn:85>20:1985:Kosslyn</a>]</dt><dd>
+Kosslyn, S.&nbsp;M.
+ Graphics and human information processing: A review of five books.
+ <em>Journal of the American Statistical Association</em>, 80:
+  499-512, 1985.
+
+<p>
+<dt>[<a href="#CITEKosslyn:89" name=Kosslyn:89>21:1989:Kosslyn</a>]</dt><dd>
+Kosslyn, S.&nbsp;M.
+ Understanding charts and graphs.
+ <em>Applied Cognitive Psychology</em>, 3: 185-225, 1989.
+
+<p>
+<dt>[<a href="#CITELewandowskySpence:89" name=LewandowskySpence:89>22:1989:Lewandowsky and Spence</a>]</dt><dd>
+Lewandowsky, S. and Spence, I.
+ The perception of statistical graphs.
+ <em>Sociological Methods &amp; Research</em>, pages 200-242, 1989.
+ Beverly Hills, CA: Sage Publications.
+
+<p>
+<dt>[<a href="#CITEMullis-etal:93" name=Mullis-etal:93>23:1993:Mullis et&nbsp;al.Mullis, Dossey, Owen, and Phillips</a>]</dt><dd>
+Mullis, I. V.&nbsp;S., Dossey, J.&nbsp;A., Owen, E.&nbsp;H., and Phillips, G.&nbsp;W.
+ NAEP 1992: Mathematics report card for the nation and the states.
+ Technical Report 23-ST02, National Center for Education Statistics,
+  Washington, D. C., 1993.
+
+<p>
+<dt>[<a href="#CITERiedwylSchupbach:83" name=RiedwylSchupbach:83>24:1983:Riedwyl and Sch&#252;pbach</a>]</dt><dd>
+Riedwyl, H. and Sch&#252;pbach, M.
+ Siebdiagramme: Graphische darstellung von kontingenztafeln.
+ Technical Report&nbsp;12, Institute for Mathematical Statistics,
+  University of Bern, Bern, Switzerland., 1983.
+
+<p>
+<dt>[<a href="#CITERiedwylSchupbach:94" name=RiedwylSchupbach:94>25:1994:Riedwyl and Sch&#252;pbach</a>]</dt><dd>
+Riedwyl, H. and Sch&#252;pbach, M.
+ Parquet diagram to plot contingency tables.
+ In Faulbaum, F., editor, <em>Softstat '93: Advances In Statistical
+  Software</em>, pages 293-299. Gustav Fischer, New York, 1994.
+
+<p>
+<dt>[<a href="#CITESnee:74" name=Snee:74>26:1974:Snee</a>]</dt><dd>
+Snee, R.&nbsp;D.
+ Graphical display of two-way contingency tables.
+ <em>The American Statistician</em>, 28: 9-12, 1974.
+
+<p>
+<dt>[<a href="#CITESpence:90" name=Spence:90>27:1990:Spence</a>]</dt><dd>
+Spence, I.
+ Visual psychophysics of simple graphical elements.
+ <em>Journal of Experimental Psychology: Human Perception and
+  Performance</em>, 16: 683-692, 1990.
+
+<p>
+<dt>[<a href="#CITETukey:93" name=Tukey:93>28:1993:Tukey</a>]</dt><dd>
+Tukey, J.&nbsp;W.
+ Graphic comparisons of several linked aspects: Alternative and
+  suggested principles.
+ <em>Journal of Computational and Statistical Graphics</em>, 2
+  (1): 1-33, 1993.
+
+<p>
+<dt>[<a href="#CITEWainer:93" name=Wainer:93>29:1993:Wainer</a>]</dt><dd>
+Wainer, H.
+ Tabular presentation.
+ <em>Chance</em>, 6 (3): 52-56, 1993.
+
+<p>
+<dt>[<a href="#CITEWainer:97" name=Wainer:97>30:1997:Wainer</a>]</dt><dd>
+Wainer, H.
+ Some multivariate displays for NAEP results.
+ <em>Psychological Methods</em>, 2 (1): 34-63, 1997.
+
+<p>
+</DL><hr>
+<H3>Footnotes:</H3>
+
+<p><a name=tthFtNtAAD></a><a href="#tthFrefAAD"><sup>1</sup></a> Color versions use blue and red at varying lightness to portray
+both sign and magnitude of residuals.
+<p><a name=tthFtNtAAE></a><a href="#tthFrefAAE"><sup>2</sup></a> This explanation ignores the possibility of structural bias
+against women, e.g., lack of resources allocated to departments that
+attract women applicants.
+<p><a name=tthFtNtAAF></a><a href="#tthFrefAAF"><sup>3</sup></a> 
+Blacks and Hispanics are interchanged from the original table,
+in accord with association ordering, described below.
+<p><a name=tthFtNtAAG></a><a href="#tthFrefAAG"><sup>4</sup></a> All of these models fit very badly, partly due to the
+enormous sample size, but they are to be regarded only as baseline models.
+When a model of joint independence, say, (Ethnicity, Poverty)(Program),
+is fit, the association between Ethnicity and Poverty is fit <em>exactly</em>,
+and so does not appear in the residuals.
+<p><hr><small>File translated from T<sub><font size="-1">E</font></sub>X by <a href="http://hutchinson.belmont.ma.us/tth/">T<sub><font size="-1">T</font></sub>H</a>, version 1.57.</small>
+</HTML>

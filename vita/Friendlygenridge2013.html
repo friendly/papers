@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  ================================================== -->
+  <!-- <meta charset="utf-8" /> -->
+  <meta charset="utf-8" />
+  <title>The Generalized Ridge Trace Plot: Visualizing Bias <em>and</em> Precision</title>
+  
+  <!-- Mobile Specific Metas
+  ================================================== -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+  
+  <!-- CSS
+  ================================================== -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/vita.css">  <!-- Customize here -->
+  
+  <!-- JS (not used here)
+  ================================================== -->
+  <!--[if lt IE 9]>
+    <script src="-js/html5.js"></script>
+  <![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
+  <script>window.jQuery || document.write("<script src='-js/jquery-1.5.1.min.js'>\x3C/script>")</script>
+  <script src="/-js/app.js"></script>
+  
+</head>
+<body>
+
+  <div class="container">  
+    <div class="sixteen columns">
+      <header>
+      <p><a href="/">Michael Friendly's</a></p>
+      <h1>The Generalized Ridge Trace Plot: Visualizing Bias <em>and</em> Precision</h1>
+
+      </header></div>
+
+    <div class="eleven columns content">
+      <div class='citation'>
+<a href='http://datavis.ca/papers/genridge-jcgs.pdf'>  <img src='thumbs/genridge-jcgs.png' width='100' />
+</a>  <ul>
+    <li class='author'>Michael Friendly.</li>
+    <li class='title'>The Generalized Ridge Trace Plot: Visualizing Bias <em>and</em> Precision.</li>
+    <li class='citation'><em>Journal of Computational and Graphical Statistics</em>, vol. 22, no. 1, pp. 50&#8211;68, 2013.</li>
+  </ul>
+<p class='download'><span>Download</span>: 
+<a href='http://datavis.ca/papers/genridge-jcgs.pdf'>from web</a> | <a href='http://datavis.ca/papers/genridge-supp.zip'>supplementary materials</a>
+</p>
+  <br clear='all' /></div>
+<p class='abstract'>In ridge regression and related shrinkage methods, the ridge trace plot, a plot of
+                 estimated coefficients against a shrinkage parameter, is a common graphical adjunct
+                 to help determine a favorable tradeoff of bias against precision (inverse variance)
+                 of the estimates. However, standard unidimensional versions of this plot are
+                 ill-suited for this purpose because they show only bias directly and ignore the
+                 multi-dimensional nature of the problem. We introduce a generalized version of the
+                 ridge trace plot, showing covariance ellipsoids in parameter space, whose centers
+                 show bias and whose size and shape show variance and covariance in relation to the
+                 criteria for which these methods were developed. These provide a direct
+                 visualization of both bias and precision. Even 2D bivariate versions of this plot
+                 show interesting features not revealed in the standard univariate version. Low-rank
+                 versions of this plot, based on an orthogonal transformation of predictor space
+                 extend these ideas to larger numbers of predictor variables, by focusing on the
+                 dimensions in the space of predictors that are likely to be most informative about
+                 the nature of bias and precision. Two well-known data sets are used to illustrate
+                 these graphical methods. The genridge package for R implements computation and
+                 display.</p>
+
+<p class='keywords'><strong>Keywords: </strong>biplot; model selection; multivariate bootstrap; regression shrinkage; ridge
+                 regression; ridge trace plot; singular value decomposition; variance-shrinkage
+                 tradeoff</p>
+
+<pre class='bibtex'>@Article{Friendlygenridge2013,
+  author = {Michael Friendly},
+  title = {The Generalized Ridge Trace Plot: Visualizing Bias <em>and</em> Precision},
+  journal = {Journal of Computational and Graphical Statistics},
+  year = {2013},
+  volume = {22},
+  number = {1},
+  pages = {50&#8211;68},
+  url = {http://datavis.ca/papers/genridge-jcgs.pdf},
+  supp = {http://datavis.ca/papers/genridge-supp.zip},
+}</pre>
+
+    </div>
+    <div class="four columns sidebar offset-by-one">
+      &nbsp;
+    </div>
+
+    <div class="sixteen columns">
+      <hr />
+      <footer>
+      Ispiration and code from <a href="http://vita.had.co.nz/">Hadley Wickham</a>.
+      Built with <a href="http://r-project.org">R</a>, the <a href="http://cran.r-project.org/web/packages/bibtex/index.html">bibtex </a>, 
+      and <a href="http://cran.r-project.org/web/packages/brew">brew</a> packages.  
+      Styled with <a href="http://www.getskeleton.com/">skeleton</a>.
+      Generated 12 Jun 2013.
+      </footer>
+    </div>
+  </div><!-- container -->
+    
+  
+<!-- End Document
+================================================== -->
+</body>
+</html>
+
+

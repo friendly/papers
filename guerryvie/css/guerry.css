@@ -1,0 +1,52 @@
+/*  Styles for Gallery of Data Visualization */
+
+a:hover {text-decoration: underline; font-weight: bold}
+
+
+body
+{
+    font-family : Arial, Helvetica, Verdana, Sans-Serif;
+}
+H1
+{
+    font-family : Arial, Helvetica, Verdana, Sans-Serif;
+    font-weight : bold;
+    font-size : big;
+	 color: blue;
+	 text-align: center; 
+}
+
+
+H2
+{
+    font-family : Arial, Helvetica, Verdana, Sans-Serif;
+    font-size : large;
+    font-weight : bold;
+    background-color : white;
+	  color: blue;
+}
+
+
+H3
+{
+    font-family : Arial, Helvetica, Verdana, Sans-Serif;
+    font-weight : bold;
+    font-size : medium;
+    background-color : white;
+}
+
+
+H4
+{
+    font-family : Arial, Helvetica, Verdana, Sans-Serif;
+    font-weight : bold;
+    font-size : medium;
+    background-color : white;
+}
+
+blockquote
+{
+	font-style: italic;
+}
+
+

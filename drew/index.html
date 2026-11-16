@@ -1,0 +1,1528 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+           "http://www.w3.org/TR/REC-html40/loose.dtd"><HTML>
+<head>
+<META NAME="GENERATOR" CONTENT="TtH 1.57">
+  <META NAME="keywords" content="statistical graphics,
+   categorical data analysis,
+   data visualization, mosaic display,
+	categorical data, conditional independence, coplots,
+correspondence analysis, graphical models, log-linear models,
+scatterplot matrix ">
+<LINK REV=MADE HREF="mailto:friendly@yorku.ca">
+<style type="text/css">
+<!-- 
+H1 {text-align: center; font-family: Arial, Helvetica, Verdana, sans-serif;}
+H2, H3 {font-family: Arial, Helvetica, Verdana, sans-serif;}
+-->
+</style>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+<title>Extending Mosaic Displays: Marginal, Partial, and Conditional Views
+of Categorical Data</title>
+</head>
+<body>
+<H1 align=center><A NAME="xtocid40840">Extending Mosaic Displays: Marginal, Partial, and Conditional Views
+of Categorical Data</A><a href="#tthFtNtAAC" name=tthFrefAAC><sup>*</sup></a></H1>
+
+
+<p>
+
+<H3 align=center>Michael Friendly <br>
+York University</H3>
+<a name=tthFtNtAAC></a><a href="#tthFrefAAC"><sup>*</sup></a> 
+ Paper presented at the 
+ Workshop on <cite>Data Visualization in Statistics</cite>, July 6-10, 1998, held at Drew University.  Published in <cite>Journal of Computational and Graphical Statistics</cite>, 1999, 8:373--395.
+This work is supported by Grant 8150 from the National Sciences and Engineering Research Council of Canada.
+<br>
+Also available: <a href="drew.pdf"><img src="../images/pdf16.jpg">Paper, in PDF format</a> (updated, 328k) |
+<a href="foils.pdf"><img src="../images/pdf16.jpg" align="absmiddle">Slides, in PDF format</a> (400k)
+<HR> 
+<p>
+
+<H2 align=center><A NAME="xtocid40841"> Abstract</A></H2>
+<blockquote>
+This paper first illustrates the use of mosaic displays and other
+graphical methods for the analysis of multiway contingency tables.
+We then introduce several extensions of mosaic displays designed
+to integrate graphical methods for categorical data with those used
+for quantitative data.
+
+<p>
+For example, the scatterplot matrix shows all pairwise (marginal)
+views of a set of variables in a coherent display.  One analog for
+categorical data is a matrix of mosaic displays showing some aspect
+of the bivariate relation between all pairs of variables.  The
+simplest case shows the marginal relation for each pair of variables.
+Another case shows the conditional relation between each pair, with
+all other variables partialled out.  For quantitative data this
+represents (a) a visualization of the conditional independence
+relations studied by graphical models. and (b) a generalization of
+partial residual plots.
+
+<p>
+The conditioning plot, or <em>coplot</em> shows a collection of
+(conditional) views of several variables, conditioned by the values
+of one or more other variables.  A direct analog of the coplot for
+categorical data is an array of mosaic plots of the dependence
+among two or more variables, conditioned (or stratified) by the
+values of one or more <em>given</em> variables.  Each such panel then
+shows the <em>partial</em> associations among the foreground variables;
+the collection of such plots show how these associations change as
+the given variables vary.
+<p>
+<b>Key words:</b> categorical data, conditional independence, coplots,
+correspondence analysis, graphical models, log-linear models,
+scatterplot matrix
+</blockquote>
+
+<p>
+<p>      <H2><A NAME="tth_sEc1">
+1</A>&nbsp;&nbsp;Introduction</H2>
+Graphical methods for quantitative data are well-developed, and
+widely used in both data analysis (e.g., detecting outliers,
+verifying model assumptions) and data presentation.  Graphical
+methods for categorical data, however, are only now being developed.
+Many of these are specialized for particular types of tables, e.g.,
+2 &times;2 &times;k tables (fourfold display), r &times;3 tables
+(trilinear plots), two-way tables (sieve diagram), most are not
+readily available in standard software, and they are not widely
+used.
+
+<p>
+For some time I have been working on graphical methods for categorical
+data which aim to be comparable in scope to those available for
+quantitative data, including exploratory methods, and plots for
+model-based methods.  In this paper I first illustrate the use of
+mosaic displays and other graphical methods for the analysis of
+several multiway contingency tables.  Second, I introduce several
+extensions of mosaic displays designed to integrate graphical
+methods for categorical data with those used for quantitative data.
+
+<p>
+One essential difference between quantitative data and categorical
+data lies in the nature of the natural visual representation
+[<a href="#Friendly:95" name=CITEFriendly:95> Friendly1995</a>,<a href="#Friendly:97" name=CITEFriendly:97> Friendly1997</a>].  For quantitative, magnitude can
+be represented by length (in a bar chart) or by position along a
+scale (dotplots, scatterplots).  When the data are categorical,
+design principles of perception, detection, and comparison
+[<a href="#Friendly:98" name=CITEFriendly:98> Friendly1998</a>] suggest that frequencies are most usefully
+represented as areas.
+
+<p>
+One final introductory point:
+the graphics shown here are, of necessity, static graphs, designed to show both the data and some model-based analysis.
+Their ultimate use will, I believe, be most productive as interactive
+graphics tightly coupled with the model-building methods themselves.
+One needs to design good widgets first, however, before learning how to
+employ them most effectively.
+
+<p>
+      <H2><A NAME="tth_sEc2">
+2</A>&nbsp;&nbsp;Fourfold Display</H2><A NAME="sec:fourfold">
+</A>
+
+<p>
+One specialized graphical method using area as the visual
+mapping of cell frequency is the ``fourfold display'' (
+<a name="CITEFriendly:94b" href="#Friendly:94b"> Friendly1994 a</a>,
+<a name="CITEFriendly:94c" href="#Friendly:94c"> 1994 c</a>;
+<a name="CITEFienberg:75" href="#Fienberg:75"> Fienberg1975</a> )
+designed for the display of 2 &times;2 (or 
+2&times;2 &times;k) tables.  In this display the frequency
+n<sub>ij</sub> in each cell of a fourfold table is shown by a quarter
+circle, whose radius is proportional to <font face=symbol>Ö</font>{ n<sub>ij</sub> }, so the
+area is proportional to the cell count.
+
+<p>
+For a single 2 &times;2 table the fourfold display described
+here also shows the frequencies by area, but scaled to
+depict the sample odds ratio, <font face=symbol>q</font
+> = (n<sub>11</sub> n<sub>22</sub> ) /( n<sub>12</sub> n<sub>21</sub> ).  An association between the variables
+(<font face=symbol>q</font> <font face=symbol>¹</font> 1) is shown by the tendency of diagonally opposite
+cells in one direction to differ in size from those in the opposite
+direction, and the display uses color or shading to show this
+direction.  Confidence rings for the observed <font face=symbol>q</font> allow a
+visual test of the hypothesis H<sub>0</sub> : <font face=symbol>q</font> = 1.  They have
+the property that the rings for adjacent quadrants overlap <em>iff</em>
+the observed counts are consistent with the null hypothesis.
+
+<p>
+To illustrate, Figure&nbsp;<A href="#fig:pie2x2g">1</A> shows aggregate data on
+applicants to graduate school at Berkeley for the six largest
+departments in 1973 classified by admission and sex.  At issue is
+whether the data show evidence of sex bias in admission practices
+[<a href="#Bickel-etal:75" name=CITEBickel-etal:75> Bickel et&nbsp;al.1975</a>].
+The figure shows the observed cell frequencies
+numerically in the corners of the display.  Thus, there were 2691 male
+applicants, of whom 1193 (44.4%) were admitted, compared with 1855
+female applicants of whom 557 (30.0%) were admitted.  Hence the
+sample odds ratio, Odds (Admit<font face=symbol>|</font>Male) / (Admit<font face=symbol>|</font>Female) is 1.84
+indicating that males were almost twice as likely to be admitted.
+
+<p><A NAME="tth_fIg1">
+</A> 
+<p>
+  <center>     <img src="fig/pie2x2g.gif"><p>   <center>     <A NAME="fig:pie2x2g"> Figure 1</a>: Four-fold display for Berkeley
+admissions: Evidence for sex bias?  The area of each shaded quadrant shows the frequency,
+standardized to equate the margins for sex and admission.  Circular
+arcs show the limits of a 99% confidence interval for the odds ratio.</center>
+ 
+</center><p>
+<p>
+The frequencies displayed graphically by shaded quadrants in
+Figure&nbsp;<A href="#fig:pie2x2g">1</A> are not the raw frequencies.  Instead, they
+have been standardized (by iterative proportional
+fitting) so that all table margins are equal, while preserving the
+odds ratio.  Each quarter circle is then drawn to have an area
+proportional to this standardized cell frequency.  This makes it
+easier to see the association between admission and sex without being
+influenced by the overall admission rate or the differential tendency
+of males and females to apply.  With this standardization the four
+quadrants will align when the odds ratio is 1, regardless of the
+marginal frequencies.
+
+<p>
+The shaded quadrants in Figure&nbsp;<A href="#fig:pie2x2g">1</A> <em>do not</em> align and
+the 99% confidence rings around each quadrant do not overlap,
+indicating that the odds ratio differs significantly from 1 --- putative
+evidence of gender bias.  The
+width of the confidence rings gives a visual indication of the
+precision of the data-if we stopped here, we might feel quite confident of
+this conclusion.
+
+<p>
+      <H3><A NAME="tth_sEc2.1">
+2.1</A>&nbsp;&nbsp;Multiple strata</H3>
+In the case of a 
+2 &times;2&times;k table, the last dimension often corresponds to
+strata or populations, and it is typically of interest to see if
+the association between the first two variables is homogeneous across
+strata.  The fourfold display is designed to allow easy visual comparison of the
+pattern of association between two dichotomous variables across two
+or more populations.
+
+<p>
+For example,
+the admissions data shown in Figure&nbsp;<A href="#fig:pie2x2g">1</A> were aggregated over
+a sample of six departments; 
+Figure&nbsp;<A href="#fig:pie2x2b">2</A> displays the data
+for each department.  The departments
+are labelled so that the overall acceptance rate is highest for
+Department A and decreases to Department F.  Again each
+panel is standardized to equate the marginals for sex and admission.
+This standardization also equates for the differential total
+applicants across departments, facilitating visual comparison.
+
+<p><A NAME="tth_fIg2">
+</A> 
+<p>
+  <center>     <img src="fig/pie2x2b.gif"><p>   <center>     <A NAME="fig:pie2x2b"> 
+ Figure 2</A>: Fourfold display of Berkeley
+admissions, by department.  In each panel the confidence rings for
+adjacent quadrants overlap if the odds ratio for admission and sex
+does not differ significantly from 1.  The data in each panel have
+been standardized as in Figure&nbsp;<A href="#fig:pie2x2g">1</A>.</center></center><p>
+<p>
+Surprisingly, Figure&nbsp;<A href="#fig:pie2x2b">2</A> shows that, for five of the
+six departments, the odds of admission is essentially identical for
+men and women applicants.  Department A appears to differs from
+the others, with women approximately 2.86 (
+ = ( 313/19 ) /(512/89)) times <em>more</em> likely to gain admission.  This appearance is
+confirmed by the confidence rings, which  
+are <em>joint</em> 99% intervals for <font face=symbol>q</font
+><sub>c</sub>  in Figure&nbsp;<A href="#fig:pie2x2b">2</A>.
+
+<p>
+This result, which contradicts the display for the aggregate data in
+Figure&nbsp;<A href="#fig:pie2x2g">1</A>, is a nice example of Simpson's paradox.
+The resolution of this contradiction can be found in the large
+differences in admission rates among departments.  Men and women
+apply to different departments differentially, and in these data
+women apply in larger numbers to departments that have a low
+acceptance rate.  The aggregate results are misleading because they
+falsely assume men and women are equally likely to apply in each
+field.<a href="#tthFtNtAAD" name=tthFrefAAD><sup>1</sup></a>
+
+<p>
+      <H3><A NAME="tth_sEc2.2">
+2.2</A>&nbsp;&nbsp;Visualization principles</H3>
+An important principle in the display of large, complex datasets
+is <i><b>controlled comparison</b></i>-we want to make comparisons 
+against a clear standard, with
+other things held constant.
+The fourfold display 
+differs from a pie chart in that it holds the
+angles of the segments constant and varies the radius,
+whereas the pie chart varies the angles and holds the radius constant.
+An important consequence is that we can quite easily compare a
+series of fourfold displays for different strata, since corresponding
+cells of the table are always in the same position.
+As a result, an array of fourfold displays serve the goals of comparison and 
+detection better than an array of pie charts.
+Moreover, it allows the observed frequencies to be standardized
+by equating either the row or column totals, while preserving
+the odds ratio.
+In Figure&nbsp;<A href="#fig:pie2x2b">2</A>, for example,
+the proportion of men and women, and the proportion
+of accepted applicants were equated visually in each department.  
+This provides a clear standard which 
+also greatly facilitates controlled comparison.
+
+<p>
+Another principle is <i><b>visual impact</b></i>-we want the important 
+features
+of the display to be easily distinguished from the less important
+[<a href="#Tukey:93" name=CITETukey:93> Tukey1993</a>].
+In Figure&nbsp;<A href="#fig:pie2x2b">2</A> distinguishes the one department for which
+the odds ratio differs significantly from 1 by shading intensity,
+even though the same information can be found by inspection of the
+confidence rings.
+
+<p>
+       <H2><A NAME="tth_sEc3">
+3</A>&nbsp;&nbsp;Mosaic displays</H2>
+The mosaic display
+[<a href="#Friendly:92b" name=CITEFriendly:92b> Friendly1992 a</a>,<a href="#Friendly:94a" name=CITEFriendly:94a> 1994 b</a>,<a href="#Friendly:97" name=CITEFriendly:97> 1997</a>,<a href="#Friendly:98" name=CITEFriendly:98> 1998</a>,<a href="#HartiganKleiner:81" name=CITEHartiganKleiner:81> Hartigan &amp; Kleiner1981</a>,<a href="#HartiganKleiner:84" name=CITEHartiganKleiner:84> Hartigan &amp; Kleiner1984</a>]
+ is a graphical method for visualizing an n-way
+contingency table and for building models to account for the
+associations among its variables.  The frequencies in a contingency
+table are portrayed as a collection of rectangular ``tiles'' whose
+areas are proportional the cell frequencies; the areas are colored
+and shaded to portray the residuals from a specified log-linear
+model.  Whereas goodness-of-fit statistics provide an overall
+summary of how well a model fits the data, the mosaic display
+reveals the pattern of lack of fit, and helps suggest an alternative
+model that may fit better.
+
+<p>
+The construction of the mosaic is easily understood as a straightforward
+application of conditional probabilities.
+For a two-way table, with cell frequencies n<sub>ij</sub>,  and cell probabilities
+p<sub>ij</sub> = n<sub>ij</sub> / n<sub>++</sub>,
+a unit square is first divided into rectangles whose width is proportional
+to the marginal frequencies n<sub>i+</sub>, and hence to the marginal
+probabilities p<sub>i</sub> = n<sub>i+</sub> / n<sub>++</sub>.
+Each such rectangle is then subdivided horizontally in proportion to the
+conditional probabilities of the second variable given the first,
+p<sub>j<font face=symbol>|</font
+>i</sub> = n<sub>ij</sub> / n<sub>i+</sub>.  Hence the area of each tile is proportional
+to the observed cell frequency and probability,
+<A NAME="eq:pij">
+</A>					
+<centEr><table border=0 align=center><tr><td>
+<Table align=left><tr><td nowrap align=center>
+p<sub>ij</sub> = p<sub>i</sub> &times;p<sub>j<font face=symbol>|</font
+>i</sub>  = </td><td align=left><font face=symbol>
+æ<br>ç<br>
+è
+</font></td><td align=center>
+ </td><td nowrap align=center>
+n<sub>i+</sub><hr NOSHADE>
+ n<sub>++</sub><Br></td><td nowrap align=center>
+</td><td align=left><font face=symbol>
+ö<br>÷<br>
+ø
+</font></td><td align=center>
+&times;</td><td align=left><font face=symbol>
+æ<br>ç<br>
+è
+</font></td><td align=center>
+ </td><td nowrap align=center>
+n<sub>ij</sub><hr NOSHADE>
+ n<sub>i+</sub><Br></td><td nowrap align=center>
+</td><td align=left><font face=symbol>
+ö<br>÷<br>
+ø
+</font></td><td align=center>
+</td></Table>
+</td><td width=100 align=right>(1)</td></table></centEr>
+
+
+
+<p>
+For example, Table&nbsp;<A href="#tab:hairdat">1</A> shows data
+on the relation between hair color and eye color among 592 subjects
+(students in a statistics course) collected by 
+Snee .
+The
+Pearson <font face=symbol>c</font
+><sup>2</sup> for these data is 138.3 with 9 df,
+indicating substantial departure from independence.
+
+<p><A NAME="tth_tAb1">
+</A> 
+<p>
+ <center>      <A NAME="tab:hairdat">Table 1</A>: Hair-color eye-color data</center>
+
+
+<center>
+<p>
+
+<table border><tr><td>
+<tr><td></td><td colspan=4 align=center>Hair Color        </td><td>
+<tr><td>Eye     </td><td></td><td></td><td></td><td></td><td>
+<tr><td>Color   </td><td>Black  </td><td>Brown  </td><td>Red  </td><td>Blond  </td><td>Total 
+<tr><td>Green   </td><td>5  </td><td>29  </td><td>14  </td><td>16  </td><td>64 
+<tr><td>Hazel   </td><td>15  </td><td>54  </td><td>14  </td><td>10  </td><td>93 
+<tr><td>Blue    </td><td>20  </td><td>84  </td><td>17  </td><td>94  </td><td>215 
+<tr><td>Brown   </td><td>68  </td><td>119  </td><td>26  </td><td>7  </td><td>220 
+<tr><td>Total   </td><td>108  </td><td>286  </td><td>71  </td><td>127  </td><td>592 </table>
+
+</center>
+<p>
+<p>The basic two-way mosaic for these data, shown in Figure&nbsp;<A href="#fig:mosaic31">3</A>,  is then similar to a divided bar chart.
+If hair color and eye color were independent,
+ p<sub>ij</sub> = p<sub>i</sub> &times;p<sub>j</sub>, and then the tiles in each
+row would all align.  This is shown in Figure&nbsp;<A href="#fig:sieve0">4</A>,
+which shows a mosaic constructed from the expected frequencies
+m<sub>ij</sub> = n<sub>i+</sub> n<sub>+j</sub> / n<sub>++</sub>, under independence.
+
+<p>
+
+<p><A NAME="tth_fIg3">
+</A>    <center>  <img src="fig/mosaic31.gif"><p>   <center>      Figure 3: Basic mosaic display for hair-color and eye color data.  The area of each
+  rectangle is proportional to the observed frequency in that cell.</center>  <A NAME="fig:mosaic31">
+</A>
+ </center> 
+<p>
+   <center>  <img src="fig/sieve0.gif"><p>   <center>      Figure 4: Expected
+  frequencies under independence.  The tiles align when the variables
+  are independent.</center>
+ <A NAME="fig:sieve0">
+</A>
+ </center>
+<p>
+<p>      <H3><A NAME="tth_sEc3.1">
+3.1</A>&nbsp;&nbsp;Design goals and visualization principles</H3>
+One important design goal for visualization methods for categorical
+data is to serve various needs in the analysis of contingency tables
+[<a href="#Friendly:98" name=CITEFriendly:98> Friendly1998</a>]:
+
+<p>
+
+<UL>
+<li> <i><b>reconnaissance</b></i>-a preliminary examination, or an overview of a possibly complex terrain;
+
+<li> <i><b>exploration</b></i>-help detect patterns or unusual
+circumstances, or to suggest hypotheses;
+
+<li> <i><b>model building &amp; diagnosis</b></i>-critique a fitted model
+as a reasonable statistical summary. 
+</UL>
+<p>
+Enhancements to the basic mosaic designed to meet these needs are described
+below.
+
+<p>
+       <H4><A NAME="tth_sEc3.1.1">
+3.1.1</A>&nbsp;&nbsp;Enhanced mosaics</H4>
+The enhanced mosaic display
+[<a href="#Friendly:92b" name=CITEFriendly:92b> Friendly1992 a</a>,<a href="#Friendly:94a" name=CITEFriendly:94a> 1994 b</a>]
+achieves greater visual impact by using
+color and shading to reflect the size of the residual from
+independence and by reordering rows and columns to make the pattern
+of association
+more coherent.  The resulting display serves
+exploratory
+goals (by showing the pattern of observed frequencies in the
+full table),
+and model building goals (by displaying the residuals
+from a given log-linear model).
+
+<p>
+Figure&nbsp;<A href="#fig:mosaic34">5</A> gives the extended the mosaic plot, showing
+the standardized (Pearson) residual from independence, 
+d<sub>ij</sub> = (n<sub>ij</sub> - m<sub>ij</sub>) / <font face=symbol>Ö</font>{ m<sub>ij</sub> } by the color and shading of each
+rectangle: cells with positive residuals are outlined with solid lines
+and filled with slanted lines; negative residuals are outlined with
+broken lines and filled with grayscale.  The absolute value of the
+residual is portrayed by shading density: cells with absolute values
+less than 2 are empty; cells with <font face=symbol>|</font
+> d<sub>ij</sub> <font face=symbol>|</font
+>  <font face=symbol>³</font
+> 2 are filled;
+those with <font face=symbol>|</font
+> d<sub>ij</sub> <font face=symbol>|</font
+>  <font face=symbol>³</font
+> 4 are filled with a darker pattern.
+Under the assumption of independence, these values roughly correspond
+to two-tailed probabilities p <font face=symbol> &lt; </font
+> .05 and p <font face=symbol> &lt; </font
+> .0001 that a
+given value of <font face=symbol>|</font
+> d<sub>ij</sub> <font face=symbol>|</font
+> exceeds 2 or 4.<a href="#tthFtNtAAE" name=tthFrefAAE><sup>2</sup></a>
+
+<p>
+
+<p><A NAME="tth_fIg5">
+</A>   <center>  <img src="fig/mosaic34.gif"><p>   <center>      Figure 5: Extended mosaic,
+  reordered and shaded.  The two levels of shading density correspond to
+  standardized residuals greater than 2 and 4 in absolute value.</center>  <A NAME="fig:mosaic34">
+</A>
+</center><p>
+<p>
+When the row or column variables are unordered, we are also free to
+rearrange the corresponding categories in the plot to help show the
+nature of association.  For example, in Figure&nbsp;<A href="#fig:mosaic34">5</A>, the
+eye color categories have been permuted so that the residuals from
+independence have an opposite-corner pattern, with positive values
+running from bottom-left to top-right corners, negative values along
+the opposite diagonal.  Coupled with size and shading of the tiles,
+the excess in the black-brown and blond-blue cells, together with the
+underrepresentation of brown-haired blonds and people with black hair
+and blue eyes is now quite apparent.  Though the table was reordered
+based on the d<sub>ij</sub> values, both dimensions in
+Figure&nbsp;<A href="#fig:mosaic34">5</A> are ordered from dark to light, suggesting
+an explanation for the association.  In this example the eye-color
+categories could be reordered by inspection.  A general method
+[<a href="#Friendly:94a" name=CITEFriendly:94a> Friendly1994 b</a>]
+is to sort the categories by their
+scores on the largest dimension in a (correspondence analysis)
+singular value decomposition of residuals.
+
+<p>
+       <H4><A NAME="tth_sEc3.1.2">
+3.1.2</A>&nbsp;&nbsp;n-way tables</H4>
+Another design goal is that graphical methods extend naturally to three-way and higher-way
+tables, in much the same way that graphical methods for quantitative
+data do.
+For an n-way table,
+with variables A, B, C, ...,  the construction of the mosaic generalizes recursively to
+<A NAME="eq:pijkl">
+</A>
+<centEr><table border=0 align=center><tr><td>
+<Table align=left><tr><td nowrap align=center>
+p<sub>ijk<i>l</i><font face=symbol>¼</font
+></sub> = </td><td nowrap align=center>
+<font size="-1"></font> <Br><Br><tabLe border=0><tr><td nowrap align=center>
+</td><td nowrap align=center>
+<font size="-1">{A B}</font> <Br><hr>p<sub>i</sub> &times;p<sub>j<font face=symbol>|</font
+>i</sub><Br><BR>
+<font size="-1"></font>&nbsp;<br></td><td nowrap>
+&times;&nbsp;p<sub>k<font face=symbol>|</font
+>ij</sub></td></tabLe><hr><font size="-1">{A B C}</font>&nbsp;<br></td><td nowrap>
+&times;&nbsp;p<sub><i>l</i><font face=symbol>|</font
+>ijk</sub> &times;<font face=symbol>¼</font
+></td></Table>
+</td><td width=100 align=right>(2)</td></table></centEr>
+
+
+The braces in Eqn.&nbsp;(<A href="#eq:pijkl">2</A>) are meant to suggest that the first two terms provide a
+mosaic for the marginal frequencies of variables A and B,
+the first three terms give a mosaic for the {A B C} marginal table,
+and so forth, up to the display of the full n-way table.
+
+<p>
+For example, imagine that each
+cell of the two-way table for hair and eye color is further
+classified by one or more additional variables-sex and 
+ethnicity, for example.  Then each rectangle can be subdivided
+horizontally to show the proportion of males and females in that
+cell, and each of those horizontal portions can be subdivided
+vertically to show the proportions of people of each ethnicity in the hair-eye-sex group.
+
+<p>
+Figure&nbsp;<A href="#fig:mosaic35">6</A> shows the mosaic for the three-way table, with hair and eye color
+groups divided according to the proportions of Males and Females:
+We see that there is no systematic association between sex
+and the combinations of hair and eye color-except among
+blue-eyed blonds, where there are an overabundance of females.
+(Do they have more fun?)
+
+<p>
+
+<p><A NAME="tth_fIg6">
+</A>   <center>  <img src="fig/mosaic35.gif"><p>   <center>      Figure 6: Three-way mosaic display for hair color, eye
+color, and sex.  
+The categories of sex are crossed with those of
+hair color, but only the first occurrence is labeled.  
+Residuals from
+the model of joint independence, [HE]&nbsp;[S] are shown by
+shading.
+The only lack of fit is 
+an overabundance of females among blue-eyed blonds.</center>
+<A NAME="fig:mosaic35">
+</A>
+</center><p>
+<p>
+      <H3><A NAME="tth_sEc3.2">
+3.2</A>&nbsp;&nbsp;Fitting models</H3>
+When three or more variables are
+represented in the mosaic, we can fit different models of
+``independence'' and display the residuals from each.  We treat
+these as null or baseline models, which may not fit the data
+particularly well.  The deviations of observed frequencies from
+expected ones, displayed by shading, will often suggest terms to be added
+to to an explanatory model that achieves a better fit.
+
+<p>
+For a three-way table, with variables A, B and C, some of the possible models are
+described below and summarized in Table&nbsp;<A href="#tab:hyp3way">2</A>.
+I use [&nbsp;] notation to list the high-order terms in
+a hierarchical log-linear model; these correspond to the margins
+of the table which are fitted exactly.
+Any other associations present in the data will appear in the pattern of
+residuals.
+Here, A <font face=symbol>^</font
+>B is
+read, ``A is independent of B''.  Table&nbsp;<A href="#tab:hyp3way">2</A> also
+depicts the relations among variables as an
+association graph, where associated variables are connected by and edge.
+
+<p><A NAME="tth_tAb2">
+</A>  <center>      <A NAME="tab:hyp3way">Table 2</A>: Fitted margins, model symbols and interpretations for some hypotheses for a three-way table</center>
+
+<p>
+<center>  <img src="fig/hyp3tst.gif"><br>   </center>
+
+<!--
+<center>
+<p>
+  
+<table border><tr><td>
+<tr><td></td><td>Fitted  </td><td>Model </td><td>Independence  </td><td>Association  
+<tr><td>Hypothesis </td><td>margins </td><td>symbol </td><td>Interpretation </td><td>graph 
+<tr><td>H<sub>1</sub> </td><td>n<sub>i++</sub>, n<sub>+j+</sub>, n<sub>++k</sub> </td><td>[A][B][C] </td><td>A <font face=symbol>^</font
+>B <font face=symbol>^</font
+>C  </td><td>(-.01, -.01)(1.1,1.1)		<font color="#000000">	(0,0)	(1.0,0)	(.5,.866)		</font>	 
+<tr><td>H<sub>2</sub> </td><td>n<sub>ij+</sub>, n<sub>++k</sub> </td><td>[AB][C] </td><td>A , B <font face=symbol>^</font
+>C  </td><td>(-.01, -.01)(1.1,1.1)		<font color="#000000">	(0,0)	(1.0,0)	(.5,.866)		</font>	 
+<tr><td>  H<sub>3</sub> </td><td>n<sub>i+k</sub>, n<sub>+k</sub> </td><td>[AC][BC] </td><td>A <font face=symbol>^</font
+>B &nbsp;<font face=symbol>|</font
+>&nbsp;C </td><td>(-.01, -.01)(1.1,1.1)		<font color="#000000">	(0,0)	(1.0,0)	(.5,.866)		</font>	 
+<tr><td>H<sub>4</sub> </td><td>n<sub>ij+</sub>, n<sub>i+k</sub>, n<sub>+jk</sub> </td><td>[AB][AC][BC] </td><td>- </td><td>(-.01, -.01)(1.1,1.1)		<font color="#000000">	(0,0)	(1.0,0)	(.5,.866)		</font>	
+<tr><td>  
+<p>
+  </table>
+ </center><p>
+-->
+
+<DL compact><dt><b>H<sub>1</sub>: Mutual independence</b></dt><dd>  The model of mutual independence, A <font face=symbol>^</font
+>B <font face=symbol>^</font
+>C,
+       asserts that all joint probabilities <font face=symbol>p</font
+><sub>ijk</sub> are products of the
+       one-way marginal probabilities:
+<font face=symbol>p</font
+><sub>ijk</sub> = <font face=symbol>p</font
+><sub>i++</sub> &nbsp;<font face=symbol>p</font
+><sub>+j+</sub> &nbsp;<font face=symbol>p</font
+><sub>++k</sub>.  This corresponds to the log-linear model
+       [A] &nbsp;[B] &nbsp;[C].  Fitting this model leaves all higher
+       terms, and hence <em>all</em> association among the variables, in the
+       residuals.
+
+<p>
+<dt><b>H<sub>2</sub>: Joint independence</b></dt><dd>  The model in
+       which variable C is jointly independent of variables A
+       and B, (A , B <font face=symbol>^</font
+>C ), has
+ <font face=symbol>p</font
+><sub>ijk</sub> = <font face=symbol>p</font
+><sub>ij+</sub> &nbsp;<font face=symbol>p</font
+><sub>++k</sub> ., and
+corresponds to the log-linear model 
+[ A B ] &nbsp;[ C].  Residuals from this model show the extent to which
+variable C is related to the combinations of variables
+A and B, but they do not show any association between
+A and B, since that association is fitted exactly.
+
+<p>
+<dt><b>H<sub>3</sub>: Conditional independence</b></dt><dd> Two variables, say A and B, are conditionally independent
+given the third (C) if A and B are independent when we
+control for C, symbolized as A <font face=symbol>^</font
+>B &nbsp;<font face=symbol>|</font
+> &nbsp;C.
+This means that conditional probabilities, <font face=symbol>p</font
+><sub>ij<font face=symbol>|</font
+>k</sub>, obey
+
+ <font face=symbol>p</font
+><sub>ij<font face=symbol>|</font
+>k</sub> = <font face=symbol>p</font
+><sub>i+<font face=symbol>|</font
+>k</sub> &nbsp;<font face=symbol>p</font
+><sub>+j<font face=symbol>|</font
+>k</sub> ..
+The corresponding log-linear models is denoted [AC] &nbsp;[BC].
+When this model is fit, the mosaic shows the conditional
+associations between variables A and B, controlling for C,
+but does not show the associations between A and C, or
+B and C.
+
+<p>
+<dt><b>H<sub>4</sub>: No three-way interaction</b></dt><dd>  For this model, no pair is
+marginally or 
+conditionally independent, so there is no independence interpretation.
+However, the partial association between any two
+variables is the same at each level of the third variable.
+The corresponding log-linear model formula is [AB] &nbsp;[AC] &nbsp;[BC],
+indicating that all two-way margins are fit exactly and so are not
+shown in the residuals.  Only a possible three-way association
+appears in the mosaic.
+</DL>
+<p>
+For example, with the data from Table&nbsp;<A href="#tab:hairdat">1</A> broken down
+by sex, fitting the joint-independence model [HairEye][Sex] allows us to see the extent
+to which the joint distribution of hair-color and eye-color is
+associated with sex.  For this model, the likelihood-ratio G<sup>2</sup> is
+19.86 on 15 df (p = .178), indicating an acceptable overall fit.
+The three-way mosaic for this model was shown in Figure <A href="#fig:mosaic35">6</A>.
+Any other model fit to this table will have the same tiles in the mosaic
+since the areas depend on the observed frequencies;  the residuals,
+and hence the shading of the tiles will differ.
+
+<p>
+       <H4><A NAME="tth_sEc3.2.1">
+3.2.1</A>&nbsp;&nbsp;Sequential plots and models</H4>
+
+<p>
+The mosaic display is constructed in stages, with the variables
+listed in a given order.
+At each stage, the procedure 
+fits a (sub)model to the marginal subtable defined by summing over all
+variables not yet entered.  For example for a three-way table,
+{ABC}, the marginal subtables {A} and {AB} are calculated
+in the process of constructing the three-way mosaic.
+The {A} marginal table can be fit to a model where the categories
+of variable A are equiprobable (or some other discrete distribution);
+the independence model can be fit to the {AB} subtable, and so forth.
+The series of plots can give greater insight into the relationships
+among all the variables than a single plot alone.
+
+<p>
+Moreover, the series of mosaic plots fitting submodels of 
+joint independence to
+the marginal subtables have the special property that they can be viewed as partitioning the hypothesis
+of mutual independence in the full table
+[<a href="#Friendly:94a" name=CITEFriendly:94a> Friendly1994 b</a>,<a href="#Goodman:70" name=CITEGoodman:70> Goodman1970</a>].
+
+<p>
+For example, for the hair-eye data, the mosaic displays for the
+[Hair] [Eye] marginal table (Figure&nbsp;<A href="#fig:mosaic34">5</A>)
+and the [HairEye] [Sex]
+(Figure&nbsp;<A href="#fig:mosaic35">6</A>) table can be
+viewed as representing the partition
+
+<pre>
+ Model                      df        G2
+
+[Hair] [Eye]                9       146.44
+[Hair, Eye] [Sex]          15        19.86
+------------------------------------------
+[Hair] [Eye] [Sex]         24       155.20
+</pre>
+<p>
+</center>This partitioning scheme for sequential models of joint independence extends directly to higher-way tables.
+The <a href="http://www.datavis.ca/mosaics/mosaics.html"><font face="helvetica">MOSAICS</font> program</a> [<a href="#Friendly:92c" name=CITEFriendly:92c> Friendly1992 b</a>]<a href="#tthFtNtAAF" name=tthFrefAAF><sup>3</sup></a>
+ implements a variety of schemes for fitting
+a sequential series of submodels, including
+mutual independence, joint independence, conditional independence,
+partial independence and markov chain models, as shown in Table&nbsp;<A href="#tab:fittype">3</A>.
+
+<p><A NAME="tth_tAb3">
+</A> 
+<p>
+  <center>      <A NAME="tab:fittype">Table 3</A>: Log-linear models corresponding to the various <tt>fittype</tt>
+ values recognized by <font face="helvetica">MOSAICS</font>.</center><p><br>
+<center>
+<p>
+
+<table><tr><td>
+<tr><td>fittype
+<a href="#tthFtNtAAG" name=tthFrefAAG><sup>4</sup></a>
+	</td><td colspan=1 align=center><font size="+1">3-way</font>		</td><td colspan=1 align=center><font size="+1">4-way</font> </td><td colspan=1 align=center><font size="+1">5-way</font> 
+<tr><td>MUTUAL </td><td>             [A] &nbsp;[B] &nbsp;[C]  </td><td> [A] &nbsp;[B] &nbsp;[C] &nbsp;[D]  </td><td> [A] &nbsp;[B] &nbsp;[C] &nbsp;[D] &nbsp;[E] 
+<tr><td>JOINT  </td><td>             [AB] &nbsp;[C]  </td><td> [ABC] &nbsp;[D]  </td><td> [ABCE] &nbsp;[E]  
+<tr><td>JOINT1  </td><td>             [A] &nbsp;[BC]  </td><td> [A] &nbsp;[BCD]  </td><td> [A] &nbsp;[BCDE]  
+<tr><td>CONDIT  </td><td>             [AC] &nbsp;[BC]  </td><td> [AD] &nbsp;[BD] &nbsp;[CD]  </td><td> [AE] &nbsp;[BE] &nbsp;[CE] &nbsp;[DE] 
+<tr><td>CONDIT1  </td><td>             [AB] &nbsp;[AC]  </td><td> [AB] &nbsp;[AC] &nbsp;[AD]  </td><td> [AB] &nbsp;[AC] &nbsp;[AD] &nbsp;[AE] 
+<tr><td>PARTIAL  </td><td>             [AC] &nbsp;[BC]  </td><td> [ACD] &nbsp;[BCD]  </td><td> [ADE] &nbsp;[BDE] &nbsp;[CDE] 
+<tr><td>MARKOV1  </td><td>    [AB] &nbsp;[BC]  </td><td> [AB] &nbsp;[BC] &nbsp;[CD]  </td><td> [AB] &nbsp;[BC] &nbsp;[CD] &nbsp;[DE] 
+<tr><td>MARKOV2  </td><td>    [A] &nbsp;[B] &nbsp;[C]  </td><td> [ABC] &nbsp;[BCD]  </td><td> [ABC] &nbsp;[BCD] &nbsp;[CDE]  </table>
+
+
+<p>
+</center><p>        <H3><A NAME="tth_sEc3.3">
+3.3</A>&nbsp;&nbsp;Example: Survival on the <em>Titanic</em></H3>
+  
+<p>
+There have been few marine disasters resulting in the staggering loss of life
+which occurred in the sinking of the <em>Titanic</em> on April 15, 1912
+and (perhaps as a result) few that are so widely known by the public.
+It is surprising, therefore, that 
+neither the exact death toll from this disaster
+nor the distributions of death among the passengers
+and crew are universally agreed.
+Dawson [<a href="#Dawson:95" name=CITEDawson:95> Dawson1995 </a>]
+ presents the cross-classification of
+2201 passengers and crew on the <em>Titanic</em> by Age, Gender, Class
+(1st, 2nd, 3rd, Crew) shown in Table&nbsp;<A href="#tab:titanic">4</A>
+and describes his efforts to reconcile various historical sources.
+Let us see what we can learn from this data set.
+
+<p>
+
+<p><A NAME="tth_tAb4">
+</A>   <center>     <A NAME="tab:titanic"> Table 4</A>: Survival on the Titanic</center>
+ 
+<center>
+<p>
+  
+<table border><tr><td>
+<tr><td></td><td></td><td></td><td colspan=4 align=center><b><font size="+1">Class   </b></font>
+<tr><td><b><font size="+1">Survived</b></font> </td><td><b><font size="+1">Age     </b></font> </td><td><b><font size="+1">Gender</b></font> </td><td>1st    </td><td>2nd    </td><td>3rd    </td><td>Crew   
+<tr><td>No         </td><td>Adult   </td><td>Male     </td><td>118 </td><td>154 </td><td>387 </td><td>670
+<tr><td>Yes        </td><td></td><td></td><td>4 </td><td>13 </td><td>89 </td><td>3 
+<tr><td>
+No         </td><td>Child   </td><td></td><td>0 </td><td>0 </td><td>35 </td><td>0 
+<tr><td>Yes        </td><td></td><td></td><td>0 </td><td>0 </td><td>17 </td><td>0 
+<tr><td>
+No         </td><td>Adult   </td><td>Female   </td><td>57 </td><td>14 </td><td>75 </td><td>192
+<tr><td>Yes        </td><td></td><td></td><td>140 </td><td>80 </td><td>76 </td><td>20 
+<tr><td>
+No         </td><td>Child   </td><td></td><td>5 </td><td>11 </td><td>13 </td><td>0 
+<tr><td>Yes        </td><td></td><td></td><td>1 </td><td>13 </td><td>14 </td><td>0 </table>
+
+ </center>
+<p>
+<p>Examining the series of mosaics for the variables ordered
+Class, Gender, Age, Survival will show the relationships among
+the background variables and how these are related to survival.
+The letters C, G, A, S respectively are used to refer to these variables
+below.
+
+<p>
+Figure&nbsp;<A href="#fig:mostitanic1">7</A> and Figure&nbsp;<A href="#fig:mostitanic2">8</A>
+show the two-way and three-way plots among the background variables.
+Figure&nbsp;<A href="#fig:mostitanic1">7</A> shows that the proportion of males decreases
+with increasing economic class, and that the crew was almost entirely male.
+The three-way plot (Figure&nbsp;<A href="#fig:mostitanic2">8</A>)
+shows the distribution of adults and children among the Class-Gender groups. The
+residuals display the fit of a model in which Age is jointly independent of
+the the Class-Gender categories.
+Note that there were no children among the crew, and the overall
+proportion of children was quite small (about 5 %).
+Among the passengers, the proportion of children is smallest in
+first class, largest in third class.
+The only large positive residuals correspond to a greater number of children
+among the 3rd class passengers, perhaps representing families travelling
+or immigrating together.
+
+<p><A NAME="tth_fIg7">
+</A> 
+<p>
+   <center>  <img src="fig/mostitanic1.gif"><p>   <center>      Figure 7: Titanic data: Class and Gender</center><A NAME="fig:mostitanic1">
+</A>
+ </center> 
+<p>
+   <center>  <img src="fig/mostitanic2.gif"><p>   <center>      Figure 8: Titanic data: Class, Gender, Age</center><A NAME="fig:mostitanic2">
+</A>
+ </center>
+<p>
+<p>The four-way mosaic, shown in Figure&nbsp;<A href="#fig:mostitanic3">9</A>,
+fits the model [CGA][S] which asserts that survival is independent
+of Class, Gender and Age.
+This is the minimal null model when the first three variables are
+explanatory.  It is clear that greater proportions of women survived
+than men in all classes, but with greater proportions of women surviving
+in the upper two classes.  Among males the proportion who survived
+also increases with economic class.  However, this model fits very poorly
+(G<sup>2</sup> (15) = 671.96),
+and we may try to fit a more adequade model by adding associations between
+survival and the explanatory variables.
+
+<p>
+Adding a main effect of each of Class, Gender and Age on Survival
+amounts to fitting the model
+[CGA][CS][GS][AS].  That is, each of the three variables is
+associated with survival, but have independent, additive effects. The mosaic for this model, shown in Figure&nbsp;<A href="#fig:mostitanic4">10</A>.
+The fit of this model is much improved (<font face=symbol>D</font
+>G<sup>2</sup> (5) = 559.4), but still does not represent
+an adequate fit (G<sup>2</sup> (10) = 112.56).
+There are obviously interactions among Class, Gender and Age on their
+impact on survival, some of which we have already noted.
+
+<p><A NAME="tth_fIg9">
+</A> 
+<p>
+   <center>  <img src="fig/mostitanic3.gif"><p>   <center>      Figure 9: Class, Gender, Age, and Survival, Joint independence</center>  <A NAME="fig:mostitanic3">
+</A>
+ </center> 
+<p>
+   <center>  <img src="fig/mostitanic4.gif"><p>   <center>      Figure 10: Main effects of Age, Gender and Class on Survival</center><A NAME="fig:mostitanic4">
+</A>
+ </center>
+<p>
+<p>Noting the rubric of ``women and children first'', we next fit the
+model [CGA][CS][GAS] in which Age and Gender interact in their influence
+on survival.  The mosaic for this model is shown in Figure&nbsp;<A href="#fig:mostitanic5">11</A>.
+Adding the association of Age and Gender with survival has 
+improved the model slightly, however the fit is still not good (G<sup>2</sup> (9) = 94.54).  If we add the interaction of Class and Gender to this
+(the model [CGA][CGS][GAS]) the The likelihood-ratio chi-square is reduced 
+substantially (G<sup>2</sup> (6) = 37.26), but the lack of fit is still
+significant.
+
+<p>
+Finally, we try a model in which Class interacts with both
+Age and Gender to give the model
+[CGA][CGS][CAS], whose residuals are shown in Figure&nbsp;<A href="#fig:mostitanic6">12</A>.
+The likelihood-ratio chi-square is now 1.69 with 4 df, a very good fit, indeed.
+
+<p><A NAME="tth_fIg11">
+</A> 
+<p>
+   <center>  <img src="fig/mostitanic5.gif"><p>   <center>      Figure 11: Main effects + Age*Gender on Survival</center><A NAME="fig:mostitanic5">
+</A>
+ </center> 
+<p>
+   <center>  <img src="fig/mostitanic6.gif"><p>   <center>      Figure 12: Main effects + Age*Gender + Class*Gender on Survival</center><A NAME="fig:mostitanic6">
+</A>
+ </center>
+<p>
+<p>The import of these figures is clear.
+Regardless of Age and Gender, lower economic
+status was associated with increased mortality; the differences due to Class
+were moderated, however, by both Age and Gender.
+Although women on the <em>Titanic</em>
+were more likely overall
+to survive than men, the interaction of Class and Gender shows that
+women in 3rd class did not have a significant advantage, while men in 1st class
+did compared to men in other classes.  The interaction of Class and
+Age is explained by the observation
+that while no children in 1st or 2nd class died,
+nearly two-thirds in 3rd class died;
+for adults, mortality increases progressively
+as economic class declines.
+Hence, although the phrase ``women and
+children first'' is melifluous and appeals to our sense of Edwardian chivalry
+a more adequate description might be
+``women and children (according to class), then 1st class men''.
+
+<p>
+      <H2><A NAME="tth_sEc4">
+4</A>&nbsp;&nbsp;Mosaic matrices for categorical data</H2><A NAME="sec:mosmat">
+</A>
+
+<p>
+One reason for the wide usefulness of graphs of quantitative data
+has been the 
+development of effective, general techniques for dealing with high-dimensional datasets.
+The scatterplot matrix
+shows all pairwise (marginal) views of a set of variables
+in a coherent display, whose design goal is to show the interdependence
+among the collection of variables as a whole, and
+which allows detection of patterns which could
+not readily be discerned from a series of separate graphs.
+In effect, a multivariate data set in p dimensions (variables) is shown as
+a collection of p (p-1) two-dimensional scatterplots, each of which is
+the projection of the cloud of points on two of the variable axes.
+These ideas can be readily extended to categorical data.
+
+<p>
+A multiway contingency table of p categorical variables,
+A, B, C,..., also contains the interdependence among the collection
+of variables as a whole.  The saturated log-linear model, [A B C...]
+fits this interdependence perfectly, but is often too complex to describe
+or understand.  By summing the table over all variables except two,
+A and B, say, we obtain a two-variable (marginal) table, showing the
+bivariate relationship between A and B, which is also a projection
+of the p-variable relation into the space of two (categorical) variables.
+If we do this for all p (p-1) unordered pairs of categorical variables
+and display each two-variable table as a mosaic,  we have a categorical
+analog of the scatterplot matrix, called a
+<i><b>mosaic matrix</b></i>.
+Like the scatterplot matrix, the mosaic matrix can accommodate any number of
+variables in principle, but in practice is limited by the resolution
+of our display to three or four variables.
+
+<p>
+      <H3><A NAME="tth_sEc4.1">
+4.1</A>&nbsp;&nbsp;MCA and the Burt matrix</H3>
+The mosaic matrix has another interpretation as a direct visualization of
+the so-called ``Burt matrix'' which forms the basis of multiple correspondence
+analysis (MCA).  A p-way, J<sub>1</sub> &times;J<sub>2</sub> &times;<font face=symbol>¼</font
+>&times;J<sub>p</sub>
+contingency table of K = <font face=symbol>Õ</font
+>J<sub>i</sub> cells can be represented
+in a vector of frequencies <b><i>n</i></b> = ( n<sub>1</sub>, ... , n<sub>K</sub> )<sup><font face="helvetica">T</font></sup>
+and a K &times;p matrix <b>X</b> whose i<sup>th</sup> column gives the 
+factor levels for variable i in each cell of the table.
+Let <b>Z</b><sub>i</sub> be the K &times;J<sub>i</sub> indicator (design) matrix corresponding
+to <b><i>x</i></b><sub>i</sub>, so that
+<b>Z</b><sub>i</sub> (k,<i>l</i>) = 1 <font face=symbol>Û</font
+> x<sub>ik</sub> = <i>l</i>,
+and let <b>Z</b> be the K &times;<font face=symbol>å</font
+><sup>p</sup> J<sub>i</sub>
+partitioned matrix [ <b>Z</b><sub>1</sub> &nbsp;<font face=symbol>|</font
+> &nbsp;<b>Z</b><sub>2</sub> &nbsp;<font face=symbol>|</font
+> &nbsp;... &nbsp;<font face=symbol>|</font
+> &nbsp;<b>Z</b><sub>p</sub> ].
+
+<p>
+Then the Burt matrix is the symmetric partitioned matrix
+
+<centEr><table border=0 align=center><tr><td>
+<Table align=left><tr><td nowrap align=center>
+ <b>B</b> = <b>Z</b><sup><font face="helvetica">T</font></sup>diag (</td><td nowrap align=center>
+<!--
+<font face=symbol>®</font
+>
+-->
+<br><b><i>n</i></b><Br>&nbsp;<br></td><td nowrap align=center>
+) <b>Z</b> =  </td><td align=left><font face=symbol>
+é<br>ê<br>ê<br>
+ê<br>ê<br>ë
+</font></td><td align=center>
+ </td><td nowrap><TablE border=0 align=left><tr><td nowrap align=center>
+<tabLe border=0><tr><td nowrap Align=center>
+ <b>N</b><sub>[1]</sub> </td></tabLe></td><td nowrap align=center>
+<tabLe border=0><tr><td nowrap Align=center>
+ <b>N</b><sub>[12]</sub> </td></tabLe></td><td nowrap align=center>
+<tabLe border=0><tr><td nowrap Align=center>
+ <font face=symbol>¼</font
+></td></tabLe></TD></TR><TR><TD NOWRAP align="center" colspan=0><tabLe border=0><tr><td nowrap Align=center>
+ <b>N</b><sub>[21]</sub> </td></tabLe></td><td nowrap align=center>
+<tabLe border=0><tr><td nowrap Align=center>
+ <b>N</b><sub>[2]</sub> </td></tabLe></td><td nowrap align=center>
+<tabLe border=0><tr><td nowrap Align=center>
+ <font face=symbol>¼</font
+></td></tabLe></TD></TR><TR><TD NOWRAP align="center" colspan=0><tabLe border=0><tr><td nowrap Align=center>
+ :</td></tabLe></td><td nowrap align=center>
+<tabLe border=0><tr><td nowrap Align=center>
+ :</td></tabLe></td><td nowrap align=center>
+<tabLe border=0><tr><td nowrap Align=center>
+ <sup><big>&#183;</big></sup>&#183;<sub><big>&#183;</big></sub></td></tabLe></TD></TR></TablE>
+</td><td nowrap> </td><td align=left><font face=symbol>
+ù<br>ú<br>ú<br>
+ú<br>ú<br>û
+</font></td><td align=center>
+</td></Table>
+</td></table></centEr>
+
+
+where each diagonal block, <b>N</b><sub>[i]</sub>, is a diagonal matrix of the one-way
+marginal frequencies of variable i and each off-diagonal
+block <b>N</b><sub>[ij]</sub> = <b>Z</b><sub>i</sub> <sup><font face="helvetica">T</font></sup>diag (<b><i>n</i></b>) <b>Z</b><sub>j</sub>
+ is the two-way marginal contingency table for variables i and j,
+with its transpose in <b>N</b><sub>[ji]</sub>.
+MCA (see, e.g., [<a href="#Greenacre:84" name=CITEGreenacre:84> Greenacre1984</a>])
+can be defined as an ordinary correspondence analysis (a singular value decomposition) of the matrix <b>B</b> which produces scores for the
+categories of all variables so that the greatest proportion of the
+pairwise associations in all off-diagonal blocks is accounted for in
+a small number of dimensions.
+The mosaic matrix of these two-way margins thus provides a visual representation of the Burt matrix,<a href="#tthFtNtAAH" name=tthFrefAAH><sup>5</sup></a>
+and the total amount of shading in all the individual mosaics
+portrays the total pairwise associations decomposed by MCA.
+
+<p>
+        <H3><A NAME="tth_sEc4.2">
+4.2</A>&nbsp;&nbsp;Example: Survival on the <em>Titanic</em></H3>
+  
+<p>
+Figure&nbsp;<A href="#fig:titanmos">13</A> shows the mosaic matrix for the bivariate
+relations in the <em>Titanic</em> data.
+The bottom row and the rightmost column show the associations between each of the background variables and Survival collapsing over other
+variables.
+There are strong associations of all three variables, but particularly for Gender (females more likely to have survived overall) and for Class (``1st'' most likely to have survived overall).
+Off-diagonal panels show the associations among the classifications
+of the passengers and crew.  The panel in row 3, column 1<a href="#tthFtNtAAI" name=tthFrefAAI><sup>6</sup></a>
+is the bivariate relation
+between Class and Gender, shown earlier in Figure&nbsp;<A href="#fig:mostitanic1">7</A>.
+The panels in row 2 show that very few children sailed on the
+<em>Titanic</em>, and that most were in 3rd class, and female.
+
+<p><A NAME="tth_fIg13">
+</A> 
+<p>
+  <center>  <img src="fig/titanmos.gif"><p>   <center>      Figure 13: Mosaic matrix of <em>Titanic</em> data.  Each panel shows the marginal relation,
+fitting an independence model between the row and column variable, collapsed over other variable(s).</center><A NAME="fig:titanmos">
+</A> 
+</center><p>
+<p>
+The mosaic matrix in Figure&nbsp;<A href="#fig:titanmos">13</A> may be compared with the 
+the results of an MCA analysis of the <em>Titanic</em> data.
+Figure&nbsp;<A href="#fig:titanicmca">14</A> shows the 2-dimensional solution.
+The positions of the category points for all factors accounts for
+50% of the total association (<font face=symbol>c</font
+><sup>2</sup> (81) = 15533.4), representing
+all pairwise interactions among the four factors.
+The points for each factor have the property that the sum of coordinates
+on each dimension, weighted inversely by the marginal proportions, equals
+zero, so that high frequency categories (e.g., Adult) are close to the origin.
+The first dimension is perfectly aligned with the Gender factor, and also
+strongly aligned with Survival.  The second dimension pertains mainly to
+Class and Age effects.  Considering those points which differ from the
+origin most similarly (in distance and direction) to the point for Survived, 
+gives the interpretation that survival was associated with being female
+or upper class or (to a lesser degree) being a child.
+
+<p>
+
+<p><A NAME="tth_fIg14">
+</A>   <center>  <img src="fig/titanicmca.gif"><p>   <center>      Figure 14: Titanic data: MCA analysis</center><A NAME="fig:titanicmca">
+</A>
+</center><p>
+<p>
+The mosaic matrix, although more complex, captures all of the pairwise
+associations, while the MCA plot shows only 50% in two dimensions.
+(A third dimension would account for an additional 17% here.)
+Most importantly, the pairwise associations are shown explicitly
+in the mosaic matrix, while they must be inferred from the positions
+of category points in the MCA plot.
+
+<p>
+        <H3><A NAME="tth_sEc4.3">
+4.3</A>&nbsp;&nbsp;Example: Berkeley admissions</H3>
+  
+<p>
+Figure&nbsp;<A href="#fig:mosmat9a">15</A> shows the pairwise marginal
+relations among the variables
+Admit, Gender and Department in the Berkeley
+data which were examined earlier in fourfold displays
+(Figure&nbsp;<A href="#fig:pie2x2g">1</A> and Figure&nbsp;<A href="#fig:pie2x2b">2</A>).
+The panel in row 2, column 1
+shows that Admission and Gender are 
+strongly associated marginally, as we saw in Figure&nbsp;<A href="#fig:pie2x2g">1</A>,
+and overall, males are more often admitted.
+The diagonally-opposite panel (row 1, column 2) shows the
+same relation, splitting first by gender.<a href="#tthFtNtAAJ" name=tthFrefAAJ><sup>7</sup></a>
+
+<p><A NAME="tth_fIg15">
+</A> 
+<p>
+  <center>  <img src="fig/mosmat9a.gif"><p>   <center>      Figure 15: Mosaic matrix of Berkeley
+admissions.  Each panel shows the marginal relation,
+fitting an independence model.</center><A NAME="fig:mosmat9a">
+</A> 
+</center><p>
+<p>
+The panels in the third column (and third row)
+illuminate the explanation for the paradoxical
+result (see Figure&nbsp;<A href="#fig:pie2x2b">2</A>) that, within all but department A,
+the likelihood of admission is equal for men and women,
+yet, overall, there appears to be a bias in favor of admitting men
+(see Figure&nbsp;<A href="#fig:pie2x2g">1</A>)
+The (1,3) and (3, 1) panels shows
+the marginal relation between Admission and Department; departments A and B have the greatest
+overall admission rate, departments E and F the least.
+The (2, 3) panel shows that men apply in much greater numbers to
+departments A and B, while women apply in greater numbers to
+the departments with the lowest overall rate of admission.
+
+<p>
+      <H3><A NAME="tth_sEc4.4">
+4.4</A>&nbsp;&nbsp;Conditional mosaic matrices</H3>
+
+<p>
+Several further extensions are now possible.
+First, we need not show the marginal relation between
+each pair of variables in the mosaic matrix.
+For example, Figure&nbsp;<A href="#fig:mosmat9b">16</A> shows the pairwise <em>conditional</em>
+relations among these variables, in each case fitting a model
+of conditional independence with the remaining variable controlled.
+Thus, the (1,2) and (2,1) panels shows the fit of the model
+[Admit,Dept] [Gender, Dept],
+which asserts that Admission and Gender are independent, given (controlling
+for) department.  Except for Department A, this model fits quite well,
+again indicating lack of gender bias.
+
+<p><A NAME="tth_fIg16">
+</A> 
+<p>
+  <center>     <img src="fig/mosmat9b.gif"><p>   <center>      Figure 16: Conditional mosaic matrix of Berkeley
+admissions.  Each panel shows the conditional relation,
+fitting a model of conditional independence model between the row and column variable, controlling for other variable(s)</center><A NAME="fig:mosmat9b">
+</A> 
+</center><p>
+<p>
+Second, the analogous conditional matrix plot for quantitative variables
+is of some interest itself.  For each pair of variables, X<sub>i</sub>, X<sub>j</sub>,
+we plot
+[(X<sub>i</sub>)\tilde] = X<sub>i</sub> - [^(X<sub>i</sub>)] <font face=symbol>|</font
+> others against
+[(X<sub>j</sub>)\tilde] = X<sub>j</sub> - [^(X<sub>j</sub>)] <font face=symbol>|</font
+> others, where ``others'' is the complementary
+set excluding X<sub>i</sub>, X<sub>j</sub>.
+Whittaker
+ shows
+that X<sub>i</sub>, X<sub>j</sub> are
+conditionally independent of the others <em>iff</em>
+the corresponding element of the inverse covariance matrix
+<font face=symbol>S</font
+><sup>-1</sup> = { <font face=symbol>s</font
+><sup>ij</sup> }
+ is zero,
+
+<centEr><table border=0 align=center><tr><td>
+<Table align=left><tr><td nowrap align=center>
+</td><td nowrap><TablE border=0 align=left><tr><td nowrap align=left>
+<tabLe border=0><tr><td nowrap Align=left>
+<font face=symbol>r</font
+><sub>ij<font face=symbol>|</font
+>  others</sub> = 0 </td></tabLe></td><td nowrap align=left>
+<tabLe border=0><tr><td nowrap Align=left>
+ <font face=symbol>Û</font
+> </td></tabLe></td><td nowrap align=left>
+<tabLe border=0><tr><td nowrap Align=left>
+ <font face=symbol>s</font
+><sup>ij</sup> = 0 </td></tabLe></TD><Td width=100 align=right>(3)</TD></TR><TR><TD NOWRAP align="left" colspan=0><tabLe border=0><tr><td nowrap Align=left>
+ </td></tabLe></td><td nowrap align=left>
+<tabLe border=0><tr><td nowrap Align=left>
+ <font face=symbol>Û</font
+> </td></tabLe></td><td nowrap align=left>
+<tabLe border=0><tr><td nowrap Align=left>
+ X<sub>i</sub> <font face=symbol>^</font
+>X<sub>j</sub> <font face=symbol>|</font
+>  others </td></tabLe></TD></TR></TablE>
+</td><td nowrap></td></Table>
+</td></table></centEr>
+
+
+Zero partial correlation plays the same role in graphical models for
+quantitative variables as two-way terms in graphical log-linear models.
+Hence, the conditional scatterplot matrix for quantitative variables provide
+a visualization of the pairwise partial correlations among all variables
+and of the conditional independence relations studied in Gaussian graphical
+models.
+Moreover, when one variable, Y, is a response,
+the panels in the row for Y are just the partial regression
+(added variable) plots. 
+The other rows treat each variable in turn as a response,
+giving a multiway generalization of partial regression plots.
+ 
+<p>
+Third, the framework of the scatterplot matrix can now be used
+as a general method for displaying marginal or conditional relations
+among a mixture of quantitative and categorical variables.
+For marginal plots, pairs of quantitative variables are shown as
+a scatterplot, while pairs of categorical variables are shown as
+a mosaic display.
+Pairs consisting of one quantitative and one categorical variable
+can be shown as a set of boxplots for each level of the categorical
+variable.
+For conditional plots, we fit a model predicting the
+row variable from the column variable, partialing out (or conditioning on)
+all other
+variables from each.
+
+<p>
+      <H3><A NAME="tth_sEc4.5">
+4.5</A>&nbsp;&nbsp;Coplots for categorical data</H3>
+Conditional relations among variables may also be visualized by
+stratifying the data on the given variables, rather than by
+partialling out.
+For quantitative vaariables, a visually effective device is the
+<i><b>coplot</b></i> display [<a href="#Cleveland:VisData" name=CITECleveland:VisData> Cleveland1993</a>].
+
+<p>
+One analog of the coplot for categorical data is an array of plots of the
+dependence among two or more variables,  stratified by
+the values of one or more <em>given</em> variables.
+Each such panel then shows the <em>partial</em> associations among the
+foreground variables;  the collection of such plots show how these change
+as the given variables vary.  Figure&nbsp;<A href="#fig:pie2x2b">2</A> 
+is one example of this idea, using the fourfold display to represent
+the association in 2 &times;2 tables.
+
+<p>
+For categorical data, models of independence fit to the strata separately
+have the useful property that they decompose a model of
+conditional independence fit to the whole table.
+Consider, for example, the model of conditional independence, A<font face=symbol>^</font
+>B&nbsp;<font face=symbol>|</font
+> &nbsp;C
+for a three-way table. This model asserts that A and B are independent
+within <i>each</i> level of C. Denote the hypothesis that A and B
+are independent at level C(k) by A<font face=symbol>^</font
+>B&nbsp;<font face=symbol>|</font
+> &nbsp;C(k). Then one can show
+[<a href="#Andersen:91" name=CITEAndersen:91> Anderson1991</a>] that
+
+<p>
+<A NAME="eq:partial1">
+</A>
+<centEr><table border=0 align=center><tr><td>
+<Table align=left><tr><td nowrap align=center>
+G<sub>A<font face=symbol>^</font
+>B &nbsp;<font face=symbol>|</font
+> &nbsp;C</sub><sup>2</sup> = </td><td nowrap align=center>
+<font size="-1">K</font> <Br><font face=symbol size="+3">å<br></font>
+<font size="-1">k</font>&nbsp;<br></td><td nowrap>
+G<sub>A<font face=symbol>^</font
+>B &nbsp;<font face=symbol>|</font
+> &nbsp;C(k)</sub><sup>2</sup></td></Table>
+</td><td width=100 align=right>(4)</td></table></centEr>
+
+
+That is, the overall G<sup>2</sup> for the conditional independence model
+with (I-1)(J-1)K degrees of freedom is the
+sum of the values for the ordinary association between A and B over the levels of 
+C (each with (I-1)(J-1) degrees of freedom).
+Thus, 
+
+<UL>
+<li>the overall G<sup>2</sup> may be decomposed into portions attributable
+to the AB association in the layers of C, and
+
+<li>the collection of mosaic displays for the dependence of A and B
+for each of the levels of C provides a natural visualization of this
+decomposition.  
+</UL>
+These conditional mosaics have the additional useful property
+that they adjust automatically for differing marginal frequencies
+across the strata, because the area of each partial mosaic is the same.
+This facilitates controlled comparison, allowing us to focus
+attention on the association of the foreground variables.
+
+<p>
+Figure&nbsp;<A href="#fig:mospart9a">17</A> and Figure&nbsp;<A href="#fig:mospart9b">18</A> show two further
+examples, using the mosaic display to show the partial relations
+[Admit][Dept] given Gender, and [Admit][Gender] given Dept,
+respectively.
+Figure&nbsp;<A href="#fig:mospart9b">18</A> shows the same results displayed in Figure&nbsp;<A href="#fig:pie2x2b">2</A>: no association between Admission and Gender,
+except in Dept. A, where females are relatively more likely to
+gain admission.
+But one can also see how the proportion admitted decreases
+regularly from Dept. A to F and how the proportion of females
+changes across departments.
+The breakdown of the overall G<sup>2</sup> from Eqn.&nbsp;(<A href="#eq:partial1">4</A>) is
+given in Table&nbsp;<A href="#tab:mospart9">5</A>.
+
+<p><A NAME="tth_fIg17">
+</A> 
+<p>
+  <center>     <img src="fig/mospart9a.gif"><p>   <center>      Figure 17: Mosaic coplot of Berkeley
+admissions, given Gender. Each panel shows the partial relation,
+fitting a model of independence model between Admission and Department.</center><A NAME="fig:mospart9a">
+</A> 
+</center><p>
+<p>
+
+<p><A NAME="tth_tAb5">
+</A>   <center>      <A NAME="tab:mospart9">Table 5</A>: Partial tests of independence of Gender and Admission, by Department</center>
+<center>
+<p>
+
+<table><tr><td>
+<tr><td><font size="+1">Dept</font>  </td><td><font size="+1">df</font> </td><td><font size="+1">G<sup>2</sup></font>  </td><td colspan=1 align=center><font size="+1">p</font>   
+<tr><td>A       </td><td>1 </td><td>19.054      </td><td>0.000 
+<tr><td>B       </td><td>1 </td><td>0.259      </td><td>0.611 
+<tr><td>C       </td><td>1 </td><td>0.751      </td><td>0.386 
+<tr><td>D       </td><td>1 </td><td>0.298      </td><td>0.585 
+<tr><td>E       </td><td>1 </td><td>0.990      </td><td>0.320 
+<tr><td>F       </td><td>1 </td><td>0.384      </td><td>0.536 
+<tr><td>Total   </td><td>6 </td><td>21.735      </td><td>0.001 </table>
+
+ </center>
+<p>
+<p>
+<p><A NAME="tth_fIg18">
+</A>   <center>     <img src="fig/mospart9b.gif"><p>   <center>      Figure 18: Mosaic coplot of Berkeley
+admissions, given Department  Each panel shows the partial relation,
+fitting a model of independence model between Admission and Gender.</center><A NAME="fig:mospart9b">
+</A> 
+</center><p>
+<p>
+Figure&nbsp;<A href="#fig:mospart9a">17</A> shows that there is a very strong association
+between Admission and Department-different rates of admission,
+but also shows two things not seen in other displays:
+First, the <em>pattern</em> of association is qualitatively similar
+for both men and women; second the association is quantitatively stronger
+for men than women-larger differences in admission rates across departments.
+
+<p>
+<h3> 4.6 Summary</h3>
+Taken together, mosaic matrices and mosaic coplots extend the use of
+the mosaic display in simple, but powerful ways, and provide useful
+techniques for the graphical display of categorical and quantitative
+data within a common framework.
+
+<H2><A NAME="xtocid40846">References</A></H2>
+<DL compact>
+
+
+<dt>[<a href="#CITEAndersen:91" name=Andersen:91> Anderson1991</a>]</dt><dd>
+Anderson, E.&nbsp;B.
+(1991).
+<em>Statistical analysis of categorical data.</em>
+Berlin: Springer-Verlag.
+
+
+<dt>[<a href="#CITEBickel-etal:75" name=Bickel-etal:75> Bickel et&nbsp;al.1975</a>]</dt><dd>
+Bickel, P.&nbsp;J., Hammel, J.&nbsp;W., &amp; O'Connell, J.&nbsp;W.
+(1975).
+Sex bias in graduate admissions: Data from Berkeley.
+<em>Science</em>, <em>187</em>, 398-403.
+
+
+<dt>[<a href="#CITECleveland:VisData" name=Cleveland:VisData> Cleveland1993</a>]</dt><dd>
+Cleveland, W.&nbsp;S.
+(1993).
+<em>Visualizing data.</em>
+Summit, NJ: Hobart Press.
+
+
+<dt>[<a href="#CITEDawson:95" name=Dawson:95> Dawson1995</a>]</dt><dd>
+Dawson, R. J.&nbsp;M.
+(1995).
+The ``unusual episode'' data revisited.
+<em>Journal of Statistics Education</em>, <em>3</em>(3).
+
+
+<dt>[<a href="#CITEFienberg:75" name=Fienberg:75> Fienberg1975</a>]</dt><dd>
+Fienberg, S.&nbsp;E.
+(1975).
+Perspective canada as a social report.
+<em>Social Indicators Research</em>, <em>2</em>, 153-174.
+
+
+<dt>[<a href="#CITEFriendly:92b" name=Friendly:92b> Friendly1992 a</a>]</dt><dd>
+Friendly, M.
+(1992a).
+Mosaic displays for loglinear models.
+In <em>ASA, Proceedings of the statistical graphics section</em>&nbsp;  (pp.&nbsp;61-68).
+Alexandria, VA.
+
+
+<dt>[<a href="#CITEFriendly:92c" name=Friendly:92c> Friendly1992 b</a>]</dt><dd>
+Friendly, M.
+(1992b).
+<em>User's guide for MOSAICS</em>&nbsp;(Tech.&nbsp;Rep.&nbsp;No.&nbsp;206).
+York University, Psychology Dept.
+
+
+<dt>[<a href="#CITEFriendly:94b" name=Friendly:94b> Friendly1994 a</a>]</dt><dd>
+Friendly, M.
+(1994a).
+<em>A fourfold display for 2 by 2 by k tables</em>&nbsp;(Tech.&nbsp;Rep.&nbsp;No.&nbsp;  217).
+York University, Psychology Dept.
+
+
+<dt>[<a href="#CITEFriendly:94a" name=Friendly:94a> Friendly1994 b</a>]</dt><dd>
+Friendly, M.
+(1994b).
+Mosaic displays for multi-way contingency tables.
+<em>Journal of the American Statistical Association</em>, <em>89</em>,
+  190-200.
+
+
+<dt>[<a href="#CITEFriendly:94c" name=Friendly:94c> Friendly1994 c</a>]</dt><dd>
+Friendly, M.
+(1994c).
+SAS/IML graphics for fourfold displays.
+<em>Observations</em>, <em>3</em>(4), 47-56.
+
+
+<dt>[<a href="#CITEFriendly:95" name=Friendly:95> Friendly1995</a>]</dt><dd>
+Friendly, M.
+(1995).
+Conceptual and visual models for categorical data.
+<em>Amer. Statistician</em>, <em>49</em>, 153-160.
+
+
+<dt>[<a href="#CITEFriendly:97" name=Friendly:97> Friendly1997</a>]</dt><dd>
+Friendly, M.
+(1997).
+Conceptual models for visualizing contingency table
+  data.
+In M.&nbsp;Greenacre &amp; J.&nbsp;Blasius&nbsp;(Eds.), <em>Visualization of
+  categorical data</em>&nbsp;(pp.&nbsp;17-35).
+San Diego, CA: Academic Press.
+
+
+<dt>[<a href="#CITEFriendly:98" name=Friendly:98> Friendly1998</a>]</dt><dd>
+Friendly, M.
+(1998).
+Visualizing categorical data.
+In M.&nbsp;Sirken, D.&nbsp;Herrmann, S.&nbsp;Schechter, N.&nbsp;Schwarz, J.&nbsp;Tanur,
+  &amp; R.&nbsp;Tourangeau&nbsp;(Eds.), <em>Cognition and survey research</em>&nbsp;(pp.&nbsp;  ??-??).
+New York: Wiley.
+(In press)
+
+
+<dt>[<a href="#CITEGoodman:70" name=Goodman:70> Goodman1970</a>]</dt><dd>
+Goodman, L.&nbsp;A.
+(1970).
+The multivariate analysis of qualitative data: Interactions
+  among multiple classifications.
+<em>Journal of the American Statistical Association</em>, 226-256.
+(65)
+
+
+<dt>[<a href="#CITEGreenacre:84" name=Greenacre:84> Greenacre1984</a>]</dt><dd>
+Greenacre, M.
+(1984).
+<em>Theory and applications of correspondence analysis.</em>
+London: Academic Press.
+
+
+<dt>[<a href="#CITEHartiganKleiner:81" name=HartiganKleiner:81> Hartigan &amp; Kleiner1981</a>]</dt><dd>
+Hartigan, J.&nbsp;A., &amp; Kleiner, B.
+(1981).
+Mosaics for contingency tables.
+In W.&nbsp;F. Eddy&nbsp;(Ed.), <em>Computer science and statistics:
+  Proceedings of the 13th symposium on the interface</em>&nbsp;(pp.&nbsp;286-273).
+New York: Springer-Verlag.
+
+
+<dt>[<a href="#CITEHartiganKleiner:84" name=HartiganKleiner:84> Hartigan &amp; Kleiner1984</a>]</dt><dd>
+Hartigan, J.&nbsp;A., &amp; Kleiner, B.
+(1984).
+A mosaic of television ratings.
+<em>Amer. Statistician</em>, <em>38</em>, 32-35.
+
+
+<dt>[<a name=Snee:74> Snee1974</a>]</dt><dd>
+Snee, R.&nbsp;D.
+(1974).
+Graphical display of two-way contingency tables.
+<em>Amer. Statistician</em>, <em>28</em>, 9-12.
+
+
+<dt>[<a href="#CITETukey:93" name=Tukey:93> Tukey1993</a>]</dt><dd>
+Tukey, J.&nbsp;W.
+(1993).
+Graphic comparisons of several linked aspects: Alternative
+  and suggested principles.
+<em>Journal of Computational and Statistical Graphics</em>, <em>2</em>(1),
+  1-33.
+
+
+<dt>[<a name=Whittaker:90> Whittaker1990</a>]</dt><dd>
+Whittaker, J.
+(1990).
+<em>Graphical models in applied multivariate statistics.</em>
+Wiley.
+
+<p>
+</DL><p><br><tt>drew.tex</tt>, processed Jul 17, 1998
+
+<hr><H3>Footnotes:</H3>
+
+<p><a name=tthFtNtAAD></a><a href="#tthFrefAAD"><sup>1</sup></a> This explanation ignores the possibility of structural bias
+against women, e.g., lack of resources allocated to departments that
+attract women applicants.
+<p><a name=tthFtNtAAE></a><a href="#tthFrefAAE"><sup>2</sup></a> For exploratory
+purposes, we do not usually make adjustments (e.g., Bonferroni) for
+multiple tests because the goal is to display the pattern of
+residuals in the table as a whole.  However, the number and values of
+these cutoffs can be easily set by the user.
+<p><a name=tthFtNtAAF></a><a href="#tthFrefAAF"><sup>3</sup></a> 
+<a href="http://www.datavis.ca/mosaics/mosaics.html"> <tt>http://www.datavis.ca/mosaics/mosaics.html</tt></a>
+<p><a name=tthFtNtAAG></a><a href="#tthFrefAAG"><sup>4</sup></a> In all cases, the model  [A] &nbsp;[B] 
+ is fit to a two-way table or marginal table.
+<p><a name=tthFtNtAAH></a><a href="#tthFrefAAH"><sup>5</sup></a> The representation would be complete if the one-way margins
+where drawn in the diagonal cells.
+<p><a name=tthFtNtAAI></a><a href="#tthFrefAAI"><sup>6</sup></a> Rows and columns in the mosaic matrix are identified
+as in a table or numerical matrix, with row 1, column 1 in the upper left corner.
+<p><a name=tthFtNtAAJ></a><a href="#tthFrefAAJ"><sup>7</sup></a> Note that this is different than just the transpose or interchange
+of horizontal and vertical dimensions as in the scatterplot matrix,
+because the mosaic display splits the total frequency first by the horizontal
+variable and then (conditionally) by the vertical variable.
+The areas of all corresponding tiles are the same in each diagonally
+opposite pair, however, as are the
+residuals shown by color and shading.
+<p><hr><small>File translated from T<sub><font size="-1">E</font></sub>X by <a href="http://hutchinson.belmont.ma.us/tth/">T<sub><font size="-1">T</font></sub>H</a>, version 1.57.</small>
+</body>
+</HTML>

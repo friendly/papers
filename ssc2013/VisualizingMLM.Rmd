@@ -1,0 +1,355 @@
+```{r set-options, echo=FALSE, cache=FALSE}
+options(width = 100)
+opts_chunk$set(tidy = FALSE)
+```
+
+INTRODUCTION
+=============
+
+This page aims to walk you through the procedures and analyses run during our presentation on "Recent Advances in Visualizing Multivariate Linear Models" at the 2013 Statistical Society of Canada annual conference.  The following examples use three primary datasets: `iris` (a `base` dataset), and `Pottery` and `Rohwer`, both of which are included in the `heplots` package.
+
+```{r datasets, error=FALSE, message=FALSE, warning=FALSE}
+library(heplots)
+head(iris)
+summary(iris)
+head(Pottery)
+summary(Pottery)
+head(Rohwer)
+summary(Rohwer)
+```
+
+The script is organized sequentially based upon the plots used in our presentation.  However, plots shown during the background overview that are repeated in a later section are only shown in the pertinent subsection.  The structure is as follows:
+
+1. Background and Visual Overview
+2. Hypothesis-Error (HE) Plots
+    * MANOVA Designs
+    * Multiple Regression Designs
+3. Reduced-Rank Displays
+    * Canonical Disciminant HE Plots
+4. Recent Extensions
+    * Canonical Correlation
+    * Robust Multivariate Models
+    * Influence Diagnostics for Multivariate Models
+
+BACKGROUND and VISUAL OVERVIEW
+==============================
+
+To contrast the novel developments in data visualization techniques, we begin by demonstrating some traditional techniques and how they are used to convey information about more simplistic designs.  
+
+Our first graphics demonstrate some of the traditional bivariate approaches to visualizing data.  These figures are created using the `lattice` package, which allows the user to request a data concentration ellipse be superimposed on the plots.
+```{r basic, message=FALSE, fig.align='center'}
+library(lattice)
+library(latticeExtra)
+
+# A simple grouped scatterplot:
+xyplot(Sepal.Length/10 ~ Petal.Length/10, group = Species, data = iris, 
+    # Define axes:
+    xlab = "Petal length (mm)", ylab = "Sepal length (mm)", 
+    # Define legend parameters:
+    auto.key = list(x = .1, y = .8, corner = c(0, 0)), 
+    scales = "free", par.settings=list(superpose.symbol=list(pch=1:3)))
+# A grouped scatterplot with 95% data concentration ellipses:
+xyplot(Sepal.Length/10 ~ Petal.Length/10, groups=Species, data = iris,
+    # Define axes:
+    xlab = "Petal length (mm)", ylab = "Sepal length (mm)", 
+    # Define legend parameters:
+    auto.key = list(x = .1, y = .8, corner = c(0, 0)), scales = "free",
+    par.settings = list(superpose.symbol = list(pch=c(1:13)), superpose.line = list(lwd=2, lty=1:3)),
+    # Superimpose data ellipse on the scatterplot:
+    panel = function(x, y, ...) {
+        panel.xyplot(x, y, ...)
+        panel.ellipse(x, y, ...)
+    }
+)
+```
+
+With additional variables (the `iris` dataset contains four continuous variables that are of interest, and one categorical variable that is used for grouping), we can look at each of the bivariate relationships in turn. For instance, using the `car` package, we can produce a scatterplot matrix that is annotated to include data concentration ellipses for each group:
+```{r sm, message=FALSE, fig.align='center'}
+library(car)
+scatterplotMatrix(~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width | Species, 
+                  data = iris, diagonal = "none", smoother = FALSE, reg.line = lm, 
+                  ellipse = TRUE, by.groups = TRUE)
+```
+
+Finally, utilizing a data reduction technique, we can look at a biplot, which demonstrates the relationship between the variables in terms of how each aids in accounting for the maximum amount of variation found in the data.
+```{r biplot}
+# A biplot showing the maximum total variation by species:
+library(bpca)
+library(car)
+iris.pca <- bpca(iris[,-5], method = "sqrt", scale = TRUE)
+scores <- iris.pca$coord$objects[,1:2]
+col <- c('blue', 'darkgreen', 'red')[unclass(iris$Species)]
+plot(iris.pca,
+  var.factor = .24, var.cex = 1.2, var.col = "black", lwd = 2,
+  obj.names = FALSE, obj.cex = 1, obj.col = col,
+  obj.pch = (15:17)[unclass(iris$Species)], xpd = TRUE)
+
+dataEllipse(scores, add=TRUE, levels=0.68, col="gray", plot.points=FALSE)
+dataEllipse(scores, groups=iris$Species, add=TRUE, levels=0.68, col=unique(col), plot.points=FALSE)
+```
+
+This narrative follows our substantive example, using the Romano-British `Pottery` data, which has five continuous variables designating concentration of minerals in a particular piece and one categorical variable regarding the site at which it was found.
+```{r pottery1}
+pottery.mod <- lm(cbind(Al, Fe, Mg, Ca, Na) ~ Site, data = Pottery)
+pottery.man <- Manova(pottery.mod)
+summary(pottery.man)
+op <- par(mfrow = c(2,3))
+boxplot(Al ~ Site, data = Pottery, main = "Al")
+boxplot(Fe ~ Site, data = Pottery, main = "Fe")
+boxplot(Mg ~ Site, data = Pottery, main = "Mg")
+boxplot(Ca ~ Site, data = Pottery, main = "Ca")
+boxplot(Na ~ Site, data = Pottery, main = "Na")
+par(op)
+```
+
+HYPOTHESIS-ERROR PLOTS
+======================
+
+MANOVA Designs
+--------------
+
+The univariate displays are limited - they show the variation in the elements at the different sites, but they do not show which elements group together.  A more novel approach for working with a multivariate linear models with two dependent variables is to use a Hypothesis-Error (HE) plot.  In this plot, we take the regression of petal length and sepal length on species from the `iris` dataset. 
+```{r heplot}
+iris.mod <- lm(cbind(Petal.Length, Sepal.Length) ~ Species, data = iris)
+heplot(iris.mod, xlab = "Petal Length in cm.", ylab = "Sepal length in cm.", size = "effect")
+```
+
+Similarly, with the `Pottery` data, we can look at 2-D HE plots to show how the sites differ on two elements at a time.  These plots can also be configured to display different scaling coefficients for the plotting of the hypothesis ellipse relative to the error ellipse.
+
+```{r twodhe}
+# Obtain limits from the model:
+pot <- heplot(pottery.mod)
+# 2-D HE Plot for Aluminum and Iron with "Effect" Scaling (with annotations):
+heplot(pottery.mod, size="effect.size", 
+    xlim = pot$xlim, ylim = pot$ylim, main = "Pottery data: Al and Fe",
+    fill = c(TRUE, TRUE), fill.alpha = 0.05, cex.lab = 1.25)
+# Add annotations:
+label <- expression(paste("Effect scaling:", H / df[e]))
+text(12.6, 7.2, label, col = "blue", cex = 1.5, pos = 4)
+label <- expression( E / df[e])
+text(16.8, 5.2, label, col = "red", cex = 1.5, pos = 4)
+
+# Addition of the ellipse generated with "Significance" Scaling:
+heplot(pottery.mod, add = TRUE, col = "darkgreen", fill = c(FALSE, TRUE), fill.alpha = 0.1)
+label <- expression(paste("Significance scaling: H / ",  lambda[alpha], df[e]))
+text(10.6, 8.7, label, col = "darkgreen", cex = 1.5, pos = 4)
+```
+
+The HE plot is also amenable to visualizing particular contrasts and linear hypotheses.
+
+```{r cont, warning=FALSE, message=FALSE}
+# 2-D HE plot for Aluminum and Iron with 3 degree of freedom hypothesis:
+heplot(pottery.mod, col = c("red", "darkgreen"), main = "Pottery data: Al and Fe", 
+	fill = c(TRUE,FALSE), fill.alpha = 0.05, cex.lab = 1.25)
+# Add annotation:
+text(12.5, 8.5, "Site: 3df H", col = "darkgreen", cex = 2)
+```
+
+```{r cont2, echo=-1}
+<<cont>>
+# Addition of a 2 degree of freedom hypothesis:
+heplot(pottery.mod, terms = FALSE, add = TRUE, col = "blue", 
+       hypotheses = list("Caldicot & Isle Thorns" = c("SiteCaldicot = 0", "SiteIsleThorns = 0")), 
+       fill = c(FALSE, TRUE), fill.alpha = 0.1)
+# Add annotation:
+text(17.8, 3.6, "2 df H", col="blue", cex=2)
+```
+
+```{r cont3, echo=-1, warning=FALSE, message=FALSE}
+<<cont2>>
+# Addition of a 1 degree of freedom hypothesis:
+heplot(pottery.mod, terms = FALSE, add = TRUE, col="brown",
+       hypotheses=list("C-A" = "SiteCaldicot", "I-A" = "SiteIsleThorns"))
+text(13.1, 4.5, "1 df H", col="brown", cex=1.7)
+```
+
+With more than two response variables, we can also visualize all pairs using a generalization of the scatterplot matrix:
+```{r sm2}
+# With the iris dataset:
+iris.mod <- lm(cbind(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width) ~ Species, data = iris)
+pairs(iris.mod)
+# With the Pottery dataset:
+pairs(pottery.mod, fill=TRUE, fill.alpha=0.1)
+```
+
+Finally, we can also produce an interactive visualization that yields information on how three variables behave simultaneously with `heplot3d()`:
+```{r thrdhe}
+# Uncomment the heplot3d line to produce the plot. 
+# It can be rotated to view the data cloud from all sides.
+# Note: This visualization will load in a new window.
+# heplot3d(pottery.mod)
+```
+
+Unfortunately, the 3D plot can only show three variables at a time, and as such cannot express all of the relationships at play.
+
+Multivariate Multiple Regression
+---------------------------------
+
+HE plots are also useful in multivariate multiple regression, where the predictor variables are quantitative. In this design, we often test two primary sets of hypotheses: one, to see is all coefficients for each of the responses is zero (overall test); and two, for the significance of the individual predictor slopes.
+
+This process can be demonstrated using Rohwer's data on paired-associate (PA) tasks, the five continuous predictors, and how they measure intelligence and achievement, which was captured using three scales, the SAT, the Peabody Picture Vocabulary Test, and the Raven Progressive Matrices test.
+
+```{r mmreg1, warning=FALSE, message=FALSE}
+# Multivariate regression model for low SES students:
+rohwer.ses2 <- lm(cbind(SAT, PPVT, Raven) ~ n + s + ns + na + ss, data = Rohwer, subset = SES=="Lo")
+
+# Test of infidivudal predicators (lines) and overall test (blue ellipse):
+he <- heplot(rohwer.ses2, col=c("red", rep("black", 5), "blue"),
+		hypotheses = list("Overall: B = 0" = c("n", "s", "ns", "na", "ss")),
+        cex = 1.25, fill = c(TRUE, TRUE), fill.alpha = c(.05, .1),
+		xlab = "Student Achievement Test",
+		ylab = "Peabody Picture Vocabulary Test",
+		cex.lab = 1.25, xlim = c(-10, 70), ylim = c(30, 90))
+```
+
+A similar approach can be taken with an MANVOCA design.  First, we use Rohwer's data on both low SES students (the previous model) and high SES students to fit seperate regressions for each group.
+```{r mmreg2, warning=FALSE, message=FALSE}
+rohwer.ses1 <- lm(cbind(SAT, PPVT, Raven) ~ n + s + ns + na + ss, data = Rohwer, subset = SES == "Hi")
+
+# HE Plot for Low SES Students:
+he2 <- heplot(rohwer.ses2, col=c("red", rep("black",5), "blue"),
+		hypotheses = list("B=0, Low SES" = c("n", "s", "ns", "na", "ss")),
+		level = 0.5, cex = 1.25,
+		fill = c(TRUE, FALSE), fill.alpha = 0.05,
+		xlab = "Student Achievement Test",
+		ylab = "Peabody Picture Vocabulary Test",
+		label.pos = c(1, rep(NULL, 5), 1),
+		xlim = c(-15, 110), ylim = c(40, 110))
+
+# HE Plot for High SES Students:
+he1 <- heplot(rohwer.ses1, col=c("red", rep("black",5), "blue"),
+		hypotheses=list("B=0, High SES" = c("n", "s", "ns", "na", "ss")),
+		level=0.5, cex=1.25, add=TRUE, error=TRUE,
+		fill=c(TRUE, FALSE), fill.alpha=0.05,
+		xlim=c(-15, 110), ylim=c(40,110))
+```
+
+We can also produce an HE plot for the MANCOVA model, which assumes equal slopes:
+```{r mmreg3, warning=FALSE, message=FALSE}
+# Fit model:
+rohwer.mod <- lm(cbind(SAT, PPVT, Raven) ~ SES + n + s + ns + na + ss, data=Rohwer)
+Anova(rohwer.mod)
+col <- c("red", "black", "gray", "cyan", "magenta", "brown", "darkgreen", "blue")
+heplot(rohwer.mod, col=col, xlab="Student Achievement Test",
+	ylab="Peabody Picture Vocabulary Test", cex.lab=1.25, cex=1.25)
+# Add ellipse to test all 5 regressors:
+heplot(rohwer.mod, hypotheses=list("Regr" = c("n", "s", "ns", "na", "ss")), 
+	xlab="Student Achievement Test",
+	ylab="Peabody Picture Vocabulary Test", 
+	cex.lab=1.25, cex=1.25,
+	col=col, fill=TRUE, fill.alpha=0.1)
+```
+
+REDUCED-RANK DISPLAYS
+=====================
+
+Canonical Discriminant HE Plots
+-------------------------------
+
+We saw when we were working with multiple dependent variables, that it was difficult to visualize more than two at a time or three, if we use an interactive 3D plot. One way that we can circumvent this issu is to utilizae a dimension reduction technique, such as canonical discrimination, to produce a reduced rank display:
+```{r rrd, message=FALSE, warning=FALSE, error=FALSE, results='hide'}
+library(candisc)
+# Using a multivariate regression model, we can produce the canonical discriminant analysis solution:
+iris.mod <- lm(cbind(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width) ~ Species, data = iris)
+iris.can <- candisc(iris.mod)
+
+# This can be plotted with the generic plot function:
+plot(iris.can, col=rep(c("red", "black", "blue"), each=50), pch=rep(1:3, each=50))
+```
+```{r rrd12, message=FALSE, results='hide'}
+# Or as an HE plot:
+heplot(iris.can, size = "effect")
+```
+
+Similarly, for the `Pottery` data:
+```{r rrd2, message=FALSE, warning=FALSE, error=FALSE, results='hide'}
+pottery.mod <- lm(cbind(Al, Fe, Mg, Ca, Na) ~ Site, data=Pottery)
+pottery.can <-candisc(pottery.mod)
+heplot(pottery.can, var.lwd=3)
+```
+
+Recent Extensions
+=================
+
+Recent advances to this framework have focused upon three areas, visualizing: canonical correlation, robust multivariate models, and influence diagnostics for multivariate models.
+
+Canonical Correlation
+---------------------
+
+Canonical correlationl analysis is a low-rank approximation of multivariate multiple regression, in the same manner than canonican discrimination analysis is a low-rank approximation of a MANOVA.  Using the `candisc` package, we have two approaches to visualizing such an analysis:
+```{r cancor, message=FALSE, warning=FALSE}
+library(candisc)
+# First, using plot() to show canonical (X, Y) variates as data:
+X <- as.matrix(Rohwer[,6:10])  # the PA tests
+Y <- as.matrix(Rohwer[,3:5])   # the aptitude/ability variables
+(cc <- cancor(X, Y, set.names = c("PA", "Ability")))
+# Equivalently:
+# (cc <- cancor(cbind(SAT, PPVT, Raven) ~ n + s + ns + na + ss, data = Rohwer, set.names=c("PA", "Ability")))
+
+# First canonical dimension (with annotation):
+plot(cc, smooth = TRUE, id.n = 3, ellipse.args = list(fill = TRUE), col.smooth = "blue", lwd = 3, cex.lab = 1.4, id.cex = 1.25, pch = 20, cex = 1.5)
+text(-2,1.75, "1st Canonical dimension:\n    CanR=0.67 (77.3%)", pos = 4, cex = 1.4)
+# Second Canonical dimension (with annotation):
+plot(cc, which = 2, smooth = TRUE, id.n = 3, ellipse.args = list(fill = TRUE), col.smooth = "blue", lwd = 3, cex.lab = 1.4, id.cex = 1.25, pch = 20, cex = 1.5)
+text(-2.9,2.2, "2nd Canonical dimension:\n    CanR=0.38 (16.3%)", pos = 4, cex = 1.4)
+# Second, using heplot() to show (X, Y) relations as HE plots for Y in canonical space:
+heplot(cc, scale = 1.4, var.cex = 1.5, var.lwd = 3, prefix="Y canonical dimension", cex.lab = 1.25, lwd = 2)
+```
+
+Robust Multivariate Models
+--------------------------
+
+A second extension that has been recently advanced is the development of functions that apply robust methods for the fully general multivariate linear model.  The `heplots` package now provides a function, `robmlm()` to conduct robust MLMs.
+
+As an example, we return to the `Pottery` dataset:
+
+```{r rob1, message=FALSE}
+# Multivariate Model:
+pottery.mod <- lm(cbind(Al,Fe,Mg,Ca,Na)~Site, data=Pottery)
+# Non-robust ANOVA:
+Anova(pottery.mod)
+# Robust Multivariate Model:
+pottery.rmod <- robmlm(cbind(Al,Fe,Mg,Ca,Na)~Site, data=Pottery)
+# Robust ANOVA:
+Anova(pottery.rmod)
+```
+
+We can visualize how each data point was adjusted using an index plot:
+```{r rob2, message=FALSE}
+# Basic plot:
+plot(pottery.rmod$weights, type = "h", col = "gray", ylab = "Observation Weight", cex.lab = 1.5)
+# End points (coloured by site):
+points(pottery.rmod$weights, pch = 16, col = Pottery$Site, cex = 1.5)
+# Obtain end point locations to plot site names:
+prle <- rle(as.numeric(Pottery$Site))
+loc <- c(1, cumsum(prle$lengths)[-4])
+text(loc, rep(c(-0.01,0.03), length = 4), levels(Pottery$Site)[prle$values], pos = 4, cex = 1.5)
+```
+
+We can also visualize the difference between the robust and the non-robust solution using HE plots:
+```{r rob3, message=FALSE}
+heplot(pottery.mod, cex = 1.3, lty = 1, cex.lab = 1.4)
+heplot(pottery.rmod, add = TRUE, error.ellipse = TRUE, lwd = c(2,2), lty = c(2,2), term.labels = FALSE, err.label = "", fill = TRUE, fill.alpha = 0.1)
+legend(15.5, 8.5, c("Classical", "Robust"), col = "blue", lty = c(1,2), bg = 'gray96', cex = 1.6, lwd = 3)
+```
+
+Influence Diagnostics for Multivariate Models
+---------------------------------------------
+
+Our final demonstration pertained to visualizing influence diagnostics for multivariate models.  Such measures and plots are common for univariate models, but have been unavailable for MLMs.  The `mvinfluence` package provides both measures of influence and methods for plotting them.
+
+```{r inf1, warning=FALSE, message=FALSE}
+library(mvinfluence)
+library(heplots)
+
+Rohwer2 <- subset(Rohwer, subset = group == 2)
+rownames(Rohwer2) <- 1:nrow(Rohwer2)
+# Obtain regression model:
+Rohwer.mod <- lm(cbind(SAT, PPVT, Raven) ~ n+s+ns+na+ss, data=Rohwer2)
+# Multivariate influence plot for Cook's D vs. Generalized Hat Values:
+influencePlot(Rohwer.mod, id.n=3, type="cookd", cex.lab=1.4, id.cex=1.25)
+# Multivariate Leverage/Residual Plot:
+influencePlot(Rohwer.mod, id.n=3, type="stres", cex.lab=1.4, id.cex=1.25)
+# Multivariate Likelihood Ratio Plot (log Leverage by log Residual):
+influencePlot(Rohwer.mod, id.n=3, type="LR", cex.lab=1.4, id.cex=1.25)
+```

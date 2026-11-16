@@ -1,0 +1,1194 @@
+<HTML>               
+<head>
+<style type="text/css">
+<!-- 
+H1 {text-align: center; font-family: Arial, Helvetica, Verdana, sans-serif;}
+H2, H3, H4, H5 {font-family: Arial, Helvetica, Verdana, sans-serif;}
+-->
+</style>
+<title>Conceptual Models for Visualizing Contingency Table Data</title>
+</head>
+<body>
+<b>Note</b>:
+This document makes extensive use of the <tt>symbol</tt> font
+for mathematical notation.
+It will only be readable with HTML 3.2-compliant browsers
+such as Netscape 3.0 or later.
+<p>
+<H1 align="center">Conceptual Models for Visualizing Contingency Table Data</H1>
+
+<H3 align="center">Michael Friendly
+<br>
+York University  
+</H3>
+<center>
+An edited appears as Chapter 2 in 
+M. Greenacre and J. Blasius (eds.), <cite>Visualizing Categorical Data</cite>,
+Academic Press, 1997.
+</center>
+<H3 align="center"></H3> 
+
+
+<p>
+
+
+<H3 align="center">Abstract</H3>
+This paper reviews several graphical methods for visualizing n-way
+contingency table data: parquet diagrams, mosaic displays and fourfold
+displays, which all display counts by area or observation density, and
+asks why visualization methods for categorical data are relatively
+ill-developed, while analogous methods for quantitative data are both
+well-developed and highly used.
+<p>
+One answer is suggested by a physical model for categorical data which
+likens categorical observations to gas molecules in pressure chambers,
+and provides a conceptual model for the use of area or observation
+density to display frequency data.  The physical model provides
+concrete interpretations of a surprising number of results in the
+analysis of categorical data, from degrees of freedom and likelihood
+ratios, to iterative proportional fitting and Newton-Raphson
+iteration.
+<p>  
+
+
+<H2><A NAME="tth_sEc1">1.&nbsp;</A> Introduction</H2><A NAME="H12:1."></A>
+For some time I have wondered why graphical methods for categorical
+data are so poorly developed and little used compared with methods
+for quantitative data.  For quantitative data, graphical methods are
+commonplace adjuncts to all aspects of statistical analysis, from the
+basic display of data in a scatterplot, to diagnostic methods for
+assessing assumptions and finding transformations, to the final
+presentation of results.  In contrast, graphical methods for
+categorical data are still in infancy.  There are not many methods, and
+those that are available in the literature are not accessible in
+common statistical software; consequently, they are not widely
+used.
+<p>
+What has made this contrast puzzling is the fact that the statistical
+methods for categorical data are in many respects discrete analogs
+of corresponding methods for quantitative data:  log-linear models
+and logistic regression, for example, are such close parallels of
+analysis of variance and regression models that they can all be seen
+as special cases of generalized linear models.
+<p>
+Several possible explanations for this apparent puzzle may be
+suggested.  First, it may just be that those who have worked with and
+developed methods for categorical data are more comfortable with
+tabular data, or that frequency tables, representing sums over all
+cases in a dataset, are more easily apprehended in tables than
+quantitative data.  Second, it may be argued that graphical methods
+for quantitative data are easily generalized so, for example, the
+scatterplot for two variables provides the basis for visualizing any
+number of variables in a scatterplot matrix;  available graphical
+methods for categorical data tend to be more specialized.  However, a
+more fundamental reason may be, as I will try to show here,  that
+quantitative data display relies on e well-known natural visual
+mapping in which a magnitude is depicted by length or position along a
+scale; for categorical data, it will be seen that a count is more
+naturally displayed by an area or by the visual density of an area.
+<p>
+
+<H2><A NAME="tth_sEc2">2.&nbsp;</A> Some graphical methods for contingency tables</H2>
+<A NAME="H13:2."></A>
+Several schemes for representing contingency tables graphically are
+based on the fact that when the row and column variables are
+independent, the estimated expected frequencies, m<sub>ij</sub>, are
+products of the row and column totals (divided by the grand total).
+Then each cell can be represented by a rectangle whose area shows
+the cell frequency, n<sub>ij</sub>,  or deviation from independence.
+<p>
+
+<H3><A NAME="tth_sEc2.1">2.1&nbsp;</A> Sieve diagrams</H3><A NAME="H231:Sieve"></A>
+<p>
+Table&nbsp;<A href="#tab:hairdat"
+>1</A> shows data
+on the relation between hair color and eye color among 592 subjects
+(students in a statistics course) collected by <a href="#Snee74" name=CITESnee74>Snee (1974)</a>.  The
+Pearson <font face="symbol">c</font><sup>2</sup> for these data is 138.3 with nine degrees of freedom,
+indicating substantial departure from independence.  The question is
+how to understand the <i>nature </i> of the association between hair
+and eye color.
+
+<A NAME="tth_tAb1"></A> 
+<p>
+
+<center><A NAME="tab:hairdat">Table 1</A>: Hair-color eye-color data.</center>
+
+<center>
+
+<table border>
+<tr><td>
+
+        </td><th colspan=4 align="center">Hair Color        </th><td> 
+
+<tr><th>
+Eye<br>Color     </th><td>  BLACK  </td><td>  BROWN  </td><td>    RED  </td><td>  BLOND  </td><td> Total 
+<tr><td> 
+Green   </td><td>      5  </td><td>     29  </td><td>     14  </td><td>     16  </td><td>    64 
+<tr><td>
+Hazel   </td><td>     15  </td><td>     54  </td><td>     14  </td><td>     10  </td><td>    93 
+<tr><td>
+Blue    </td><td>     20  </td><td>     84  </td><td>     17  </td><td>     94  </td><td>   215 
+<tr><td>
+Brown   </td><td>     68  </td><td>    119  </td><td>     26  </td><td>      7  </td><td>   220 
+<tr><td> 
+Total   </td><td>    108  </td><td>    286  </td><td>     71  </td><td>    127  </td><td>   592</table>
+
+</center>
+
+<p>
+For any two-way table, the expected frequencies under independence
+can be represented by rectangles whose widths are proportional to the
+total frequency in each column, n<sub>+j</sub>, and whose heights are
+proportional to the total frequency in each row, n<sub>i+</sub>; the area
+of each rectangle is then proportional to m<sub>ij</sub>.  <A href="#fig:sieve0">Figure&nbsp;1</A>
+shows the expected frequencies for the hair and eye color
+data.
+<p>
+<A NAME="tth_fIg1"></A>
+<table border=0><tr>
+  <td><a href="figs/sieve0.gif"><img src="icons/sieve0.gif"></a></td>
+  <td><a href="figs/sieve0.gif" NAME="fig:sieve1">Figure 1</a><br>
+  <B>Expected
+  frequencies under independence</B>.  Each box has area equal to its
+  expected frequency, and is cross-ruled proportionally to the
+  expected frequency.
+  </td>
+</tr></table>
+<p>
+<a href="#Riedwyl83" name=CITERiedwyl83>Riedwyl and Sch&#252;pbach (1983</a>, <a href="#Riedwyl84" name=CITERiedwyl84>1994</a>) proposed a <i><b>sieve
+diagram</b> </i> (later called a <i><b>parquet diagram</b></i>) based on
+this principle.  In this display the area of each rectangle is
+proportional to the expected frequency and the observed frequency is shown by
+the number of squares in each rectangle.  Hence, the difference
+between observed and expected frequencies appears as the density of
+shading, using color to indicate whether the deviation from
+independence is positive or negative.  (In monochrome versions,
+positive residuals are shown by solid lines, negative by broken
+lines.)  The sieve diagram for hair color and eye color is shown in
+<A href="#fig:sieve1">Figure&nbsp;2</A>.
+
+
+<A NAME="tth_fIg2"></A> 
+<table border=0><tr>
+  <td><a href="figs/sieve1.gif"><img src="icons/sieve1.gif"></a></td>
+  <td><a href="figs/sieve1.gif" NAME="fig:sieve1">Figure 2</a><br>
+  <B>Sieve diagram for hair-color, eye-color data</B>.  Observed frequencies are equal to the number
+  squares in each cell, so departure from independence appears as variations
+  in shading density.
+  </td>
+</tr></table>
+<p>
+
+<H3><A NAME="tth_sEc2.2">2.2&nbsp;</A> Mosaic displays for n-way tables</H3><A NAME="H232:Mosaic"></A>
+<p>
+The mosaic display, proposed by 
+<a href="#Hartigan81" name=CITEHartigan81>Hartigan &amp; Kleiner (1981)</a>
+ and
+extended by <a href="#Friendly94a" name=CITEFriendly94a>Friendly (1994a)</a>, represents the counts in a contingency
+table directly by tiles whose area is proportional to the cell
+frequency.  This display generalizes readily to <i>n</i>-way tables and can
+be used to display the residuals from various log-linear models.
+<p>
+One form of this plot, called the <i><b>condensed mosaic display</b></i>,
+is similar to a divided bar chart.  The width of each column of
+tiles in <A href="#fig:mos31">Figure 3</a> is proportional to the marginal
+frequency of hair colors; the height of each tile is determined by
+the conditional probabilities of eye color in each column.  Again,
+the area of each box is proportional to the cell frequency, and
+complete independence is shown when the tiles in each row all have
+the same height.
+
+<A NAME="tth_fIg3"></A> 
+<table border=0><tr>
+  <td><a href="figs/mos31.gif"><img src="icons/mos31.gif"></a></td>
+  <td><a href="figs/mos31.gif" name="fig:mos31">Figure 3</a><br>
+  <B>Condensed
+  mosaic for Hair-color, Eye-color data</B>.  Each column is divided
+  according to the conditional frequency of eye color given hair
+  color.  The area of each rectangle is proportional to observed
+  frequency in that cell.
+</tr>
+</table>
+<p>
+
+
+<H5>Enhanced mosaics</H5> The <b><i>enhanced mosaic display</i></b>
+(<a href="#Friendly92b" name=CITEFriendly92b>Friendly, 1992b</a>, 
+<a href="#Friendly94a" name=CITEFriendly94a>1994a</a>) achieves greater visual impact by using
+color and shading to reflect the size of the residual from
+independence and by reordering rows and columns to make the pattern
+more coherent.  The resulting display shows both the observed
+frequencies and the pattern of deviations from a specified model.
+<p>
+<A href="#fig:mos32">Figure 4</a> gives the extended the mosaic plot, showing
+the standardized (Pearson) residual from independence, 
+d<sub>ij</sub> = (n<sub>ij</sub> - m<sub>ij</sub>) / <font face="symbol">Ö</font>{ m<sub>ij</sub> } by the color and shading of each
+rectangle: cells with positive residuals are outlined with solid lines
+and filled with slanted lines; negative residuals are outlined with
+broken lines and filled with grayscale.  The absolute value of the
+residual is portrayed by shading density: cells with absolute values
+less than 2 are empty; cells with <font face="symbol">|</font> d<sub>ij</sub> <font face="symbol">|</font>  <font face="symbol">³</font> 2 are filled;
+those with <font face="symbol">|</font> d<sub>ij</sub> <font face="symbol">|</font>  <font face="symbol">³</font> 4 are filled with a darker pattern.<a href="#tthFtNtAAB" name=tthFrefAAB><sup>1</sup></a>
+
+Under the assumption of independence, these values roughly correspond
+to two-tailed probabilities p <font face="symbol">&lt;</font> .05 and p <font face="symbol">&lt;</font> .0001 that a
+given value of <font face="symbol">|</font> d<sub>ij</sub> <font face="symbol">|</font> exceeds 2 or 4.  For exploratory
+purposes, we do not usually make adjustments (e.g., Bonferroni) for
+multiple tests because the goal is to display the pattern of
+residuals in the table as a whole.  However, the number and values of
+these cutoffs can be easily set by the user.
+
+<A NAME="tth_fIg4"></A> 
+<table border=0><tr>
+  <td><a href="figs/mos32.gif"><img src="icons/mos32.gif"></a></td>
+  <td><a href="figs/mos32.gif" name="fig:mos32">Figure 4</a><br>
+  <B>Enhanced mosaic,
+  reordered and shaded</B>.  Deviations from independence are shown by
+  color and shading.  The two levels of shading density correspond to
+  standardized deviations greater than 2 and 4 in absolute value.
+  This form of the display generalizes readily to multi-way
+  tables.
+</tr>
+</table>
+<p>
+When the row or column variables are unordered, we are also free to
+rearrange the corresponding categories in the plot to help show the
+nature of association.  For example, in <A href="#fig:mos32"
+>Figure 4</A>, the
+eye color categories have been permuted so that the residuals from
+independence have an opposite-corner pattern, with positive values
+running from bottom-left to top-right corners, negative values along
+the opposite diagonal.  Coupled with size and shading of the tiles,
+the excess in the black-brown and blond-blue cells, together with the
+underrepresentation of brown-eyed blonds and people with black hair
+and blue eyes is now quite apparent.  Alhough the table was reordered
+on the basis of the d<sub>ij</sub> values, both dimensions in
+<A href="#fig:mos32"
+>Figure 4</A> are ordered from dark to light, suggesting
+an explanation for the association.  (In this example the eye-color
+categories could be reordered by inspection.  A general method
+(<a href="#Friendly94a" name=CITEFriendly94a>Friendly, 1994a</a>) uses category scores on the largest correspondence
+analysis dimension.)
+<p>
+
+<H5>Multi-way tables</H5> 
+Like the scatterplot matrix for
+quantitative data, the mosaic plot generalizes readily to the display
+of multi-dimensional contingency tables.  Imagine that each cell of
+the two-way table for hair and eye color is further classified by one
+or more additional variables-sex and level of education, for
+example.  Then each rectangle can be subdivided horizontally to show
+the proportion of males and females in that cell, and each of those
+horizontal portions can be subdivided vertically to show the
+proportions of people at each educational level in the hair-eye-sex
+group.
+<p>
+
+<H5>Fitting models</H5>
+When three or more variables are
+represented in the mosaic, we can fit several different models of
+independence and display the residuals from each model.  We treat
+these models as null or baseline models, which may not fit the data
+particularly well.  The deviations of observed frequencies from
+expected ones, displayed by shading, will often suggest terms to be added
+to to an explanatory model that achieves a better fit.
+<p>
+
+<UL>
+
+<li> Complete independence:  The model of complete independence
+       asserts that all joint probabilities are products of the
+       one-way marginal probabilities:
+ <A NAME="eq:mabc"></A>
+
+
+<centEr><table border=0 align="center"><tr><td>
+<Table align="left"><tr><td nowrap align="center">
+<font face="symbol">p</font><sub>ijk</sub> = <font face="symbol">p</font>
+<sub>i++</sub> &nbsp;<font face="symbol">p</font><sub>+j+</sub> &nbsp;<font face="symbol">p</font><sub>++k</sub> </td></Table>
+</td><td width=100 align=right>(1)</td></table></centEr>
+
+
+for all i , j , k in a
+       three-way table.  This corresponds to the log-linear model
+       [A] &nbsp;[B] &nbsp;[C].  Fitting this model puts all higher
+       terms, and hence all association among the variables, into the
+       residuals.
+
+<li> Joint independence:  Another possibility is to fit the model in
+       which variable C is jointly independent of variables A
+       and B,
+         <A NAME="eq:jabc"></A>
+
+
+<centEr><table border=0 align="center"><tr><td>
+<Table align="left"><tr><td nowrap align="center">
+ <font face="symbol">p</font><sub>ijk</sub> = <font face="symbol">p</font><sub>ij+</sub> &nbsp;<font face="symbol">p</font><sub>++k</sub> . 
+ </td></Table>
+</td><td width=100 align=right>(2)</td></table></centEr>
+
+
+         This corresponds to the log-linear model 
+[ A B ] &nbsp;[ C].  Residuals from this model show the extent to which
+variable C is related to the combinations of variables
+A and B but they do not show any association between
+A and B.
+</UL>
+<p>
+For example, with the data from Table&nbsp;<A href="#tab:hairdat"
+>1</A> broken down
+by sex, fitting the model [HairEye][Sex] allows us to see the extent
+to which the joint distribution of hair-color and eye-color is
+associated with sex.  For this model, the likelihood-ratio G<sup>2</sup> is
+19.86 on 15 df (p = .178), indicating an acceptable overall fit.
+The three-way mosaic, shown in <A href="#fig:mos33">Figure 5</a>, highlights
+two cells: 
+among blue-eyed blonds, there are more females (and fewer males)
+than would be the case if hair color and eye color were jointly independent
+of sex.
+Except for these cells hair color and eye color appear
+unassociated with sex.
+
+<A NAME="tth_fIg5"></A> 
+<table border=0><tr>
+  <td><a href="figs/mos33.gif"><img src="icons/mos33.gif"></a></td>
+  <td><a href="figs/mos33.gif" name="fig:mos33">Figure 5</a><br>
+  <B>Three-way mosaic display for hair color, eye color, and sex.</B> .
+Residuals from
+the model of joint independence, [HE]&nbsp;[S] are shown by
+shading.
+G<sup>2</sup> = 19.86 on 15 df.  
+The only lack of fit is 
+an overabundance of females among blue-eyed blonds.
+</tr>
+</table>
+<p>
+
+<H3><A NAME="tth_sEc2.3">2.3&nbsp;</A> Fourfold Display</H3><A NAME="H233:Fourfold"></A>
+<p>
+A third graphical method based on the use of area as the visual
+mapping of cell frequency is the ``fourfold display'' 
+(<a href="#Friendly94b" name=CITEFriendly94b>Friendly, 1994b</a>, 1994c)
+ designed for the display of 2 &times;2 (or 
+2&times;2 &times;k) tables.  In this display the frequency
+n<sub>ij</sub> in each cell of a fourfold table is shown by a quarter
+circle, whose radius is proportional to <font face="symbol">Ö</font>{ n<sub>ij</sub> }, so the
+area is proportional to the cell count.
+<p>
+For a single 2 &times;2 table the fourfold display described
+here also shows the frequencies by area, but scaled in a way that
+depicts the sample odds ratio, 
+<font face="symbol">q</font> = (n<sub>11</sub> / n<sub>12</sub> )<font face="symbol">¸</font>(n<sub>21</sub> / n<sub>22</sub> ).  
+An association between the variables
+(<font face="symbol">q</font> <font face="symbol">¹</font> 1) is shown by the tendency of diagonally opposite
+cells in one direction to differ in size from those in the opposite
+direction, and the display uses color or shading to show this
+direction.  Confidence rings for the observed <font face="symbol">q</font> allow a
+visual test of the hypothesis H<sub>0</sub> : &nbsp;<font face="symbol">q</font> = 1.  They have
+the property that the rings for adjacent quadrants overlap <i>iff </i>
+the observed counts are consistent with the null hypothesis.
+<p>
+As an example, <A href="#fig:pie2x2g">Figure&nbsp;6</A> shows aggregate data on
+applicants to graduate school at Berkeley for the six largest
+departments in 1973 classified by admission and sex.  At issue is
+whether the data show evidence of sex bias in admission practices
+(<a href="#Bickel75" name=CITEBickel75>Bickel et al., 1975</a>).  The figure shows the cell frequencies
+numerically in the corners of the display.  Thus there were 2691 male
+applicants, of whom 1193 (44.4%) were admitted, compared with 1855
+female applicants of whom 557 (30.0%) were admitted.  Hence the
+sample odds ratio, Odds (Admit<font face="symbol">|</font>Male) / (Admit<font face="symbol">|</font>Female) is 1.84
+indicating that males were almost twice as likely to be admitted.
+
+<p>
+<A NAME="tth_fIg6"></A> 
+<table border=0><tr>
+  <td><a href="figs/pie2x2g.gif"><img src="icons/pie2x2g.gif"></a></td>
+  <td><a href="figs/pie2x2g.gif" name="fig:pie2x2g">Figure 6</a><br>
+  <B>Four-fold display for Berkeley admissions: Evidence for sex bias? </B> 
+The area of each shaded quadrant shows the frequency,
+standardized to equate the margins for sex and admission.  Circular
+arcs show the limits of a 99% confidence interval for the odds ratio.
+</tr>
+</table>
+<p>
+The frequencies displayed graphically by shaded quadrants in
+<A href="#fig:pie2x2g">Figure&nbsp;6</A> are not the raw frequencies.  Instead, the
+frequencies have been standardized (by iterative proportional
+fitting) so that all table margins are equal, while preserving the
+odds ratio.  Each quarter circle is then drawn to have an area
+proportional to this standardized cell frequency.  This makes it
+easier to see the association between admission and sex without being
+influenced by the overall admission rate or the differential tendency
+of males and females to apply.  With this standardization the four
+quadrants will align when the odds ratio is 1, regardless of the
+marginal frequencies.
+<p>
+The shaded quadrants in <A href="#fig:pie2x2g"
+>Figure&nbsp;6</A> do not align and
+the 99% confidence rings around each quadrant do not overlap,
+indicating that the odds ratio differs significantly from 1.  The
+width of the confidence rings gives a visual indication of the
+precision of the data.
+<p>
+
+<H5>Multiple strata</H5> In the case of a 
+2 &times;2&times;k table, the last dimension typically corresponds to
+``strata'' or populations, and it is typically of interest to see if
+the association between the first two variables is homogeneous across
+strata.  The fourfold display allows easy visual comparison of the
+pattern of association between two dichotomous variables across two
+or more populations.
+<p>
+For example,
+the admissions data shown in <A href="#fig:pie2x2g"
+>Figure&nbsp;6</A> were obtained
+from a sample of six departments; 
+<A href="#fig:pie2x2b"
+>Figure&nbsp;7</A> displays the data
+for each department.  The departments
+are labeled so that the overall acceptance rate is highest for
+Department A and decreases steadily to Department F.  Again, each
+panel is standardized to equate the marginals for sex and admission.
+This standardization also equates for the differential total
+applicants across departments, facilitating visual comparison.
+
+<A NAME="tth_fIg7"></A> 
+<table border=0><tr>
+  <td><a href="figs/pie2x2b.gif"><img src="icons/pie2x2b.gif"></a></td>
+  <td><a href="figs/pie2x2b.gif" name="fig:pie2x2b">Figure 7</a><br>
+  <B>Fourfold display of Berkeley admissions, by department.</B>  
+In each panel the confidence rings for
+adjacent quadrants overlap if the odds ratio for admission and sex
+does not differ significantly from 1.  The data in each panel have
+been standardized as in <A href="#fig:pie2x2g"
+>Figure 6</A>.
+</tr>
+</table>
+<p>
+
+<A href="#fig:pie2x2b"
+>Figure&nbsp;7</A> shows that, for five of the
+six departments, the odds of admission is approximately the same for
+both men and women applicants.  Department A appears to differs from
+the others, with women approximately 2.86 (
+ = ( 313/19 ) /(512/89)) times as likely to gain admission.  This appearance is
+confirmed by the confidence rings, which in <A href="#fig:pie2x2b">Figure&nbsp;7</A> 
+are <i>joint </i> 99% intervals for 
+<font face="symbol">q</font><sub>c</sub> , &nbsp;c = 1, <font face="symbol">¼</font>, k.
+<p>
+This result, which contradicts the display for the aggregate data in
+<A href="#fig:pie2x2g">Figure&nbsp;6</A>, is a nice example of Simpson's paradox.
+The resolution of this contradiction can be found in the large
+differences in admission rates among departments.  Men and women
+apply to different departments differentially, and in these data
+women apply in larger numbers to departments that have a low
+acceptance rate.  The aggregate results are misleading because they
+falsely assume men and women are equally likely to apply in each
+field.  (This explanation ignores the possibility of structural bias
+against women, e.g., lack of resources allocated to departments that
+attract women applicants.)
+<p>
+
+<H2><A NAME="tth_sEc3">3.&nbsp;</A> Conceptual Models for Visual Displays</H2><A NAME="H14:3."></A>
+Visual representation of data depends fundamentally on an appropriate
+visual scheme for mapping numbers into graphic patterns 
+(<a href="#Bertin83" name=CITEBertin83>Bertin 1983</a>).
+The widespread use of graphical methods for quantitative data
+relies on the availability of a natural visual mapping:  magnitude
+can be represented by length, as in a bar chart, or by  position
+along a scale, as in dot charts and scatterplots.  One reason for the
+relative paucity of graphical methods for categorical data may be
+that a natural visual mapping for frequency data is not so apparent.
+And, as I have just shown, the mapping of frequency to area appears
+to work well for categorical data.
+<p>
+Closely associated with the idea of a visual metaphor is a conceptual
+model that helps you interpret what is shown in a graph.  A good
+conceptual model for a graphical display will have deeper connections
+with underlying statistical ideas as well.  In this section I will
+describe conceptual models for both quantitative and frequency data
+that have these properties and help to elucidate the differences
+between their graphical displays.  The discussion borrows from 
+<a href="#Sall91a" name=CITESall91a>Sall (1991a</a>, 
+<a href="#Sall91b" name=CITESall91b>1991b</a>), <a href="#Farebrother87" name=CITEFarebrother87>Farebrother (1987)</a> and <a href="#Friendly95" name=CITEFriendly95>Friendly (1995)</a>.
+<p>
+
+<H3><A NAME="tth_sEc3.1">3.1&nbsp;</A> Quantitative Data</H3><A NAME="H241:Quantitative"></A>
+<p>
+The simplest conceptual model for quantitative data is the balance
+beam, often used in introductory statistics texts to illustrate the
+sample mean as the point along an axis where the positive and
+negative deviations balance.
+
+<H5>Springs</H5> A more powerful model (Sall, 1991a) likens
+observations to fixed points connected to a movable junction by
+springs of equal spring constant, k <font face="symbol"> ~ </font>1 / <font face="symbol">s</font>
+(<A href="#fig:grsp1"> Figure&nbsp;8</A>).
+By this model, each observation exerts
+a force proportional to ( X - <font face="symbol">m</font>) / <font face="symbol">s</font> on the
+junction, and the sample mean is seen as the point which not only
+balances the forces, but also minimizes the total potential energy in
+the system.
+
+<p>
+<A NAME="tth_fIg8"></A> 
+<table border=0><tr>
+  <td><a href="figs/grsp1.gif"><img src="icons/grsp1.gif"></a></td>
+  <td><a href="figs/grsp1.gif" name="fig:grsp1">Figure 8</a><br>
+ <B> Spring model for least squares estimation.</B>
+  Each observation exerts a force on the movable junciton.  The system
+  balances where the potential energy of the system is minimized.
+</tr>
+</table>
+
+<p>
+The spring model is more powerful because it provides a basis for
+understanding a wide class of both graphical displays and statistical
+principles for quantitative data.  For example, least squares
+regression can be represented as shown in <A href="#fig:grsp2"
+> Figure&nbsp;9</A>,
+where the points are again fixed and attached to a movable rod by
+unit length, equally stiff springs.  If the springs are constrained
+to be kept vertical, the rod, when released, moves to the position of
+balance and minimum potential energy, the least square solution.  The
+normal equations,
+    <A NAME="eq:ne1"></A>
+
+<A NAME="eq:ne2"></A>
+
+<centEr><table border=0 align="center"><tr><td>
+<Table align="left"><tr><td nowrap align="center">
+</td><td nowrap><TablE border=0 align="left"><tr><td nowrap align="left">
+<tabLe border=0><tr><td nowrap align="left">
+  </td><td nowrap align="center">
+<font face="symbol" size="+3">å<br></font>
+</td><td nowrap>e<sub>i</sub> </td></tabLe></td><td nowrap align="left">
+<tabLe border=0><tr><td nowrap align="left">
+ = </td></tabLe></td><td nowrap align="left">
+<tabLe border=0><tr><td nowrap align="left">
+ </td><td nowrap align="center">
+<font size="-1">n</font><br><font face="symbol" size="+3">å<br></font>
+<font size="-1">i = 1</font>&nbsp;<br></td><td nowrap>
+&nbsp;( y<sub>i</sub> - a - b x<sub>i</sub> ) = 0 </td></tabLe></TD></TR><TR><TD NOWRAP align="left"><tabLe border=0><tr><td nowrap align="left">
+  </td><td nowrap align="center">
+<font face="symbol" size="+3">å<br></font>
+</td><td nowrap>x<sub>i</sub> &nbsp;e<sub>i</sub> </td></tabLe></td><td nowrap align="left">
+<tabLe border=0><tr><td nowrap align="left">
+ = </td></tabLe></td><td nowrap align="left">
+<tabLe border=0><tr><td nowrap align="left">
+ </td><td nowrap align="center">
+<font size="-1">n</font><br><font face="symbol" size="+3">å<br></font>
+<font size="-1">i = 1</font>&nbsp;<br></td><td nowrap>
+&nbsp;( y<sub>i</sub> - a - b x<sub>i</sub> ) &nbsp;x<sub>i</sub> = 0</td></tabLe></TD></TR></td></TablE>
+</td><td nowrap></td></Table>
+</td><td width=100 align=right>(3)</td></table></centEr>
+
+  are seen as conditions that the vertical forces balance (Eq. (<A href="#eq:ne1"
+>3</A>)),
+and the rotational moments about the intercept 
+(0, &nbsp;a) balance (Eq. (<A href="#eq:ne2"
+>3</A>)).  Letting 
+<b>X</b> = [ <b>1</b> , &nbsp;<b>x</b> ], the
+normal equations provide the derivation 
+<b>X</b> ' &nbsp;<b>e</b> = <b>X</b> ' ( <b>y</b> - <b>X</b> <b>b</b> ) = 0 <font face="symbol">Þ</font
+> <b>X</b> ' <b>y</b> = <b>X</b> ' <b>X</b> <b>b</b> <font face="symbol">Þ</font
+> <b>b</b> = ( <b>X</b> ' <b>X</b> )<sup>-1</sup> <b>X</b> ' <b>y</b>,
+but springs get it right without inverting a matrix.
+
+<p>
+<A NAME="tth_fIg9"></A> 
+<table border=0><tr>
+  <td><a href="figs/grsp2.gif"><img src="icons/grsp2.gif"></a></td>
+  <td><a href="figs/grsp2.gif" name="fig:grsp2">Figure 9</a><br>
+<b>Spring model for least squares regression.</b>
+Fixed data points are connected to a movable rod by
+springs constrained to remain vertical.  The least squares line is
+the position of balanced forces.
+</tr>
+</table>
+<p>
+
+<H5>Neat explanations by springs</H5>
+The appeal of the
+spring model lies in the intuitive explanations it provides for many
+statistical phenomena and the understanding it can bring to our
+perception of graphical displays.  Without much explanation here (but
+see Sall, 1991a and Farebrother, 1987) I will simply list some of
+these.
+<p>
+
+<UL>
+
+
+<li> <b>least squares</b> <font face="symbol">«</font> minimum energy
+
+<li> <b>orthogonality</b> <font face="symbol">«</font> balancing of forces
+
+<li> <b>hypothesis testing</b>:  To test the hypothesis 
+H<sub>0</sub> : &nbsp;<font face="symbol">b</font
+> = 0, simply force the rod to the horizontal position,
+       measuring the additional energy required to make it obey the
+       hypothesis (see <a href="#fig:grsp3">Figure 10</a>). 
+		 This is the
+       regression sum of squares, SSR ( X ).
+
+<li> <b>sample size and power</b>:  Adding more points (more springs)
+       causes the position of the rod (and thus the coefficient
+       estimates) to be held more tightly.  It is therefore easier to
+       reject the null hypothesis.
+
+<li> <b>error variance</b>:  The spring constant is inversely proportional
+       to <font face="symbol">s</font>, so smaller error variance means stiffer
+       springs, which require more force to impose the null
+       hypothesis.
+
+<li> <b>outliers</b>:  Points far from the regression line pull the line
+       towards themselves in proportion to the square of their
+       vertical distance from the line.
+
+<li> <b>leverage</b>:  Observations exert a force on the regression line
+       proportional to the square of their horizontal distance from
+       the mean of <b>X</b>.  Influence is the product of the force of leverage
+		 and the vertical force from the residual.
+
+<li> <b>multiple regression</b>:  With two (or more) predictors, fit a
+       plane (or hyperplane) to points with vertical springs.
+
+<li> <b>partial F tests</b>:  With two predictors, fit a plane to 
+( X<sub>1</sub> , X<sub>2</sub> ).  How much more energy is required to make the plane
+       flat in the x<sub>2</sub> direction?  This is the extra sum of
+       squares, SSR (X<sub>2</sub> &nbsp;<font face="symbol">|</font> &nbsp;X<sub>1</sub>)
+
+<li> <b>robust estimation</b>:  Use springs which deform (so they exert
+       little or no force) when stretched past some limit.
+
+<li> <b>smoothing splines</b>:  Make the ``regression line'' from a
+       material which is flexible but stiff.
+
+<li> <b>principal components</b>:  If we relax the restriction that the
+       springs are constrained to remain vertical, the rod moves to
+       the position of the first principal component.
+</UL>
+<p>
+
+
+<A NAME="tth_fIg10"></A>   
+<table border=0><tr>
+  <td><a href="figs/grsp3.gif"><img src="icons/grsp3.gif"></a></td>
+  <td><a href="figs/grsp3.gif" name="fig:grsp3">Figure 10</a><br>
+  
+<B>Testing a hypothesis by springs. </B>  
+The
+regression sum of squares for testing H<sub>0</sub> : &nbsp;<font face="symbol">b</font> = 0
+measures the additional energy required to force the rod to be
+horizontal.
+</tr>
+</table>
+<p>
+
+<H3><A NAME="tth_sEc3.2">3.2&nbsp;</A> Categorical Data</H3><A NAME="H242:Categorical"></A>
+<p>
+For categorical data, we need a visual analog for the sample
+frequency in k mutually exclusive and exhaustive categories.
+Consider first the one-way marginal frequencies of hair color from
+Table&nbsp;<A href="#tab:hairdat">1</A>.
+<p>
+
+<H5>Urn model</H5> 
+<p>
+The simplest physical model represents
+the hair color categories by urns containing marbles representing the
+observations (<a href="fig:mosdemo1">Figure&nbsp;11</a>).  This model is sometimes
+used in texts to describe multinomial sampling, and provides a visual
+representation that equates the count n<sub>i</sub> with the area filled in
+each urn, as in the familiar bar chart.  (When the urns are of equal
+width, count is also reflected by height, but in the general case,
+count is proportional to area.)  However, the urn model is a static
+one and provides no further insights.  It does not relate to the
+concept of likelihood or to the constraint that the probabilities sum
+to 1.
+<p>
+
+<A NAME="tth_fIg11"></A> 
+<table border=0><tr>
+  <td><a href="figs/mosdemo1.gif"><img src="icons/mosdemo1.gif"></a></td>
+  <td><a href="figs/mosdemo1.gif" name="fig:mosdemo1">Figure 11</a><br>
+<B>	Urn model for multinomial  sampling.</B> 
+Each observation in Table&nbsp;<A href="#tab:hairdat">1</A> is represented by a
+token classified by hair color into the appropriate urn.  This model
+provides a basis for the bar chart, but does not yield any further
+insights.
+</tr>
+</table>
+<p>
+
+<H5>Pressure and Energy</H5>
+A dynamic model gives each
+observation a force (<a href="fig:mosdemo2">Figure&nbsp;12</a>).  Consider the
+observations in a given category (red hair, say) as molecules of an
+ideal gas confined to a cylinder whose volume can be varied with a
+movable piston (Sall, 1991b), set up so that a probability of 1.0
+corresponds to ambient pressure, with no force exerted on the piston.
+An actual probability of red hair equal to p means that the same
+number of observations are squeezed down to a chamber of height
+p.  By Boyle's law (that pressure &times; volume is constant)
+the pressure is proportional to 1 / p.  In the figure,
+pressure is shown by <i>observation density</i>, the number of
+observations per unit area.  Hence, the graphical metaphor is that a
+count can be represented visually by observation density when the
+count is fixed and area is varied (or by area when the observation
+density is fixed as in Figure&nbsp;<A href="#fig:grurn"
+>11</A>.)
+<p>
+The work done on the gas (or potential energy imparted to it) by
+compressing a small distance <font face="symbol">d</font>y is the force on the piston
+times <font face="symbol">d</font>y, which equals the pressure times the change in
+volume.  Hence, the potential energy of a gas at height=p is
+<font face="symbol">ò</font><sub>p</sub><sup>1</sup> &nbsp;( 1 / y ) &nbsp;d y, which is 
+- log( p ), so the energy in this model corresponds to negative log
+likelihood.
+<p>
+
+<A NAME="tth_fIg12"></A> 
+<table border=0><tr>
+  <td><a href="figs/mosdemo2.gif"><img src="icons/mosdemo2.gif"></a></td>
+  <td><a href="figs/mosdemo2.gif" name="fig:mosdemo2">Figure 12</a><br>
+  
+<B>	Pressure model for  categorical data.</B>
+Frequency of observations corresponds to pressure of gas in a
+chamber, shown visually as observation density; negative log
+likelihood corresponds to the energy required to compress the gas to
+a height p.
+</tr>
+</table>
+<p>
+
+<H5>Fitting probabilities: Minimum energy, balanced
+forces</H5>
+Maximum likelihood estimation means literally finding the
+values, [^(<font face="symbol">p</font>)]<sub>i</sub>, of the parameters under which the observed data
+would have the highest probability of occurrence.  We take
+derivatives of the (log-) likelihood function with respect to the
+parameters, set these to zero, and solve:
+<p>
+ 
+
+<centEr><table border=0 align="center"><tr><td>
+<Table align="left"><tr><td nowrap align="center">
+ </td><td nowrap align="center">
+ <font face="symbol">¶</font>&nbsp;log&nbsp;L <hr NOSHADE>
+ <font face="symbol">¶</font><font face="symbol">p</font><sub>i</sub> <br></td><td nowrap align="center">
+ = 0 &nbsp;&nbsp;&nbsp; <font face="symbol">®</font> &nbsp;&nbsp;&nbsp; </td><td nowrap align="center">
+ n<sub>1</sub> <hr NOSHADE>
+ <font face="symbol">p</font><sub>1</sub> <br></td><td nowrap align="center">
+ =  </td><td nowrap align="center">
+ n<sub>2</sub> <hr NOSHADE>
+ <font face="symbol">p</font><sub>2</sub> <br></td><td nowrap align="center">
+ = <font face="symbol">¼</font> =  </td><td nowrap align="center">
+ n<sub>c</sub> <hr NOSHADE>
+ <font face="symbol">p</font><sub>c</sub> <br></td><td nowrap align="center">
+ &nbsp;&nbsp;&nbsp; <font face="symbol">®</font> &nbsp;&nbsp;&nbsp; </td><td nowrap align="center">
+^<br><font face="symbol">p</font><br>&nbsp;<br></td><td nowrap align="center">
+<sub>i</sub> = </td><td nowrap align="center">
+ n<sub>i</sub> <hr NOSHADE>
+ n <br></td><td nowrap align="center">
+ = p<sub>i</sub> </td></Table>
+</td></table></centEr>
+
+
+  
+<p>
+As with the spring model, setting derivatives to zero means
+minimizing the potential energy; the maximum likelihood solution
+simply sets parameter values equal to corresponding sample
+quantities, where the forces are also balanced.
+<p>
+In the mechanical model (<A href="#fig:gr1waya">Figure&nbsp;13</A>) this
+corresponds to stacking the gas containers with movable partitions
+between them, with one end of the bottom and top containers fixed at
+0 and 1.  The observations exert pressure on the partitions, the
+likelihood equations are precisely the conditions for the forces to
+balance, and the partitions move so that each chamber is of size
+p<sub>i</sub> = n<sub>i</sub> / n.  Each chamber has potential energy of 
+-log&nbsp;p<sub>i</sub>, and the total energy, 
+- <font face="symbol">å</font><sub>i</sub><sup>c</sup> &nbsp;n<sub>i</sub> &nbsp;log&nbsp;p<sub>i</sub> is minimized.  The constrained top and bottom force the
+probability estimates to sum to 1, and the number of movable
+partitions is literally and statistically the degrees of freedom of
+the system.
+<p>
+
+<A NAME="tth_fIg13"></A> 
+<table border=0><tr>
+  <td><a href="figs/mosdemo3.gif"><img src="icons/mosdemo3.gif"></a></td>
+  <td><a href="figs/mosdemo3.gif" name="fig:mosdemo3">Figure 13</a><br>
+
+  <B>Fitting probabilities for a one-way table. </B> The movable partitions naturally adjust to positions of
+balanced forces, which is the minimum energy configuration.
+</tr>
+</table>
+<p>
+
+<H5>Testing a hypothesis</H5>
+This mechanical model also
+explains how we test hypotheses about the true probabilities
+(<A href="#fig:gr1wayb">Figure&nbsp;14</A>).  To test the hypothesis that the four
+hair color categories are equally probable, 
+H<sub>0</sub> : &nbsp;<font face="symbol">p</font><sub>1</sub> = <font face="symbol">p</font><sub>2</sub> = <font face="symbol">p</font><sub>3</sub> = <font face="symbol">p</font><sub>4</sub> = [1/4] simply force the partitions
+to move to the hypothesized values and measure how much energy is
+required to force the constraint.  Some of the chambers will then
+exert more pressure, some less than when the forces are allowed to
+balance without these additional restraints.  The change in energy in
+each compartment is then 
+- ( log&nbsp;p<sub>i</sub> - log&nbsp;<font face="symbol">p</font><sub>i</sub> ) = -log( p<sub>i</sub> / <font face="symbol">p</font><sub>i</sub> ), the change in negative log-likelihood.  Sum
+these up and multiply by 2 to get the likelihood ratio G<sup>2</sup>.
+<p>
+
+<A NAME="tth_fIg14"></A> 
+<table border=0><tr>
+  <td><a href="figs/mosdemo4.gif"><img src="icons/mosdemo4.gif"></a></td>
+  <td><a href="figs/mosdemo4.gif" name="fig:mosdemo4">Figure 14</a><br>
+  <B>Testing a hypothesis. </B> The likelihood
+ratio G<sup>2</sup> measures how much energy is required to move the
+partitions to constrain the data to the hypothesized probabilities.
+The components of G<sup>2</sup> indicate the degree to which each chamber has
+low or high pressure, relative to the balanced state.
+</tr>
+</table>
+<p>
+The pressure model also provides simple explanations of other
+results.  For example, increased sample size increases power, because
+more observations means more pressure in each compartment, so it
+takes more energy to move the partitions and the test is sensitive to
+smaller differences between observed and hypothesized probabilities.
+<p>
+
+<H5>Multi-way Tables</H5> The dynamic pressure model extends
+readily to multi-way tables.  For a two-way table of hair color and
+eye color, partition the sample space according to the marginal
+proportions of eye color, and then partition the observations for
+each eye color according to hair color as before (<A href="#fig:gr2waya"
+>Figure&nbsp;15</A>).
+  Within each column the forces balance as before, so that
+the height of each chamber is n<sub>ij</sub> / n<sub>i+</sub>.  Then the area of
+each cell is proportional to the maximum-likelihood estimate
+(MLE) of the cell probabilities, 
+
+( n<sub>i+</sub>  / n ) &nbsp;(  n<sub>ij</sub>  /  n<sub>i+</sub>  ) = n<sub>ij</sub>  / n = p<sub>ij</sub> ,, which again is the sample cell
+proportion.
+<p>
+
+<A NAME="tth_fIg15"></A> 
+<table border=0><tr>
+  <td><a href="figs/mosdemo5.gif"><img src="icons/mosdemo5.gif"></a></td>
+  <td><a href="figs/mosdemo5.gif" name="fig:mosdemo5">Figure 15</a><br>
+  <B>Two-way tables. </B> For multiple
+samples, the model represents each sample by a stack of pressure
+chambers whose width is proportional to the marginal frequencies of
+one variable.
+</tr>
+</table>
+<p>
+For a three-way table, the physical model is a cube with its third
+dimension partitioned according to conditional frequencies of the
+third variable, given the first two.  If the third dimension is
+represented instead by partitioning a two-dimensional graph, the
+result is the mosaic display.
+<p>
+
+<H5>Testing Independence</H5> For a two-way table of size
+I &times;J independence is formally the same as the hypothesis
+that conditional probabilities (of hair color) are the same in all
+strata (eye colors).  To test this hypothesis, force the partitions
+to align and measure the total additional energy required to effect
+the change (<A href="#fig:gr2wayb">Figure&nbsp;16</A>).  The degrees of freedom for
+the test is again the number of movable partitions, (I-1) (J-1).
+<p>
+
+<A NAME="tth_fIg16"></A> 
+<table border=0><tr>
+  <td><a href="figs/mosdemo6.gif"><img src="icons/mosdemo6.gif"></a></td>
+  <td><a href="figs/mosdemo6.gif" name="fig:mosdemo6">Figure 16</a><br>
+
+ <B> Testing independence.</B>  The chambers
+are forced to align with both sets of marginal frequencies, and the
+likelihood ratio G<sup>2</sup> again measures the additional energy
+required.
+</tr>
+</table>
+<p>
+Each log-linear model for three-way tables can be interpreted
+analogously.  For example, the log-linear model 
+[A] &nbsp;[B] &nbsp;[C] (complete independence), corresponds to the cube in which all
+chambers are forced to conform to the one way marginals, 
+<font face="symbol">p</font>
+<sub>ijk</sub> = <font face="symbol">p</font>
+<sub>i++</sub> &nbsp;<font face="symbol">p</font>
+<sub>+j+</sub> &nbsp;<font face="symbol">p</font>
+<sub>++k</sub> for all i , j , k.  G<sup>2</sup> is
+again the total additional energy required to move the partitions from
+their positions in the saturated model in which the volume of each
+cell is p<sub>ijk</sub> = n<sub>ijk</sub> / n (so the pressures balance), to
+the positions where each cell is a cube of size 
+<font face="symbol">p</font><sub>i++</sub> &times;<font face="symbol">p</font><sub>+j+</sub> &times;<font face="symbol">p</font>
+<sub>++k</sub>.  Other models have a similar representation
+in the pressure model.
+<p>
+
+<H5>Iterative Proportional Fitting</H5> 
+For three-way (and
+higher) tables some log-linear models have closed-form solutions for
+expected cell frequencies.  The cases in which direct estimates exist
+are analogous to the two-way case, where the estimates under the
+hypothesized model are products of the sufficient marginals.  Here we
+see that the partitions in the observation space can be moved
+directly in planar slices to their positions under the hypothesis, so
+that iteration is unnecessary.
+<p>
+When direct estimates do not exist, the MLEs can be estimated by
+iterative proportional fitting (IPF).  This process simply matches
+the partitions corresponding to each of the sufficient marginals of
+the fitted frequencies to the same marginals of the data.  For
+example, for the log-linear model [A B] &nbsp;[B C] &nbsp;[A C], the
+sufficient statistics are  n<sub>ij+</sub> ,  n<sub>i+k</sub> , and  n<sub>+jk</sub>.
+The conditions that the fitted margins must equal these
+observed margins are
+<p>
+    <A NAME="eq:ipf1"></A>
+  
+
+<centEr><table border=0 align="center"><tr><td>
+<Table align="left"><tr><td nowrap align="center">
+ </td><td nowrap align="center">
+ n<sub>ij+</sub> <hr NOSHADE>
+<tabLe border=0><tr><td nowrap align="center">
+ </td><td nowrap align="center">
+^<br>m<br>&nbsp;<br></td><td nowrap align="center">
+<sub>ij+</sub> </td></tabLe></td><td nowrap align="center">
+ =  </td><td nowrap align="center">
+ n<sub>i+k</sub> <hr NOSHADE>
+<tabLe border=0><tr><td nowrap align="center">
+ </td><td nowrap align="center">
+^<br>m<br>&nbsp;<br></td><td nowrap align="center">
+<sub>i+k</sub> </td></tabLe></td><td nowrap align="center">
+ =  </td><td nowrap align="center">
+ n<sub>+jk</sub> <hr NOSHADE>
+<tabLe border=0><tr><td nowrap align="center">
+ </td><td nowrap align="center">
+^<br>m<br>&nbsp;<br></td><td nowrap align="center">
+<sub>+jk</sub> </td></tabLe></td><td nowrap align="center">
+ = 1 , </td></Table>
+</td><td width=100 align=right>(3)</td></table></centEr>
+
+
+which is equivalent to balancing the forces in each fitted marginal.
+The steps in IPF follow directly from Equation (<A href="#eq:ipf1">5</A>).  For example, the
+first step in cycle t+1 of IPF matches the frequencies in the
+[AB] marginal table,
+<p>
+    <A NAME="eq:ipf2"></A>
+
+
+<centEr><table border=0 align="center"><tr><td>
+<Table align="left"><tr><td nowrap align="center">
+ </td><td nowrap align="center">
+^<br>m<br>&nbsp;<br></td><td nowrap align="center">
+<sub>ijk</sub><sup>(t+1)</sup> =  </td><td nowrap align="center">
+^<br>m<br>&nbsp;<br></td><td nowrap align="center">
+<sub>ijk</sub><sup>(t)</sup> &nbsp; </td><td align="left"><font face="symbol">
+æ<br>ç<br>
+è
+</font></td><td>
+ </td><td nowrap align="center">
+ n<sub>ij+</sub> <hr NOSHADE>
+ [^m]<sub>ij+</sub><sup>(t)</sup> <br></td><td nowrap align="center">
+ </td><td align="left"><font face="symbol">
+ö<br>÷<br>
+ø
+</font></td><td>
+, </td></Table>
+</td><td width=100 align=right>(4)</td></table></centEr>
+
+  which makes the forces balance when Equation (<A href="#eq:ipf2"
+>6</A>) is summed over
+variable C:  [^m]<sub>ij+</sub><sup>(t+1)</sup> = n<sub>ij+</sub>.  The other steps
+in each cycle make the forces balance in the [BC], and [AC]
+margins.
+<p>
+The iterative process can be shown visually 
+(<a href="#Friendly95" name=CITEFriendly95>Friendly, 1995</a>), in a
+way that is graphically exact, by drawing chambers whose area is
+proportional to the fitted frequencies, [^m]<sub>ijk</sub>, and which are
+filled with a number of points equal to the observed n<sub>ijk</sub>.  Such
+a figure will then show equal densities of points in cells that are
+fit well, but relatively high or low densities where 
+n<sub>ijk</sub> <font face="symbol">&gt;</font> [^m]<sub>ijk</sub> 
+or n<sub>ijk</sub> <font face="symbol">&lt;</font> [^m]<sub>ijk</sub>, respectively.  The IPF algorithm
+can in fact be animated, by drawing one such frame for each step in
+the iterative process.  When this is done, it is remarkable how
+quickly IPF converges, at least for small tables.
+<p>
+Likewise, numerical methods for minimizing the negative log
+likelihood directly can also be interpreted in terms of the dynamic
+model (<a href="#Farebrother88" name=CITEFarebrother88>Farebrother, 1988</a>;
+<a href="#Friendly95" name=CITEFriendly95>Friendly, 1995</a>).  For example, in steepest
+descent and Newton-Raphson iteration, the update step changes the
+estimated model parameters <b><font face="symbol">b</font></b> <sup>(t+1)</sup> in proportion to
+the score vector <b>f</b><sup>(t)</sup> of derivatives of the
+likelihood function, 
+
+<b>f</b><sup>(t)</sup> =  <font face="symbol">¶</font>logL  /  <font face="symbol">¶</font><b><font face="symbol">b</font></b>  = <b>X</b> ' &nbsp;( <b>n</b> -<b>m</b><sup>(t)</sup> ) to give 
+<b><font face="symbol">b</font></b> <sup>(t+1)</sup> = <b><font face="symbol">b</font></b> <sup>(t)</sup>+ <font face="symbol">l</font>&nbsp;<b>f</b><sup>(t)</sup>.  But <b>f</b><sup>(t)</sup> is just the
+vector of forces in the mechanical model attributed to the
+differences between <b>n</b> and <b>m</b><sup>(t)</sup> as a function of
+the model parameters.
+<p>
+
+<H2><A NAME="tth_sEc4">4.&nbsp;</A> Conclusion</H2><A NAME="H15:4."></A>
+I began this paper with the puzzling contrast in use and generality
+between graphical methods for quantitative data and those for
+categorical data, despite strong formal similarities in their
+underlying methods.  The explanation I believe I have demonstrated is
+that categorical data require a different graphic metaphor, and hence
+a different visual representation (count <font face="symbol"> ~ </font> area) from that
+which has been useful for quantitative data (magnitude <font face="symbol"> ~ </font>
+position along a scale).  The sieve diagram, mosaic, and the fourfold
+display all show frequencies in this way, and are valuable tools for
+both the analysis and presentation of categorical data.
+<p>
+In the second part of this paper I have outlined concrete, physical
+models for both quantitative and categorical data and their graphic
+representation and have shown these to yield a wide range of
+interpretation for statistical principles and phenomena.  Although
+the spring and pressure models differ fundamentally in their
+mechanics, both can be understood in terms of balancing of forces and
+the minimization of energy.  The recognition of these conceptual
+models can make a graphical display a tool for thinking, as well as a
+tool for data summarization and exposure.
+<p>
+Finally, as I look to the future development of graphical methods for
+categorical data, I see two areas where our report card, perhaps
+reflected in this volume, may be marked ``needs improvement'':
+First, much of the power of graphical methods for quantitative data
+stems from the availability of tools that generalize readily to
+multivariable data and can make important contributions to
+model building, model criticism, and model interpretation.  The
+mosaic display possesses some of these properties, and other papers
+here attest to the widespread utility of biplots and correspondence
+analysis.  However, I believe there is need for further development
+of such methods, particularly as tools for constructing models and
+communicating their import.
+<p>
+Second, I am reminded of the statement 
+(<a href="#Tukey59" name=CITETukey59>Tukey, 1959</a>, attributed to Churchill Eisenhart)
+ that the <i>
+<b>practical power</b> </i> of any statistical tool is the product of its
+statistical power times its probability of use.  It follows that
+statistical and graphical methods are of practical value to the
+extent that they are implemented in standard software, available, and
+easy to use.  Statistical methods for categorical data analysis have
+nearly reached that point.  Graphical methods still have some way to
+go.
+
+<H2>About the Author</H2>
+Michael Friendly is Associate Professor of
+Psychology and Coordinator of the Statistical
+Consulting Service at York University.
+He is an Associate Editor of the <i>Journal of Computational and
+Graphical Statistics</i>, and has been
+working on the development of graphical methods for categorical data. 
+For further information, see <a href="www.datavis.ca"><tt>http://www.datavis.ca</tt></a>.
+
+<p>
+<H2>References</H2>
+<DL compact>
+<dt>[<a href="#CITEBertin83" name=Bertin83>1</a>]</dt><dd>Bertin, J. (1983),
+        <em>Semiology of Graphics</em> (trans. W. Berg).  Madison, WI:
+        University of Wisconsin Press.
+<p>
+<dt>[<a href="#CITEBickel75" name=Bickel75>2</a>]</dt><dd>Bickel, P. J., Hammel, J. W. &amp; O'Connell, J. W.
+        (1975).
+        Sex bias in graduate admissions: data from Berkeley.  <em>
+        Science</em>, <i>187</i>, 398-403.
+<p>
+<dt>[<a href="#CITEFarebrother87" name=Farebrother87>3</a>]</dt><dd>Farebrother, R. W. (1987),
+        ``Mechanical representations of the L<sub>1</sub> and L<sub>2</sub> estimation
+        problems'', In Y. Dodge (ed.)  <em>Statistical data analysis
+        based on the L1 norm and related methods</em>, Amsterdam:
+        North-Holland., 455-464.
+<p>
+<dt>[<a href="#CITEFarebrother88" name=Farebrother88>4</a>]</dt><dd>Farebrother, R. W. (1988),
+        ``On an analogy between classical mechanics and maximum
+        likelihood estimation'', <em>Osterrische Zeitschrift fur
+        Statistik und Informatik</em>, <i>18</i>, 303-305.
+<p>
+<dt>[<a href="#CITEFriendly92a" name=Friendly92a>5</a>]</dt><dd>Friendly, M. (1992a),
+        ``Graphical methods for categorical data''.  <em>Proceedings
+        of the SAS User's Group International Conference</em>, <i>17</i>,
+        1367-1373.
+<p>
+<dt>[<a href="#CITEFriendly92b" name=Friendly92b>6</a>]</dt><dd>Friendly, M. (1992b),
+        ``Mosaic Displays for Loglinear Models''.  American
+        Statistical Association, <em>Proceedings of the Statistical
+        Graphics Section</em>, 61-68.
+<p>
+<dt>[<a href="#CITEFriendly94a" name=Friendly94a>7</a>]</dt><dd>Friendly, M. (1994a),
+        Mosaic displays for multi-way contingency tables.  <em>
+        Journal of the American Statistical Association</em>, <i>89</i>,
+        190-200.
+<p>
+<dt>[<a href="#CITEFriendly94b" name=Friendly94b>8</a>]</dt><dd>Friendly, M. (1994b),
+        <em>A fourfold display for 2 by 2 by k tables</em>.  Department
+        of Psychology Reports, No. 217, York University.
+<p>
+<dt>[<a href="#CITEFriendly94" name=Friendly94>9</a>]</dt><dd>Friendly, M. (1994c).
+        SAS/IML graphics for fourfold displays.  <em>Observations</em>,
+        <i>3(4)</i>, 47-56.
+<p>
+<dt>[<a href="#CITEFriendly95" name=Friendly95>10</a>]</dt><dd>Friendly, M. (1995).
+        Conceptual and visual models for categorical data.  <em>
+        American Statistician</em>, 1995, <i>49</i>, 153-160.
+<p>
+<dt>[<a href="#CITEHartigan81" name=Hartigan81>11</a>]</dt><dd>Hartigan, J. A., and Kleiner, B. (1981).
+        Mosaics for contingency tables.  In W. F. Eddy (Ed.), <em>
+        Computer Science and Statistics: Proceedings of the 13th
+        Symposium on the Interface</em>.  New York: Springer-Verlag, 
+		  286-273.
+<p>
+<dt>[<a href="#CITERiedwyl83" name=Riedwyl83>12</a>]</dt><dd>Riedwyl, H., &amp; Sch&#252;pbach, M. (1983).
+        Siebdiagramme: Graphische Darstellung von Kontingenztafeln.
+        Technical Report No. 12, Institute for Mathematical
+        Statistics, University of Bern, Bern, Switzerland.
+<p>
+<dt>[<a href="#CITERiedwyl94" name=Riedwyl94>13</a>]</dt><dd>Riedwyl, H., and Sch&#252;pbach, M. (1994).
+        Parquet diagram to plot contingency tables.  In <em>Softstat
+        '93: Advances in Statistical Software</em>, F. Faulbaum (Ed.).
+        New York: Gustav Fischer, 293-299.
+<p>
+<dt>[<a href="#CITESall91a" name=Sall91a>14</a>]</dt><dd>Sall, J. (1991a),
+        ``The conceptual model behind the picture'', <em>ASA
+        Statistical Computing and Statistical Graphics Newsletter</em>,
+        <i>2</i> (April),  5-8.
+<p>
+<dt>[<a href="#CITESall91b" name=Sall91b>15</a>]</dt><dd>Sall, J. (1991b),
+        ``The conceptual model for categorical responses'', <em>ASA
+        Statistical Computing and Statistical Graphics Newsletter</em>,
+        <i>3</i> (November), 33-36.
+<p>
+<dt>[<a href="#CITESnee74" name=Snee74>16</a>]</dt><dd>Snee, R. D. (1974),
+        ``Graphical display of two-way contingency tables'', <em>The
+        American Statistician</em>,  <i>28</i>, 9-12.
+<p>
+<dt>[<a href="#CITETukey59" name=Tukey59>17</a>]</dt><dd>Tukey, J. W. (1959),
+	``A quick, compact,  two sample test to 
+Duckworth's specifications''. <em>Technometrics</em>, <i>1</i>, 31-48.
+</DL>
+<p>
+
+<hr><H4>Footnotes:</H4>
+
+<p><a name=tthFtNtAAB></a><a href="#tthFrefAAB"><sup>(1)</sup></a> Color versions use blue and red at varying lightness to portray both sign and magnitude of residuals.
+<p><hr><small>File translated from T<sub>E</sub>X by 
+<a href="http://venus.pfc.mit.edu/tth/tth.html">T<sub>T</sub>H</a>, version 0.9.</small>
+</body>
+</HTML>

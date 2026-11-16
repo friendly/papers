@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+    <head>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <title>Elliptical Insights (Supplementary materials)</title>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js"></script>
+    <script src="figlist.js"></script>
+
+    <meta name="keywords" value="
+    added-variable plots;
+    Bayesian estimation;
+    concentration ellipse;
+    data ellipse;
+    discriminant analysis;
+    Francis Galton;
+    hypothesis-error plots;
+    kissing ellipsoids;
+    measurement error;
+    mixed-effect models;
+    multivariate meta-analysis;
+    regression paradoxes;
+    ridge regression;
+    statistical geometry
+    ">
+    </head>
+
+    <body>
+        <h1><small>Supplementary materials for:</small>
+            <br/><cite>Elliptical Insights:
+                Understanding Statistical Methods through Elliptical Geometry</cite>
+            <br/><small>Michael Friendly, Georges Monette and John Fox</small>
+        </h1>
+
+
+        <h2>Documents and files provided here</h2>
+        <ul>
+            <li><a href="ellipses-suppfiles.zip">Zip file containing all SAS and R scripts for figures</a></li>
+            <li><a href="supp.pdf">PDF file of Appendices</a>
+			<li><a href="R/gellipsoid_0.6.tar.gz">R gellipsoid source package </a> providing computational support
+			for generalized ellipsoids described in Appendix A.1</li>
+        </ul>
+
+        <h2>Visual directory of source code for figures</h2>
+
+        SAS and R source files are contained in the directories <b>SAS/</b> and <b>R/</b> respectively of the
+        Zip file. See the <a href="supp.pdf">PDF file of Appendices</a> for notes on SAS macros and R
+        packages required to make these run.
+        <p>
+        The table below shows thumbnails of the figures together with the name of the
+        corresponding SAS or R source file.
+        <ul>
+            <li>Click on the file name for the source code.</li>
+            <li>Click on the thumbnail for a full-sized image.</li>
+        </ul>
+        <p>
+
+        <div id="figlist"></div>
+
+
+        <h2>Movies</h2>
+        Several 3D figures in the printed paper are rendered as static images from different views.
+        These are included here as animated GIF files showing various rotations of these 3D scenes.
+        Click on the image below to see the movies.
+
+        <h3>Ellipsoids in added-variable plots</h3>
+        3D views of the relationship between Heart, Coffee and Stress, showing the three regression planes
+        for the marginal models of Heart ~ Coffee (green), Heart ~ Stress (pink), and the joint model,
+        Heart ~ Coffee + Stress (light blue).
+        The 2D walls in the figure show the projections of the ellipsoids into the planes of pairs of
+        variables.
+        <p>
+        <table>
+            <tr>
+                <td><a href="movies/coffee-av3D-1.gif"><img src="fig/coffee-av3D-1.png" width="400" /></a></td>
+                <td><a href="movies/coffee-av3D-2.gif"><img src="fig/coffee-av3D-2.png" width="400" /></a></td>
+            </tr>
+            <tr>
+                <td>Standard view, showing regression planes</td>
+                <td>AV plot view, showing regression planes on edge</td>
+            </tr>
+        </table>
+
+
+        <h3>Generalized ellipsoids</h3>
+        3D views of an example of generalized ellipsoids.
+        The matrix C1 (blue) generates a proper ellipsoid whose dual (C1^{-1}) is also a proper ellipsoid;
+        matrix C2 (red) generates an improper, flat ellipsoid, whose dual is an unbounded cylinder of elliptical cross section.
+        The scale of these images is defined by a unit sphere (gray).
+        <p>
+
+        <table>
+            <tr>
+                <td><a href="movies/gell-3D1.gif"><img src="fig/gell3d-1.png" width="400" /></a></td>
+                <td><a href="movies/gell-3D2.gif"><img src="fig/gell3d-2.png" width="400" /></a></td>
+            </tr>
+            <tr>
+                <td>C2 is a projection of  C1 onto the plane where z=0.</td>
+                <td>View illustrating orthogonality of each C and its dual,  C^{-1}.</td>
+            </tr>
+        </table>
+
+
+        <hr>
+        <!-- Creative Commons License -->
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/"><img alt="Creative Commons License" border="0"
+            src="http://i.creativecommons.org/l/by-nc/3.0/88x31.png" class="cc-button"/></a /><div class="cc-info"><span
+                xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"><span id="work_title"
+                    property="dc:title">Elliptical Insights (Supplementary materials)</span> by <a rel="cc:attributionURL"
+                    property="cc:attributionName" href="https://friendly.github.io/papers/ellipses/">Michael Friendly</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/">Creative Commons Attribution-NonCommercial 3.0 License</a>. </span></div>
+        <script language="JavaScript">
+            <!--
+            document.write("Updated " + document.lastModified);
+            // -->
+        </script>
+    </body>
+</html>
+

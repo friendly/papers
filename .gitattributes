@@ -1,0 +1,24 @@
+# Never let git touch line endings in binary files (core.autocrlf would corrupt
+# PDFs that happen to contain no NUL bytes).
+* text=auto
+*.pdf  binary
+*.ps   binary
+*.eps  binary
+*.gz   binary
+*.zip  binary
+*.tar  binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ppt  binary
+*.pptx binary
+*.doc  binary
+*.docx binary
+*.xls  binary
+*.xlsx binary
+*.rda  binary
+*.rds  binary
+*.mov  binary
+*.mp4  binary
+*.swf  binary

@@ -1,0 +1,131 @@
+<html lang="en">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 11 (filtered)">
+<title>Visualizing Collinearity Diagnostics</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+ /* Style Definitions */
+ body
+ 	{font-family: Arial, sans; }
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{
+	font-size:12.0pt;
+	}
+h1
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:16.0pt;
+	font-family:Arial;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-US link=blue vlink=purple>
+
+
+<h1 align=center style='text-align:center' font-size="20pt">Visualizing Collinearity Diagnostics</h1>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<center>
+<table>
+	<tr><th>Collinearity biplot</th>
+			<th>Tableplot</th>
+	</tr>
+	<tr><td><a href="figs/cars-biplot32.jpg"><img src="figs/cars-biplot32.jpg" height=250></a>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td><a href="figs/cars-tableplot.jpg"><img src="figs/cars-tableplot.jpg" height=250></a></td>
+	</tr>
+</table>
+</center>
+
+
+<p class=MsoNormal>This web page provides
+supplementary materials associated with the article, Where's Waldo: Visualizing
+Collinearity Diagnostics, Michael Friendly &amp; Ernest Kwan, <i>The American
+Statistician</i>, 2009, 63(1), 56-65.</p>
+
+<p class=MsoNormal>It provides the following:</p>
+
+<h2>Software</h2>
+	<ul>
+	<li>SAS software (links to documentation and download).  See the general page, <a
+	href="http://www.datavis.ca/sasmac/">www.datavis.ca/sasmac/</a>
+	for other macros.</li>
+
+		<ul type="square">
+		<li><a href="http://www.datavis.ca/sasmac/biplot.html">biplot macro</a></li>
+		<li><a href="http://www.datavis.ca/sasmac/outlier.html">outlier macro</a></li>
+		<li><a href="http://www.datavis.ca/sasmac/inflplot.html">inflplot macro</a></li>
+		</ul>
+
+	<li>R software: </li>
+
+		<ul type="square">
+		<li>R package <a href="http://cran.us.r-project.org/web/packages/tableplot/index.html">tableplot</a> on CRAN
+		<li>Original <a href="R/tableplot.zip">ZIP archive of tableplot programs and examples: tableplot.zip</a>
+		</ul>
+
+
+	<li>Matlab users:  See the page by Brian Lau, 
+	<a href="http://www.subcortex.net/research/code/collinearity-diagnostics-matlab-code">Matlab code for diagnosing collinearity in a regression design matrix.</a>
+	</li>
+	</ul>
+
+<h2>Examples and scripts:</h2>
+
+
+<h3>Cars data</h3>
+	<ul>
+	<li>Collinearity biplots and related displays for outliers [<a href="vis-outlier.pdf">vis-outlier.pdf</a>]</li>
+	<li>data file [<a href="data/cars.csv">cars.csv</a>]</li>
+	<li>SAS input source file [<a href="sas/cars2.sas">cars2.sas</a>]</li>
+	<li>SAS: Collinearity biplots [<a href="sas/cars-biplot3.sas">cars-biplot3.sas</a>]</li>
+	<li>R: Collinearity diagnostics, tableplot, biplot [<a href="R/cars-colldiag-ex.R">cars-colldiag-ex.R</a>]</li>
+	</ul>
+
+
+<h3>Biomass data: </h3>
+
+	<ul>
+	<li>data file [<a href="data/linthall.dat">linthall.dat</a>]</li>
+	<li>SAS input source file [<a href="sas/linthall.sas">linthall.sas</a>]</li>
+	<li>SAS: Collinearity biplots [<a href="sas/linth2.sas">linth2.sas</a>]</li>
+	<li>R: Collinearity diagnostics, tableplot, biplot [<a href="R/linth-colldiag-ex.R">linth-colldiag-ex.R</a>]</li>
+	</ul>
+
+
+<h3>Baseball data:</h3>
+
+	<ul>
+	<li>Description, analyses and figures [<a href="vis-extra.pdf">vis-extra.pdf</a>]</li>
+	<li>data file [<a href="data/baseball.csv">baseball.csv</a>]</li>
+	<li>SAS input source file: [<a href="sas/baseball.sas">baseball.sas</a>]</li>
+	<li>SAS: collinearity biplot [<a href="sas/base-biplot.sas">base-biplot.sas</a>]</li>
+	<li>R: Collinearity diagnostics, tableplot, biplot [<a href="R/base-colldiag-ex.R">base-colldiag-ex.R</a>]</li>
+	</ul>
+
+
+</body>
+
+</html>

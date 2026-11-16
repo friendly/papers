@@ -1,0 +1,41 @@
+R (and other) data sets dealing with the Titanic data
+=====================================================
+
+datasets::Titanic
+	A 4-dimensional array resulting from cross-tabulating 2201 observations on 4 variables; originally from Dawson
+No 	Name 	Levels
+1 	Class 	1st, 2nd, 3rd, Crew
+2 	Sex 	Male, Female
+3 	Age 	Child, Adult
+4 	Survived 	No, Yes 
+
+Frank Harrell: several data sets on the passemgers on the Titanic
+http://biostat.mc.vanderbilt.edu/wiki/pub/Main/DataSets/titanic.html
+http://biostat.mc.vanderbilt.edu/wiki/pub/Main/DataSets/Ctitanic3.html
+
+
+
+Rebecca Bilbro: https://github.com/rebeccabilbro/titanic
+Details on 1309 passengers on the Titanic
+See also: https://www.kaggle.com/c/titanic/data
+These were originally split into training and test samples for the Kaggle competition.
+Now combined into a single file, 
+passengers.csv
+
+VARIABLE DESCRIPTIONS:
+survival        Survival
+                (0 = No; 1 = Yes)
+pclass          Passenger Class
+                (1 = 1st; 2 = 2nd; 3 = 3rd)
+name            Name
+sex             Sex
+age             Age
+sibsp           Number of Siblings/Spouses Aboard
+parch           Number of Parents/Children Aboard
+ticket          Ticket Number
+fare            Passenger Fare
+cabin           Cabin
+embarked        Port of Embarkation
+                (C = Cherbourg; Q = Queenstown; S = Southampton)
+
+

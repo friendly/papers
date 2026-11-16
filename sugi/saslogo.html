@@ -1,0 +1,55 @@
+<HTML>
+<!--
+Author:	Michael Friendly
+Date:	January 29, 1995
+URL:	http://datavis.ca/papers/saslogo.html
+-->
+
+<HEAD>
+<TITLE>SAS/GRAPH Meets the Logo Turtle</TITLE> 
+<LINK REV=MADE HREF="mailto:friendly@yorku.ca">
+</HEAD>
+
+<BODY>
+<H1><IMG hspace=10 align=center WIDTH=48 HEIGHT=48 SRC="../icons/sugi15/SASturtle.gif" ALT="">SAS/GRAPH Meets the Logo Turtle<IMG  hspace=10 align=center WIDTH=48 HEIGHT=48 SRC="../icons/sugi15/SASturtle2.gif"  ALT="">
+</H1>
+This paper, presented at the <CITE>SUGI 15</CITE> Conference, describes a set of SAS macros which provide the ability to draw interesting geometric designs using the 
+&quot;turtle-relative&quot drawing commands of the Logo language, rather than absolute X-Y coordinates as is characteristic in SAS.  This makes drawing many types of figures much easier.  
+<P>For example, here are some polyspiral and spingon designs drawn with the SAS/GRAPH Logo macros:<BR> 
+<IMG  WIDTH=246 HEIGHT=246 SRC="../icons/sugi15/polyspi.gif" ALT="polyspi">
+<IMG  WIDTH=246 HEIGHT=246 SRC="../icons/sugi15/spingon.gif" ALT="spingon">
+<p>
+[You can try out one of these online on my
+<a href="http://euclid.psych.yorku.ca/SCS/Online/sascgi/repoly.html">Recursive Polygon Page</a>]
+<P>
+Another key feature of the Logo language is recursion, which also simplifies many graphic procedures.  
+Since the SAS data step has neither local variables, nor recursion, it is extremely difficult to do some things that are very easy in Logo.  
+(See my book, <a href="http://books.google.com/books?id=YYKRPwAACAAJ"><cite>Advanced Logo: A Language for Learning</cite></a>
+for more information.)
+However, the SAS macro language supports both local variables and recursion, which allows recursive macros modelling Logo procedures to be defined.  
+A variety of Logo-like designs created in this way with SAS/GRAPH are illustrated.  
+
+<P>For example, a recursive polygon is one which has a smaller polygon drawn at each vertex, down to some depth of recursion. 
+Here are some repoly designs of depth 3 and 4:<BR>
+
+<IMG  WIDTH=246 HEIGHT=246 SRC="../icons/sugi15/repoly2.gif" ALT="">
+<IMG  WIDTH=246 HEIGHT=246 SRC="../icons/sugi15/repoly1.gif" ALT="">
+
+<UL>
+<LI><A HREF="sugilogo.ps.gz">
+PostScript SUGI paper [51K] (saslogo.ps.gz)</A>
+
+<LI><A HREF="logosas.tar.gz">
+saslogo file archive [5K] (logosas.tar.gz)</A>
+
+
+</UL>
+<ADDRESS>
+Michael Friendly,
+Psychology Department<BR>
+York University,
+</ADDRESS> 
+<A HREF="http://www.datavis.ca/">
+Home page</A>
+</BODY>
+</HTML>

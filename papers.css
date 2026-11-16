@@ -1,0 +1,40 @@
+/* Minimal stand-in for the datavis.ca site styles used by index.html */
+:root {
+  --fg: #222;
+  --bg: #fff;
+  --muted: #666;
+  --link: #3b5e1a;
+  --rule: #ddd;
+}
+
+body {
+  margin: 0;
+  color: var(--fg);
+  background: var(--bg);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+header.site {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em 1.5em;
+  align-items: baseline;
+  padding: 0.75em 16px;
+  background: #556b2f;
+}
+header.site a { color: #fff; font-weight: 600; text-decoration: none; }
+header.site .note { color: #e8eedf; font-size: 0.9em; }
+header.site code { color: #fff; }
+
+main { max-width: 60em; margin: 0 auto; padding: 0 16px 3em; }
+
+a { color: var(--link); }
+h2 { border-bottom: 1px solid var(--rule); padding-bottom: 0.2em; margin-top: 1.8em; }
+a.target { color: inherit; text-decoration: none; }
+
+table.noBorder { border-collapse: collapse; width: 100%; }
+table.noBorder td { vertical-align: top; }
+
+img.imageRightAlign { float: right; margin: 0 0 0.5em 1em; max-width: 40%; height: auto; }
+li { margin-bottom: 0.35em; }
+ul::after { content: ""; display: block; clear: both; }

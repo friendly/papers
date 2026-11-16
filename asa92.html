@@ -1,0 +1,826 @@
+<html lang="en"> <head>
+<title>Mosaic Displays for Loglinear Models</title>
+</head>
+<body>
+<h1>Mosaic Displays for Loglinear Models</h1>
+<b>
+Michael Friendly,
+York University,
+Psychology Department<br></b>
+Paper presented at the ASA meetings (Statistical Graphics Section), Boston, August, 1992<br>
+Published: <cite>Proceedings of the Statistical Graphics Section</cite>, 1992, 61-68.
+<hr>
+
+<H2>Contents</H2>
+<UL>
+<LI><A HREF="#H1_Abstract">  Abstract </A>
+<LI><A HREF="#H1_1.">  1. Introduction </A>
+<LI><A HREF="#H1_2.">  2. Enhanced mosaics </A>
+<UL>
+<LI><A HREF="#H2_Displaying">  Displaying Patterns of Association
+ </A>
+</UL>
+<LI><A HREF="#H1_3.">  3. Fitting Models for Multi-way Tables
+</A>
+<UL>
+<LI><A HREF="#H2_Sequential">  Sequential plots and models 
+</A>
+<LI><A HREF="#H2_Implementation">  Implementation  </A>
+</UL>
+<LI><A HREF="#H1_4.">  4. Examples </A>
+<UL>
+<LI><A HREF="#H2_Marital">  Marital Status and Pre- and
+Extra-marital Sex  </A>
+<LI><A HREF="#H2_Models">  Models of Independence and Symmetry for
+Square Tables  </A>
+</UL>
+<LI><A HREF="#H1_References">  References </A>
+</UL>
+
+
+<h1> <a name="H1_Abstract"> Abstract</a> </h1>
+Mosaic displays represent the counts in a contingency table by
+tiles whose size is proportional to the cell count.  This graphical
+display for categorical data generalizes readily to multiway
+tables.  This paper discusses extensions of the mosaic display as
+an exploratory tool to highlight patterns of deviations from
+various models for categorical data.
+
+<p> First, we introduce the use of color and shading to represent
+sign and magnitude of standardized residuals from a specified
+model.  For unordered categorical variables, we show how the
+perception of patterns of association can be enhanced by reordering
+the categories.  Second, we introduce sequential mosaics of
+marginal subtables, together with sequential models for these
+tables.  For a class of sequential models of joint independence,
+the individual mosaics provide a graphic representation of a
+partition of the overall G &sup2; for complete independence in the
+full table into portions attributable to hypotheses about the
+marginal subtables.  These methods are illustrated for
+multidimensional tables and for models of quasi-independence and
+quasi-symmetry in square tables.
+<p>
+<b> Keywords:</b> categorical data, marginal tables, graphical
+display, contingency tables
+
+
+<h1> <a name="H1_1."> 1. Introduction</a> </h1>
+Various graphical methods have been suggested for studying the
+pattern of association between row and column categories in two-way
+contingency tables (e.g., Cohen, 1980; Friendly, 1991a; Snee,
+1974).  These procedures do not generalize, however, to <I>n</I>-way
+tables, nor do they serve to display the departure from models
+other than complete independence, such as uniform association,
+quasi-independence or quasi-symmetry.  The mosaic display,
+introduced by Hartigan and Kleiner (1981, 1984), is one method that
+extends quite naturally to multiway tables and can be used to
+display the residuals from <em>any</em> log-linear models.
+
+<p> <a href="#Tab_hairdat"> Table 1</a> shows data on the relation
+between hair color and eye color among 592 subjects (students in a
+statistics course) collected by Snee (1974).  The Pearson chi&#178;
+for these data is 138.3 with 9 degrees of freedom, indicating
+substantial departure from independence.  The question is how to
+understand the <i> nature</i> of the association between hair and
+eye color.
+<hr>
+ 
+<a name="Tab_hairdat"> Table 1:  </a> Hair-color eye-color data
+<pre>
+                      Hair Color
+Eye
+Color     BLACK    BROWN      RED    BLOND  | Total
+                                            |
+Brown        68      119       26        7  |   220
+Blue         20       84       17       94  |   215
+Hazel        15       54       14       10  |    93
+Green         5       29       14       16  |    64
+--------------------------------------------+------
+Total       108      286       71      127  |   592
+</pre>
+<hr>
+
+<p> A mosaic represents each cell of the table by a rectangle (or
+&quot;tile&quot;) whose area is proportional to the cell count.  <a
+href="#Fig_mosaica"> Figure 1</a> is a mosaic of the data in <a
+href="#Tab_hairdat"> Table 1</a>.  The mosaic is constructed by
+dividing a unit square vertically by hair color, then horizontally
+by eye color within each hair color.
+
+<p> <a name="Fig_mosaica"><IMG  WIDTH=241 HEIGHT=253 SRC="../icons/sugi17/fig5.gif" alt="Fig1" align=left> Figure 1</a>:  Column proportion mosaic
+for hair color and eye color.  Column widths show the marginal
+proportions of hair colors.  The heights of tiles show the
+conditional frequency of eye color given hair color.  The area of
+each tile is proportional to cell frequency.
+
+<p> Further variables are introduced by recursively subdividing
+each tile by the conditional proportions of the categories of the
+next variable in each cell, alternating on the vertical and
+horizontal dimensions of the display.  Note that like the
+scatterplot matrix, this scheme allows an arbitrary number of
+variables to be represented, with the main limitation being
+resolution in the display.  The final tiles are separated slightly,
+with greater spacing at the earlier subdivisions, to make small
+counts more visible and to allow visual aggregation of the tiles
+for nested divisions on the horizontal and vertical dimensions.
+See Friendly (1992c) and Wang (1985) for detailed descriptions of
+algorithms for constructing the basic mosaic display.
+
+<h1> <a name="H1_2."> 2. Enhanced mosaics</a> </h1>
+Although the basic mosaic display shows the data in any contingency
+table, it does not in general provide a visual representation of
+the fit of the data to a specified model.  In the two-way case
+independence is shown when the tiles in each row align vertically,
+but visual assessment of other models is more difficult.
+
+<p> The present paper extends the use of the mosaic display as a
+data-analytic tool in two ways.  First, for a given display we can
+fit a baseline model of independence or partial independence and
+use color and shading of the tiles to reflect departures from that
+model.  For unordered categorical variables, perception of the
+pattern of association can be enhanced by reordering the categories
+to put residuals of like signs in opposite corners.  A general
+scheme for reordering categories is based on a singular value
+decomposition (SVD) of residuals from independence.  Second, for
+multiway tables we find it useful to examine a sequence of mosaic
+displays of marginal subtables as successive variables are brought
+into the cross-classification.  While any log-linear model can be
+fit to the full table, a class of sequential models of joint
+independence provide a graphic representation of a partition of the
+overall likelihood-ratio G &sup2; for complete independence in the
+full table into portions attributable to hypotheses about the
+marginal subtables.
+
+<h2> <a name="H2_Displaying"> Displaying Patterns of Association
+</a> </h2>
+
+In Hartigan and Kleiner's (1981) original version, all the tiles
+are unshaded and drawn in one color, so only the relative sizes of
+the rectangles indicate deviations from independence.  We can
+increase the visual impact of the mosaic by using shading to
+reflect the size of the residual and by reordering rows and columns
+to make the pattern more coherent.  The resulting display shows
+both the observed frequencies, denoted n sub ij, and the pattern of
+deviations from a specified model.
+
+<h3> Displaying residuals </h3> <a href="#Fig_mosaicb"> Figure
+2</a> gives the extended mosaic plot, showing the standardized
+Pearson deviation from independence, d sub ij  =  n sub ij  -  m
+hat sub ij  /  sqrt &lt; m hat sub ij > by the color and shading of
+each rectangle:  cells with positive deviations are
+outlined with solid blue lines, with large residuals shaded blue;
+negative deviations are outlined
+with broken red lines and shaded red.<a href="#FN_1">(1)</a>  The
+absolute value of the deviation is portrayed by shading density:
+cells with absolute values less than 2 are empty; cells with | d
+sub ij | &gt;= 2 are filled; those with | d sub ij | &gt;= 4 are
+filled with a darker pattern.  Standardized deviations are often
+referred to a standard Gaussian distribution.  Under the assumption
+of independence, these values roughly correspond to two-tailed
+probabilities p &lt; .05 and p &lt; .0001 that a given value of | d
+sub ij | exceeds 2 or 4.
+
+
+<p> <a name="Fig_mosaicb"><IMG  WIDTH=245 HEIGHT=245 SRC="../icons/asa92/fig2.gif" alt="Fig2" align=left> Figure 2</a>:  Enhanced mosaic,
+reordered and shaded.  Deviations from independence are shown by
+color and shading.  Positive deviations have solid outlines and are
+shaded blue.  Negative deviations have dashed outlines and are
+shaded red.  The two levels of shading density correspond to
+standardized deviations greater than 2 and 4 in absolute value.
+This form of the display generalizes readily to multi-way tables.
+
+<br>-----------------------<br>
+
+<a name="FN_1">(1)</a>Mosaic displays are most effective 
+    in color.  However the sign information is lost if the
+    figure is reproduced in monochrome, so we
+    represent the sign of the deviation redundantly.  One
+    solution is add a stick-on dot with a + sign to cells with
+    positive residuals, which seems to work well.  The software for
+	 mosaic displays (<a href="#Friendly92c">Friendly, 1992c</a>) provides a number of grayscale and cross-hatch
+	 schemes as well.
+<br>-----------------------<br>
+
+<h3> Reordering categories </h3> 
+When the row or column variables
+are unordered, we are also free to rearrange the corresponding
+categories in the plot to help show the nature of association.  For
+example, in <a href="#Fig_mosaicb"> Figure 2</a>, the eye color
+categories have been permuted so that the deviations from
+independence have an opposite-corner pattern, with positive values
+running from SW to NE corners, negative values along the opposite
+diagonal.  Coupled with size and shading of the tiles, the excess
+in the black-brown and blond-blue cells, together with the
+underrepresentation of brown-eyed blonds and people with black hair
+and blue eyes is now quite apparent.  Though the table was
+reordered based on the d sub ij values, both dimensions in <a
+href="#Fig_mosaicb"> Figure 2</a> are ordered from dark to light,
+suggesting an explanation for the association.
+
+<p> While the categories in small tables can often be rearranged by
+inspection, a more general approach is based on correspondence
+analysis (CA) (e.g., Greenacre, 1984), which assigns scores to the
+categories so that the Pearson correlation of the optimally scaled
+variables is maximized.  For a two-way table the scores for the row
+categories, namely x sub im, and column categories, y sub jm, on
+dimension m  =  1,  ...  , M are derived from the SVD of Pearson
+residuals to account for the largest proportion of the chi&#178; in
+a small number of dimensions.  This decomposition may be expressed
+as  d sub ij   /  sqrt ( n )  =  Sigma from m=1
+to M  lambda sub m x sub im y sub jm, where lambda sub 1 &gt;=
+lambda sub 2 &gt;=  ...  &gt;= lambda sub M, and M  =  min ( I-1 ,
+J-1 ).  In M dimensions, the decomposition is exact.  A rank-d
+approximation in d dimensions is obtained from the first d singular
+values, and the proportion of chi&#178; accounted for by this
+approximation is n Sigma to d &lt; lambda sub m &sup2; &lt;   /
+chi&#178;.
+
+<p> Thus, assigning the scores x sub i1 to the row categories and y
+sub j1 to the column categories provides the maximum Pearson
+(canonical) correlation, equal to lambda sub 1, between these
+optimally scaled variables.  Therefore, rearranging row or column
+categories according to the CA scores x sub i1, or y sub j1 on the
+first (largest) dimension should provide an ordering for the mosaic
+display to best reveal the pattern of association.  This ordering
+captures the nature of the association to the extent that lambda
+sub 1 &sup2;  /  Sigma to M lambda sub m &sup2; is large.  For the
+hair-eye data, for example, the singular values are .456 (89%),
+.149, and .051.  A plot of the row and column points for the first
+two dimensions, shown in <a href="#Fig_correye"> Figure 3</a>,
+confirms that the order of the scores for eye colors on the first
+dimension is precisely the order determined by inspection from <a
+href="#Fig_mosaica"> Figure 1</a>.
+
+<p> <a name="Fig_correye"><IMG  WIDTH=260 HEIGHT=164 SRC="../icons/sugi17/fig8.gif" alt="Fig3" align=left> Figure 3</a>:  Correspondence analysis
+plot.  Positions of points for hair color (all caps) and eye colors
+(initial cap) on the first (largest) dimension are used to
+rearrange categories in the mosaic display.
+
+
+<h1> <a name="H1_3."> 3. Fitting Models for Multi-way Tables</a>
+</h1>
+When three or more variables are represented in the mosaic, we can
+fit several different models of independence and display the
+residuals from those models.  We treat these models as null or
+baseline models, which may not fit the data particularly well.  The
+deviations of observed frequencies from expected, displayed by
+shading, will often suggest terms to be added to to an explanatory
+model that achieves a better fit.
+
+<p> For example, the model of complete independence, the log-linear
+model [A] [B] [C] for a three-way table, puts all higher terms,
+and hence all association among the variables into the residuals.
+Another possibility is to fit the model in which variable C is
+jointly independent of variables A and B, the log-linear model [ A
+B ] [ C ].  Residuals from this model show the extent to which
+variable C is related to the combinations of variables A and B but
+they do not show any association between A and B.  The simplest
+extension of joint independence to four variables is the model [ A
+B C ] [ D ].
+
+<p> For example, with the data from <a href="#Tab_hairdat"> Table
+1</a> broken down by sex, fitting the model [HairEye][Sex] allows
+us to see the extent to which the joint distribution of hair-color
+and eye-color is associated with sex.  For this model, the
+likelihood-ratio G &sup2; is 29.35 on 15 df (p  =  .015), indicating
+some lack of fit.  The three-way mosaic, shown in <a
+href="#Fig_mosaicc"> Figure 4</a>, highlights two cells: males are
+underrepresented among people with brown hair and brown eyes, and
+overrepresented among people with brown hair and blue eyes.
+Females in these cells have the opposite patterns, with residuals
+just shy of +- 2.  The d sub ij &sup2; for these four cells account
+for 15.3 of the chi&#178; for the model [HairEye] [Sex].  Hence,
+except for these cells hair color and eye color appear unassociated
+with sex.
+
+
+<p> <a name="Fig_mosaicc"><IMG  WIDTH=245 HEIGHT=245 SRC="../icons/asa92/fig4.gif" alt="Fig4" align=left> Figure 4</a>:  Mosaic display for hair
+color, eye color, and sex.  Each tile from <a href="#Fig_mosaicb">
+Figure 2</a> is divided in proportion to the frequencies of males
+and females in that cell (the division by sex is fictitious).
+Residuals from the model [Hair Eye] [Sex] are shown by shading.
+
+
+<h2> <a name="H2_Sequential"> Sequential plots and models </a>
+</h2>
+
+The recursive construction of the mosaic makes it easy and often
+informative to draw the display for each of the marginal subtables
+{A}, {AB}, {ABC}, and so on, up to the <I>n</I>way table. For both
+baseline models and an arbitrary user-specified log-linear model,
+we can define a set of sequential models for these subtables whose
+residuals are displayed in the corresponding mosaic.
+
+<p> In particular, the series of mosaic plots fitting models of
+joint independence to the marginal subtables can be viewed as
+partitioning the hypothesis of complete independence in the full
+table.  For a three-way table, the hypothesis of complete
+independence, H sub { A otimes B otimes C } can be expressed
+as
+
+<blockquote>
+<IMG  WIDTH=177 HEIGHT=15 SRC="../icons/asa92/eq1.gif">    (1)
+</blockquote>  
+
+     <!-- DF 
+	  <blockquote>
+     H sub { A otimes B otimes C }   =
+     H sub { A otimes B }  meet 
+     H sub { AB otimes C }
+     ,
+     (1)
+     </blockquote>
+	   eDF -->
+
+
+where H sub { A otimes B } denotes the hypothesis that A and
+B are independent in the marginal subtable formed by collapsing
+over variable C, and H sub  { AB otimes C }  denotes the
+hypothesis of joint independence of C from the AB combinations.
+When expected frequencies under each hypothesis are estimated by
+maximum likelihood, the likelihood ratio G &sup2;s are additive:
+
+<blockquote>
+<IMG  WIDTH=172 HEIGHT=19 SRC="../icons/asa92/eq2.gif">    (2)
+</blockquote>  
+
+     <!-- DF 
+	  <blockquote>
+     G sub { A otimes B otimes C }  &sup2;  =
+     G sub { A otimes B }  &sup2;  +
+     G sub { AB otimes C } &sup2;
+     .
+     (2)
+     </blockquote>
+	   eDF -->
+
+
+This partitioning scheme extends readily to higher-way tables.  For
+the hair-eye data, the mosaic displays for the [Hair] [Eye]
+marginal table and the [HairEye] [Sex] table in <a
+href="#Fig_mosaicb"> Figure 2 </a>and <a href="#Fig_mosaicc">
+Figure 4</a> can be viewed as representing the partition
+
+<pre>
+Model                      df        <I>G&sup2;</I>
+
+[Hair] [Eye]                9       146.44
+[Hair, Eye] [Sex]          15        29.35
+------------------------------------------
+[Hair] [Eye] [Sex]         24       179.79
+</pre>
+
+<p> This sequence of models of joint independence has another
+interpretation when the ordering of the variables is based on a set
+of ordered causal hypotheses regarding the relationships among
+variables (Goodman, 1973).  Suppose, for example, that the causal
+ordering of four variables is A  -->  B  -->  C  -->  D, where the
+arrow means &quot;is antecedent to&quot;.  Goodman suggests that
+the conditional joint probabilities of B, C, and D given A can be
+characterized by the recursive logit models which treat B as a
+response to A, C as a response to A and B jointly, and D as a
+response to A, B and C.  These are equivalent to the log-linear
+models which we fit as the sequential baseline models of joint
+independence, namely [A] [B], [AB] [C], and [ABC] [D].  The
+combination of these models with the marginal probabilities of A
+gives a characterization of the joint probabilities of all four
+variables.
+
+<h2> <a name="H2_Implementation"> Implementation </a> </h2>
+
+The mosaic displays are implemented in SAS/IML, whose combination
+of matrix operations, functions for contingency table analysis and
+graphics, make an ideal environment for designing novel displays
+for multiway categorical data.
+
+<p> Two versions of the program have been developed.  The
+generalized version applies to any log-linear model which can be
+estimated by iterative proportional fitting (IPF).  It fits either
+a user-specified model or any of the sequential baseline models of
+mutual independence, joint independence, or conditional
+independence,  calculates Pearson or deviance residuals, and
+produces mosaic displays of sequential subsets of variables up to
+the full <I>n</I>way table.  
+This version of the program 
+<A HREF="http://euclid.psych.yorku.ca/ftp/sas/vcd/mosaics/mosaics.sas"> (mosaics.sas)</A> is 
+available for ftp transfer, together with a 
+<A HREF="../mosaics/mosaics.html"> User's Guide </A>. 
+
+
+<p> A specialized version of the program, under development,
+produces the mosaic display from tables of counts and residuals
+calculated externally.  This version is designed to be used with
+other software for fitting models which cannot be estimated by IPF,
+such as models for ordered variables or square tables which require
+Newton-Raphson iteration.
+
+<h1> <a name="H1_4."> 4. Examples</a> </h1>
+Two examples are presented to illustrate the use of mosaic
+displays.  The first example concentrates on the use of the mosaic
+display for model building, showing sequential plots for a 4-way
+table.  The second example illustrates mosaic displays for
+assessing models of independence and symmetry in square tables.
+
+<h2> <a name="H2_Marital"> Marital Status and Pre- and
+Extra-marital Sex </a> </h2>
+
+<a href="#Tab_maridat"> Table 2</a> lists the 2 sup 4 table from a
+study of divorce patterns reported by Thornes and Collard (1979)
+and analyzed by Agresti (1990, &#167;7.2.4).  A sample of about 500
+people who had petitioned for divorce, and a similar number of
+married people were asked two questions regarding their pre- and
+extra-marital sexual experience:  (1) &quot;Before you married your
+(former) husband/wife, had you ever made love with anyone
+else?&quot;, (2) &quot;During your (former) marriage (did you) have
+you had any affairs or brief sexual encounters with another
+man/woman?&quot; The table variables are thus gender (G), reported
+pre-marital (P) and extra-marital (E) sex, and current marital
+status (M).
+<hr>
+<a name="Tab_maridat"> Table 2:  </a> Marital Status in Relation to
+Gender and Report of Pre- and Extra-Marital Sex
+<pre>
+          Pre-    Extra-                 Still
+Gender   Marital  Marital  Divorced     Married
+------------------------------------------------
+Men        N        N         68         130
+           N        Y         17           4
+           Y        N         60          42
+           Y        Y         28          11
+ 
+Women      N        N        214         322
+           N        Y         36           4
+           Y        N         54          25
+           Y        Y         17           4
+------------------------------------------------
+</pre>
+<hr>
+ 
+<p> In this analysis we consider the variables in the order G, P,
+E, and M.  That is, in the first stage, we treat P as a response to
+G and examine the [Gender][Pre] mosaic to assess whether gender has
+an effect on pre-marital sex.  The second stage treats E as a
+response to G and P jointly; we examine the mosaic for [Gender,
+Pre] [Extra] for evidence that extra-marital sex is related to
+either gender or pre-marital sex.  Finally, the mosaic for [Gender,
+Pre, Extra] [Marital] is examined for evidence of the dependence of
+marital status on the three previous variables jointly.
+
+<p> Each stage results in a fitted model for the corresponding
+marginal table.  As noted in Section 3, these models are equivalent
+to the recursive logit models whose path diagram is G  -->  P  -->
+E  -->  M.  The G &sup2; values for these models shown below provide
+a decomposition of the G &sup2; for the model of complete
+independence fit to the full table.
+
+<pre>
+      Model           df          <I>G</I>
+     -----------------------------------
+      [G] [P]          1         75.259
+      [GP] [E]         3         48.929
+      [GPE] [M]        7        107.956
+     -----------------------------------
+      [G][P][E][M]    11        232.142
+</pre>
+
+<p> The [Gender] [Pre] mosaic is shown in <a href="#Fig_marmos1">
+Figure 5</a>.  G &sup2; for the model [G] [P] indicates that
+gender and reported pre-marital sex are highly associated.  The
+mosaic shows that men are much more likely to report pre-marital
+sex than are women; the sample odds ratio is 3.7.  We also see that
+women are about twice as prevalent as men in this sample.
+
+
+<p> <a name="Fig_marmos1"><IMG  WIDTH=245 HEIGHT=245 SRC="../icons/asa92/fig5.gif" alt="Fig5" align=left> Figure 5</a>:  Mosaic display for
+gender and pre-martial sexual experience.  Residuals from the model
+[G] [P] are shown by shading.
+
+<p> For the second stage, the [Gender, Pre] [Extra] mosaic is shown
+in <a href="#Fig_marmos2"> Figure 6</a>.  G &sup2; for the model [G
+P][E] is 48.93 on 3 df, indicating that extra-marital sex is not
+independent of gender and pre-marital sex jointly.  From the
+pattern of deviations in <a href="#Fig_marmos2"> Figure 6</a> we
+see that men and women who have reported pre-marital sex are far
+more likely to report extra-marital sex than those who have not.
+>From the marginal totals for the [GP] [E] table, the conditional
+odds ratio of extra-marital sex is 3.61 for men and 3.56 for women.
+The pattern of deviations in the mosaic suggests the need for a [P
+E] term in an explanatory model for extra-marital sex, but a [G E]
+term incorporating an association between gender and extra-marital
+sex, given pre-martial sex, appears unnecessary.
+
+<p> <a name="Fig_marmos2"><IMG  WIDTH=245 HEIGHT=245 SRC="../icons/asa92/fig6.gif" alt="Fig6" align=left> Figure 6</a>:  Mosaic display for
+gender, pre-martial and extra-marital sexual experience.
+Deviations from the model of joint independence, [GP] [E] are
+shown.
+
+
+<p> The mosaic for the model [Gender, Pre, Extra] [Marital] for the
+final stage is shown in <a href="#Fig_marmos3"> Figure 7</a>.  G
+&sup2; for this model is 107.96 on 7 df, indicating that marital
+status depends strongly on gender, pre-marital sex, and
+extra-marital sex jointly.  The relationship displayed by the
+pattern of deviations in the mosaic is more complex than a single
+interaction.  Among those reporting no pre-marital sex (bottom part
+of <a href="#Fig_marmos3"> Figure 7</a>), there is a similar
+pattern of cell sizes and deviations for marital status in relation
+to gender and extra-marital sex:  Given that people did not report
+pre-marital sexual experience, they are more likely to still be
+married if they report no extra-marital sex and more likely to be
+divorced if they did.  Among those who do report pre-marital sex
+(top part of <a href="#Fig_marmos3"> Figure 7</a>), there also a
+similar pattern of sign of deviations, positive for those who are
+divorced, negative for those who are married.
+
+
+<p> <a name="Fig_marmos3"><IMG  WIDTH=245 HEIGHT=245 SRC="../icons/asa92/fig7.gif" alt="Fig7" align=left> Figure 7</a>:  Four-way mosaic for
+gender, pre-marital sex, extra-marital sex and marital status.
+Deviations from the model of joint independence, [GPE] [M] are
+shown by shading.  The pattern of residuals suggests some terms to
+be included in an explanatory model.
+
+
+<p> The four 2  x  2 blocks of the mosaic show the conditional
+relation of extra-marital sex to marital status.  Comparing these,
+we see that the odds ratios of divorce in relation to reported
+extra-martial sex are considerably larger for men and women who
+also reported pre-marital sex.  These observations imply the need
+to incorporate effects [PM] and [EM] of pre-marital and
+extra-marital sex on marital status, and probably the interaction
+[PEM] into an explanatory model.
+
+<p> Thus, <a href="#Fig_marmos3"> Figure 7</a> suggests the
+relationship between marital status and gender, pre-marital sex and
+extra-marital sex can be modelled by including the two-way
+associations [PM] and [EM], or the three-way term [PEM].  Since
+this stage considers marital status as a response to gender,
+pre-marital sex and extra-marital sex, we would normally fit the
+[GPE] marginal table, and consider the models [GEP] [PM] [EM]
+or [GPE] [PEM] for the complete table.
+
+<p> The model [GPE] [PM] [EM] does not fit particularly well,
+producing G &sup2;  =  18.16 on 5 df ( p  =  .0028 ).  To see why,
+we display the residuals from this model in <a href="#Fig_marmos4">
+Figure 8</a>.  Only one cell has a standardized residual which
+exceeds 2:  there are more still-married men who reported both
+pre-marital sex and extra-marital sex than the model predicts.  The
+contribution to chi&#178; from this cell is d &sup2;  =  6.92, which
+is not large enough to account for the lack of fit.  Examining the
+signs of residuals in each of the four corner blocks in <a
+href="#Fig_marmos4"> Figure 8</a>, we see that the relationship of
+extra-marital sex to marital status is opposite to each other in
+the NW and SE blocks and in the SW and NE blocks, suggesting an
+interaction between P and E in their effects on marital status,
+that is, the model [GPE] [PEM].  This model does indeed fit
+quite well, G &sup2;  =  5.25 with 4 df ( p  =  .26 ).  Further
+examination reveals a small but significant main effect of gender,
+resulting in G &sup2;  =  0.70 on 3 df ( p  =  .87 ) for the model
+[GPE] [PEM] [GM].
+
+<p> <a name="Fig_marmos4"><IMG  WIDTH=245 HEIGHT=245 SRC="../icons/asa92/fig8.gif" alt="Fig8" align=left> Figure 8</a>:  Four-way mosaic for
+gender, pre-marital sex, extra-marital sex and marital status.
+Shading shows residuals from the model [GPE] [PM] [EM].  The
+signs of residuals suggest the need for a [PEM] term in the model.
+
+
+<p> The process of finding an acceptable model for these data could
+clearly be carried out numerically, by fitting all possible models,
+or using a method of forward- or backward-selection.  For
+multi-dimensional tables with higher-order associations, the
+interpretation of the log-linear parameters for these associations
+is often difficult.  The sequence of mosaic displays reveals the
+pattern of these associations as each variable is included.  As we
+move from a baseline fit to an explanatory model these associations
+are eliminated from the mosaic.  Hence, we can think of the process
+of finding an acceptable model as &quot;cleaning the mosaic&quot;.
+
+<p> Having found an acceptable model, other displays may be useful
+for presentation purposes.  If we focus solely on predicting
+marital status, the minimal adequate log-linear model [GPE] [PEM]
+is equivalent to the logit model
+
+
+<blockquote>
+<IMG  WIDTH=255 HEIGHT=19 SRC="../icons/asa92/eq3.gif">    (3)
+</blockquote>  
+<!-- DF
+  logit (Divorced)  =
+  alpha  +
+  beta sub i sup Pre  +
+  beta sub j sup Extra  +
+  beta sub j sup Pre.Extra
+  (3)
+ eDF -->
+
+<p>
+To interpret this model we plot the observed and predicted logits
+for the combinations of gender, pre-marital and extra-marital sex
+in <a href="#Fig_logmar"> Figure 9</a>.  The interaction of
+pre-martial and extra-marital sex is clear:  Those who report
+extra-marital sex are much more likely to be divorced than those
+who do not.  However, pre-marital sex with another partner makes
+the faithful spouses more likely to be be divorced, while it
+reduces the odds of divorce for those who strayed.
+
+
+<p> <a name="Fig_logmar"><IMG  WIDTH=247 HEIGHT=247 SRC="../icons/asa92/fig9.gif" alt="Fig9" align=left> Figure 9</a>:  Effects of Pre- and
+Extra-marital sex on Marital status.  Points for men are filled,
+points for women are unfilled.
+
+<h2> <a name="H2_Models"> Models of Independence and Symmetry for
+Square Tables </a> </h2>
+
+Several graphical methods for two-way tables are also based on the
+fact that expected frequencies under independence are proportional
+to products of the row and column totals and they represent each
+cell by a rectangle whose area shows frequency or deviation from
+independence (Friendly, 1992).  Riedwyl and Sch&uuml;pbach (1983)
+propose a <i> <b> sieve diagram</b> </i> in which the area of each
+rectangle is proportional to expected frequency and observed
+frequency is shown by the number of squares in each rectangle.  The
+association plot (Cohen, 1980; Friendly, 1991a) plots each cell by
+a rectangle that has (signed) height &prop d sub ij and width &prop
+sqrt &lt; m sub ij>.  The area of each rectangle is therefore
+proportional to n sub ij  -  m sub ij.
+
+<p> While these methods are useful for unstructured tables, they do
+not serve to display the residuals from models less restrictive
+than complete independence that apply to square tables and tables
+with ordered categories.  We illustrate the use of mosaic displays
+for assessing models of independence and symmetry in square tables.
+
+<p> <a href="#Tab_visdat"> Table 3</a> presents visual acuity data
+compiled from 7477 women employees, aged 30-39, in Britain's Royal
+Ordnance factories in 1943-1946 from Stuart (1953), analyzed by
+Bishop, Fienberg and Holland (1975) and many others.  For each
+person the left and right eyes were classified into vision grades,
+from 1 (highest) to 4 (lowest).
+ 
+<hr>
+ 
+<a name="Tab_visdat"> Table 3:  </a> Unaided distant vision data
+<pre>
+                       Left Eye Grade
+  Right Eye      1       2       3       4
+    Grade   ---------------------------------
+     1         1520     266     124      66
+     2          234    1512     432      78
+     3          117     362    1772     205
+     4           36      82     179     492
+</pre> 
+<hr>
+ 
+
+<h3> Independence and Quasi-independence </h3> For data such as
+these, the model of independence may be discounted a priori, but
+given the enormous sample size, serves as a basis for comparison
+with other models discussed below.  The G &sup2; is 6671 on 9 df,
+and the mosaic display for the independence model (<a
+href="#Fig_vis1"> Figure 10</a>) simply shows what is obvious from
+the table:  most people have equal vision in the two eyes.
+
+<p><a name="Fig_vis1"><IMG  WIDTH=262 HEIGHT=249 SRC="../icons/asa92/fig10.gif" alt="Fig10" align=left> Figure 10</a>:  Fit of independence model
+for vision data
+
+
+<p> It is more reasonable to ask whether eye grades are independent
+for the off-diagonal cells, that is, when the two eyes differ.  The
+model of quasi-independence ignores the diagonal cells.  Even so
+there is considerable lack of fit, G &sup2;  =  199 on 5 df.  The
+mosaic display for this model (<a href="#Fig_vis2"> Figure 11</a>)
+shows mostly positive residuals along the principal sub-diagonals:
+when eye grades differ, they are most likely to differ by one eye
+grade.
+
+<p> <a name="Fig_vis2"><IMG  WIDTH=262 HEIGHT=249 SRC="../icons/asa92/fig11.gif" alt="Fig11" align=left> Figure 11</a>:  Fit of quasi-independence
+model for vision data
+
+
+<h3> Symmetry and Quasi-symmetry </h3> The pattern of residuals is
+roughly symmetric in <a href="#Fig_vis2"> Figure 11</a>.  This
+suggests a test of the model of symmetry, m sub ij  =  m sub ji , i ne j, which asserts that when vision is unequal, neither eye is
+more likely to be better.  This model must also be rejected, G sup
+2  =  19.25 (6 df), and the mosaic display for this model (<a
+href="#Fig_vis3"> Figure 12</a>) shows why: the residuals are
+predominantly positive in the lower right.  When the eyes do
+differ, the right eye is more likely to be better, at least in this
+sample of women.  The largest contributions to lack of fit come
+from the shaded (1,4) and (4,1) cells where the better eye get the
+highest grade and the other eye gets the worst grade.  Yet, these
+two cells together account for only 8.8 of the G &sup2;, so we must
+conclude that the apparent asymmetry goes beyond these two cells.
+
+<p> <a name="Fig_vis3"><IMG  WIDTH=262 HEIGHT=249 SRC="../icons/asa92/fig12.gif" alt="Fig12" align=left> Figure 12</a>:  Fit of symmetry model for
+vision data
+
+
+<p> The symmetry model, however, assumes marginal homogeneity:
+that the marginal distributions of eye grades are the same for both
+eyes.  A model of quasi-symmetry tests for symmetry ignoring
+marginal differences.  The fit of this model is just acceptable, G
+&sup2;  =  7.27 on 3 df (p  =  .06).  The mosaic display (<a
+href="#Fig_vis4"> Figure 13</a>), however, shows a suspiciously
+consistent pattern of signs on the off-diagonal cells:  there still
+a small indication of right-eye superiority, even allowing for
+marginal inhomogeneity.
+
+<p><a name="Fig_vis4"><IMG  WIDTH=262 HEIGHT=249 SRC="../icons/asa92/fig13.gif" alt="Fig13" align=left> Figure 13</a>:  Fit of quasi-symmetry
+model for vision data
+
+<p> The sequence of mosaic displays in <a href="#Fig_vis1"> Figure
+10 </a>to <a href="#Fig_vis4"> Figure 13</a> resemble standard
+residual plots for linear models in that, as gross structure in the
+data is moved from the residuals to the fit, systematic patterns in
+what remains may suggest more subtle patterns of association that
+we may wish to explain.  More generally, the mosaic display
+provides a natural and direct graphic adjunct to log-linear
+modelling.  Fitting a model shows whether or not variables are
+associated, while mosaic displays reveal how those variables are
+related.
+
+
+<h1> <a name="H1_References"> References</a> </h1>
+<ol>
+
+<li><a name="Agresti90">Agresti, A. (1990),</a> <cite> Categorical
+       Data Analysis</cite>, New York: Wiley-Interscience.
+
+<li><a name="Bishop75">Bishop, Y. M. M., Fienberg, S. E., and
+       Holland, P.W. (1975),</a> <cite> Discrete Multivariate
+       Analysis</cite>.  Cambridge, MA: MIT Press.
+
+<li><a name="Cohen80">Cohen, A. (1980),</a> &quot;On the graphical
+       display of the significant components in a two-way
+       contingency table&quot;, <cite> Commun. Statist.-Theor.
+       Meth.</cite>, <i> A9</i>, 1025-1041.
+
+<li><a name="Friendly91a">Friendly, M. (1991a),</a> <cite> SAS
+       System for Statistical Graphics</cite>.  Cary, NC: SAS
+       Institute Inc.
+
+<li><a name="Friendly91b">Friendly, M. (1991b),</a> <cite> Mosaic
+       displays for multi-way contingency tables</cite>.  York
+       Univ.: Dept. of Psychology Reports, 1991, No. 195.
+
+<li><a name="Friendly92a">Friendly, M. (1992a),</a> &quot;SAS macro
+       programs for statistical graphics&quot;, <cite>
+       Psychometrika</cite>, <i> 57</i>, 313-317.
+
+<li><a name="Friendly92b">Friendly, M. (1992b),</a> 
+		<A HREF="sugi/sugi17-paper.html">	&quot;Graphical
+       methods for categorical data&quot;</a>, <cite> Proceedings of
+       the SAS User's Group International Conference</cite>, <i>
+       17</i>, 1367-1373.
+
+<li><a name="Friendly92c">Friendly, M. (1992c),</a> 
+		 <A HREF="../mosaics/mosaics.pdf"><cite> User's
+       guide for MOSAICS</cite></a>.  York Univ.: Dept. of Psychology
+       Reports, 1992, No. 206.
+
+<li><a name="FriendlyFox92">Friendly, M. and Fox, J. (1992),</a>
+       <cite> Interpreting higher order interactions in log-linear
+       analysis:  A picture is worth 1000 numbers</cite>.  York
+       Univ.: Inst. for Social Research Report.
+
+<li><a name="Goodman73">Goodman, L. A. (1973),</a> &quot;The
+       analysis of multidimensional contingency tables when some
+       variables are posterior to others: a modified path analysis
+       approach&quot;, <cite> Biometrika</cite>, <i> 60</i>,
+       179-192.
+
+<li><a name="Greenacre84">Greenacre, M. (1984),</a> <cite> Theory
+       and Applications of Correspondence Analysis</cite>, London:
+       Academic Press.
+
+<li><a name="Hartigan81">Hartigan, J. A., and Kleiner, B.
+       (1981),</a> &quot;Mosaics for contingency tables&quot;, In
+       W. F. Eddy (Ed.), <cite> Computer Science and Statistics:
+       Proceedings of the 13th Symposium on the Interface</cite>.
+       New York: Springer-Verlag.
+
+<li><a name="Hartigan84">Hartigan, J. A., and Kleiner, B.
+       (1984),</a> &quot;A mosaic of television ratings&quot;,
+       <cite> The American Statistician</cite>, <i> 38</i>, 32-35.
+
+       
+<li><a name="Riedwyl83">Riedwyl, H., & Sch&uuml;pbach, M. (1983),</a> Siebdiagramme:
+       Graphische Darstellung von Kontingenztafeln.  Technical
+       Report No. 12, Institute for Mathematical Statistics,
+       University of Bern, Bern, Switzerland.
+
+<li><a name="Snee74">Snee, R. D. (1974),</a> &quot;Graphical
+       display of two-way contingency tables&quot;, <cite> The
+       American Statistician</cite>, <i> 28</i>, 9-12.
+
+<li><a name="Stuart53">Stuart, A. (1953),</a> &quot;The estimation
+       and comparison of strengths of association in contingency
+       tables&quot;, <cite> Biometrika</cite>, <i> 40</i>, 105-.
+
+<li><a name="Wang85">Wang, C. M. (1985),</a> &quot;Applications and
+       computing of mosaics&quot;, <cite> Computational Statistics
+       & Data Analysis</cite>, <i> 3</i>, 89-97.
+
+</ol>
+</body>
+</html>
+
