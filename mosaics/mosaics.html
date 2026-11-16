@@ -1,0 +1,1670 @@
+<html lang="en"> 
+<head>
+<meta name="keywords" value="mosaic display, iterative proportional fitting,
+		loglinear models, categorical data, marginal tables, 
+		graphical display, contingency tables">
+<title>User's Guide for MOSAICS</title>
+<link rev=made href="mailto:friendly@yorku.ca">
+<!-- GMLHTML Version 1.2 -->
+<!-- Author: Michael Friendly  -->
+<!-- Date: March 16, 1996 -->
+<!--  -->
+<style type="text/css">
+PRE (color: red;)
+</style>
+</head>
+<body>
+
+<center>
+<h1><img src="icons/Mosaics.gif" height=48 width=48 alt="">
+User's Guide for <font face="Arial, Helvetica">MOSAICS</font> 
+<img src="icons/Mosaics.gif" height=48 width=48 alt="">
+</h1>
+</center>
+<b>
+Version 3.5<br>
+  <A HREF="http://www.datavis.ca/">
+   Michael Friendly
+  </A>
+  <BR>
+  <A HREF="http://www.psych.yorku.ca/">
+  Psychology Department
+  </A>
+  <BR>
+  <A HREF="http://www.yorku.ca/">
+  York University</a><BR>
+</b>
+<hr>
+
+<!--latex
+\begin{titlepage}
+\title{User's Guide for \MOSAICS{} \\Version 3.5}
+\thanks{This document is an updated version of ``User's Guide to MOSAICS: A SAS/IML program for Mosaic Displays'', York University, Dept of Psychology Report 206, 1992}
+\author{Michael Friendly \\
+Psychology Department \\
+York University}
+\date{}
+\end{titlepage}
+\maketitle
+
+%% \mainmatter
+\pagestyle{headings}
+\begin{multicols}{2}
+\setcounter{tocdepth}{2}
+\tableofcontents
+\end{multicols} 
+
+\fvset{numbers=left,frame=single,numbersep=8pt}
+-->
+<!--latex-off-->
+<H1>Contents</H1>
+<table><tr><td>
+<UL>
+<LI><A HREF="#sec:Introduction">  1. Introduction </A>
+<LI><A HREF="#sec:Install">  2. Installation Guide </A>
+<UL>
+<LI><A HREF="#sec:Obtain">  How to obtain <font face="Arial, Helvetica">MOSAICS</font></A>
+<LI><A HREF="#H2_22:Installing">  Installing <font face="Arial, Helvetica">MOSAICS</font></A>
+</UL>
+<LI><A HREF="#sec:Using">  3. Using <font face="Arial, Helvetica">MOSAICS</font> </A>
+<UL>
+<LI><A HREF="#H2_31:Input">  Input parameters  </A>
+<LI><A HREF="#H2_32:Global">  Global input variables  </A>
+<LI><A HREF="#H2_33:GOPTIONS">  Graphic options  </A>
+<LI><A HREF="#H2_34:Multiple">  Multiple calls  </A>
+<LI><A HREF="#readtab">  SAS Dataset Input  </A>
+</UL>
+</ul></td><td><ul>
+<LI><A HREF="#sec:Macro">  4. Macro interface </A>
+<LI><A HREF="#sec:Examples">  5. Examples </A>
+<UL>
+<LI><A HREF="#Example1">  Example 1  </A>
+<LI><A HREF="#Example2">  Example 2  </A>
+<LI><A HREF="#Example3">  Example 3  </A>
+<LI><a href="#sec:mosdata">Sample data sets</a>
+</UL>
+<LI><A HREF="#sec:Implement">  6. Implementation </A>
+<UL>
+<LI><A HREF="#H2_51:Algorithm">  Algorithm  </A>
+<LI><A HREF="#H2_52:Program">  Program structure  </A>
+<LI><A HREF="#Changes">  Changes  </A>
+</UL>
+<LI><A HREF="#sec:References">  References </A>
+</UL>
+</ul></td></tr></table>
+<!--latex-on-->
+
+ 
+<h1><a name="sec:Introduction">1. Introduction</a></h1>
+
+The mosaic display, proposed by <a href="#Hartigan81">Hartigan & Kleiner (1981)</a> represents
+the counts in a contingency table directly by tiles whose area is
+proportional to the cell frequency.  This display generalizes readily
+to n-way tables.  Friendly (<a href="#Friendly91">1991</a>, <a href="#Friendly92">1992</a>, <a href="#Friendly94">1994</a>) extended the use of the
+mosaic display as a graphical tool for fitting log-linear models.
+The enhanced mosaic uses color and shading of the tiles to reflect
+the sign and magnitude of the residual from a specified log-linear
+model.  Friendly also shows how the understanding of patterns of
+association can be enhanced by reordering the rows and columns to
+make the pattern more coherent.  Refer to Friendly (1991, 1992, 1994)
+for details of the method and examples of its use in fitting
+log-linear models.
+<p>
+There is also:
+<ul>
+<li>An <a href="/online/mosaics/">online, web application</a>, with several
+sets of sample data.
+You can submit your own data through a form or an uploaded data file.
+<li>A  <a href="/online/mosaics/about.html">brief tutorial</a> introduction
+to mosaic displays.
+<li> A 
+ <a href="mosaics.pdf">PDF version</a>
+(mosaics.pdf).
+<strong>Note: This HTML version is no longer maintained.
+The <a href="mosaics.pdf">PDF</a> version are more up to
+date.</strong>
+</ul>
+
+<p>  This report describes <font face="Arial, Helvetica">MOSAICS</font>, a 
+ collection of SAS/IML programs and macros for
+producing mosaic displays.  The programs has the following features:
+ 
+<ul >
+ 
+<li>It produces graphical displays of an n-way contingency table of
+	any size.  Experience shows that tables of up to 5 or 6
+	dimensions can be usefully explored.  The main limitation is
+	in the resolution of the display with large, complex tables.
+ 
+<li>The order of variables in the mosaic is specified by the user.
+	Different orderings of the variables can show different
+	aspects of the data.
+
+<li>For an unordered factor, the order of its levels can be determined
+to enhance understanding of the pattern of association.
+This ordering can be found from a correspondence analysis of the residuals
+from a model of independence.
+ 
+<li>The program can produce sequential displays of the marginal
+	subtables, <I>[A], [AB], [ABC]</I>, and
+	so forth, up to the full n-way table, where 
+	<I>A, B, C, ...</I> refer to the table variables in the
+	order entered.  
+ 
+<li>For each display, the program fits a log-linear model and depicts
+	the residuals from the model by the color and shading of
+	tiles in the mosaic.
+ 
+<li>The program can automatically construct and fit a wide set of baseline
+	models of independence or partial independence among the
+	table variables.  A shorthand keyword is used to specify
+	many models of interest.
+	Alternatively, the user can specify and fit
+	any log-linear model which can be estimated by iterative
+	proportional fitting.
+ 
+<li>The program can perform a correspondence analysis on marginal
+        subtables to suggest a reordering of the levels of each
+		  variable.
+<li>Models and tables with structural zeros area accommodated naturally.
+
+<li> A contingency table can be read from a SAS data set or entered
+ in SAS/IML as a table of frequencies together with variable name
+ and factor level values.  A collection of sample contingency tables
+ in this format is suppplied.
+
+<li> A SAS macro, <tt>mac/mosaic.sas</tt> provides a more easily-used
+ interface to the SAS/IML modules.
+<li> Other SAS/IML modules  extend the idea of mosaic displays to mosaic matrices (<tt>mosmat.sas</tt>), both marginal and conditional, and partial mosaic plots (<tt>mospart.sas</tt>).
+Partial mosaics are included in the <tt>mac/mosaic.sas</tt> macro; mosaic matrices
+have their own macro (<tt>mac/mosmat.sas</tt>).
+
+</ul>
+ 
+<!-- include:(1) mosainst -->
+ 
+<h1><a name="sec:Install">2. Installation Guide</a></h1>
+<h2><a name="sec:Obtain">How to obtain <font face="Arial, Helvetica">MOSAICS</font> </a></h2>
+ 
+The program, <tt>mosaics.sas</tt>, and examples of its use,
+are available from this site in two
+identical archives:
+<a href="http://www.datavis.ca/sas/mosaics/mosaics.tar.gz"><tt>mosaics.tar.gz</tt> </a>,
+and <a href="http://www.datavis.ca/sas/mosaics/mosaics.zip">
+<tt>mosaics.zip</tt></a>.
+ 
+ 
+<h2><a name="H2_22:Installing">Installing <font face="Arial, Helvetica">MOSAICS</font></a></h2>
+ 
+MOSAICS.SAS consists of a collection of SAS/IML modules which are
+designed to be called from another program in a <tt>proc iml</tt>
+step.  Because the program is large, the modules are most
+conveniently stored in compiled form in a SAS/IML storage catalog,
+called MOSAIC.MOSAIC.  To install the program in this way,
+<ol>
+<li> copy the
+files MOSAICS.SAS and MOSAICM.SAS to a directory, (<tt>'~/sasuser/mosaics/'</tt>,
+or <tt>'c:\sasuser\mosaics\'</tt>, say),
+<li>Edit the <tt>libname</tt> and <tt>filename</tt> statements to
+correspond to this directory.  On a Unix system, these might be,
+<pre>
+*-- Change the path in the following filename statement to point to
+    the installed location of mosaics.sas;
+filename mosaics  '~/sasuser/mosaics/';
+*--- Change the path in the libname to point to where the compiled
+    modules will be stored, ordinarily the same directory;
+libname  mosaic   '~/sasuser/mosaics/';
+</pre>
+On Windows, 
+<pre>
+filename mosaics  'c:\sasuser\mosaics\';
+libname  mosaic   'c:\sasuser\mosaics\';
+</pre>
+
+<li>You may wish to change some of the program default values,
+(in the module <tt>globals</tt> in MOSAICS.SAS) particularly
+the <tt>font=</tt> value which is set to <tt>font='hwpsl009'</tt>
+(Helvetica for the PS driver)
+in the distribution copy.
+<li>Run the MOSAICM.SAS program, with the
+command,
+ 
+<pre>
+sas mosaicm
+</pre>
+<li> Optionally, install the sample data sets (see <a href="#sec:mosdata"> ``Sample data sets''</a>)
+by running <tt>sas mosdata</tt>.
+<p> 
+These steps need only be done once.
+</ol>
+ 
+<p> In applications, the modules are loaded into the SAS/IML
+workspace with the <tt>load</tt>  or <tt>%include</tt>
+statement, as follows,
+ 
+<pre>
+libname mosaic '~/sasuser/mosaics';
+proc iml;
+  reset storage=mosaic.mosaic;
+  load module=_all_;
+</pre>
+ 
+On most platforms, a <tt>libname</tt> statement is needed to
+specify the location of the MOSAIC library in the operating system
+file structure.  
+<strong>Note:</strong> This requires that
+you have Read/Write access to the MOSAIC library, even if the
+MOSAIC modules are only loaded.  See "Public Use" below for
+a solution.
+ 
+<p> Alternatively, it is possible to store and use the program in
+source form.  This avoids the need to maintain and access the SAS/IML
+catalog, but means that the program is compiled each time it is run.
+To use the program in this way, simply access the program with a <tt>
+%include</tt> statement:
+ 
+<pre>
+filename mosaics <i>'path/to/mosaics.sas'</i>;
+proc iml;
+  %include mosaics;
+</pre>
+ 
+On some platforms you may need to add a path specification to the
+<tt>%include</tt> statement or use a <tt>filename</tt> statement to
+specify the location of the MOSAICS.SAS file in the operating system
+file structure.
+
+<h3><a name="public">Public Use</a></h3>
+On most platforms, SAS/IML requires (by default) that the user have Read/Write access to the
+library accessed by the <tt>load</tt> command.
+Therefore, if the MOSAIC modules are stored in compiled form and are to be accessed publically (on a network), users must speciofy 
+<tt>access=readonly</tt> on the libname statement:
+<pre>
+libname mosaic '~/sasuser/mosaics' access=readonly;
+</pre>
+You can place this statement in the system-wide <tt>autoexec.sas</tt> file.
+<p>
+Alternatively, copy the MOSAICS.SAS file to any public (readable)
+directory, and instruct users to load them using the
+<tt>%include</tt> statement, as described above.
+
+<!-- include:(1) mosaparm -->
+ 
+<h1><a name="sec:Using">3. Using <font face="Arial, Helvetica">MOSAICS</font></a></h1>
+
+You can use <font face="Arial, Helvetica">MOSAICS</font> either through a SAS/IML step or through the <tt>mosaic</tt> macro.  
+The macro is easier to use,
+but IML is somewhat more flexible.
+<p>
+If you are using IML, the contingency table can either be defined directly
+with IML statements,
+or input from a SAS data set. The macro reads data from a SAS data set.
+
+
+<h2><a name="H2_31:Input">Input parameters </a></h2>
+ 
+The frequency table analyzed is specified in the <tt>run mosaic</tt>
+statement.  A great many options, all of which have default values, are
+specified by global variables in the <tt>proc iml</tt> step.  Hence,
+the program is typically used as follows:
+ 
+<Pre>
+proc iml symsize=256;
+  reset storage=mosaic.mosaic;
+  load module=_all_;
+  *-- specify data parameters;
+  levels = { ... };   *-- variable levels;
+  table  = { ... };   *-- contingency table;
+  vnames = { ... };   *-- variable names;
+    ...
+ 
+  *-- specify non-default global inputs;
+  fittype='USER';
+  config = { 1  1,
+             2  3 };
+ 
+  run mosaic(levels, table, vnames, lnames, plots, title);
+</Pre>
+
+<p>The n-way contingency table to be analyzed is specified by the 
+<tt>table</tt> parameter; the names of the dimension (factor) variables
+and the names of the values that the dimension variables take on are
+specified in the <tt>vnames</tt> and <tt>lnames</tt> parameters,
+respectively, as described below.
+<p>
+In situations where the contingency table and factor variables are
+available in a SAS dataset,
+the <tt>table</tt>, <tt>levels</tt>, and <tt>lnames</tt> matrices may be constructed with the
+<tt>readtab</tt> module, described in 
+<a href="#readtab">Dataset Input</a>.
+  
+The parameters for the <tt>run mosaic</tt> statement are:
+ 
+<dl >
+ 
+<dt><big>Parameter</big><dd><big>Description</big>
+ 
+<dt><tt>levels</tt><dd>is a vector which specifies the number of variables
+            and the dimensions of the contingency table.  If <tt>
+            levels</tt> is <I>n  x  1</I>, then the table has <I>n</I> 
+				dimensions, and the number of levels of variable <I>i</I>
+				 is <tt>levels[i]</tt>.  The order of the
+            variables in <tt>levels</tt> is the order they are
+            entered into the mosaic display.
+ 
+<dt><tt>table</tt><dd>is a matrix or vector giving the frequency,
+ <I>f <sub>ij...</sub></I>, of observations in each cell of the table.
+            The table variables are arranged in accordance with the
+            conventions of the SAS/IML <tt>IPF</tt> and <tt>
+            MARG</tt> functions, so the <b>first</b> variable varies most
+            rapidly across the columns of <tt>table</tt> and the
+            last variable varies most slowly down the rows.
+ 
+            <p> In addition <tt>table</tt> must conform to <tt>
+            levels</tt> as follows.  If <tt>table</tt> is <I>I</I>
+            rows by <I>J</I> columns, the product of all entries in
+            <tt>levels</tt> must be <I>IJ</I>.  Moreover, <I>J</I>
+             must equal the product of the first <I>k</I>
+            entries of <tt>levels</tt>, for some <I>k</I>.
+				That is, the columns must correspond to the combinations of
+				one or more of the first <I>k</I> factors.
+ 
+<dt><tt>vnames</tt><dd>is a <I>1  x  n</I> character vector of variable
+            (factor) names, in an order corresponding to <tt>
+            levels</tt>.
+ 
+<dt><tt>lnames</tt><dd>is a character matrix of labels for the variable
+            levels, one row for each variable.  The number of columns
+            is the maximum value in <tt>levels</tt>.  When the
+            number of levels are unequal, the rows for smaller
+            factors must be padded with blank entries.
+ 
+<dt><tt>plots</tt><dd>is a vector containing any of the integers 1 to <I>n</I>
+ which specifies the list of marginal tables to be
+            plotted.  If <tt>plots</tt> contains the value <I>i</I>
+				  the marginal subtable for variables 1 to <I>i</I>
+            will be displayed.  For a 3-way table, <tt>plots={1 2
+            3}</tt> displays each sequential plot, showing the [A],
+            [AB] and [ABC] marginal tables; while <tt>plots=3</tt>
+            displays only the final 3-way [ABC] mosaic.
+ 
+<dt><tt>title</tt><dd>is a character string or vector of strings containing
+            title(s) for the plots.  If <tt>title</tt> is a single
+            character string, it is used as the title for all plots.
+            Otherwise, <tt>title</tt> may be a vector of up to <tt>
+            max(plots)</tt> strings, and <tt>title[i]</tt> is used as
+            the tile for the plot produced by <tt>plots[ ] = i</tt>.
+            If the number of strings is less than <tt>
+            max(plots)</tt> the last string is used for all remaining
+            plots.
+ 
+            <p> Moreover, if the title for a given plot contains the
+            string <tt>&amp;MODEL</tt> (upper case), that string is
+            replaced by the symbolic model description.  Similarly,
+				the string <tt>&amp;G2</tt> (or <tt>&amp;X2</tt>) is replaced by the LR (Pearson) chisquare
+				value and df for the current model, in the form
+				'G2 (df) = value'.  Enclose such titles in <b>single quotes</b>,
+				otherwise the SAS macro processor will complain about an
+				'Apparent symbolic reference'.
+				For example,
+            the specifications,
+ 
+<pre>
+plots = 2:3;
+fittype='JOINT';
+title = { '',
+          'Hair-color Eye-color Data  Model (H)(E)',
+          'Hair-color Eye-color Data  Model (HE)(S)'};
+</pre>
+ 
+            produces two plots with titles from <tt>title[2]</tt>
+            and <tt>title[3]</tt>.<a href="#FN_1">(1)</a>.  Equivalent
+            results (using substitution) are produced with the single
+            title,
+ 
+<pre>
+title = 'Hair-color Eye-color Data  Model &MODEL';
+</pre>
+ 
+<br>------------------------<br>
+ 
+<a name="FN_1">(1)</a> SAS/GRAPH fonts do not produce brackets, <tt>
+    [ ]</tt> and braces, <tt>{ }</tt>. Use parentheses instead in
+    model symbolic formulae.
+<br>------------------------<br>
+ 
+</dl>
+ 
+<h2><a name="H2_32:Global">Global input variables</a></h2>
+ 
+The global variables below allow many of the details of the model
+fitting and mosaic display to be altered.  Since they all have
+default values, it is only necessary to specify those you wish to
+change.  All character-valued variables are case-insensitive.
+ 
+<dl >
+ 
+<dt><tt>colors</tt><dd>is a character vector of one or two elements
+            specifying the colors used for positive and negative
+            residuals.  The default is <tt>{BLUE RED}</tt>.  For a
+            monochrome display, specify <tt>colors='BLACK'</tt> and
+            use two distinct fill patterns for the fill type, such
+            as <tt>filltype={M0 M45}</tt> or  <tt>filltype={GRAY M45}</tt>.
+ 
+<dt><tt>config</tt><dd>is a numeric or character matrix specifying which marginal totals
+            to fit when <tt>fittype='USER'</tt> is also
+            specified. <tt>config</tt> is ignored for all other fit
+            types.  Each column specifies a high-order marginal in
+            the model, either by the names of the variables, or by their
+				indices, according to their order in <tt>vnames</tt>.  
+				For example, the log-linear model
+				<I>[AB][AC] [BC]</I> for a three-way table is specified by the
+            2 by 3 matrix,
+ 
+<pre>
+ config = { 1  1  2,
+            2  3  3};
+</pre>
+or
+<pre>
+ config = { A  A  B,
+            B  C  C};
+</pre>
+The same model can be specified more easily row-wise, and then transposed:
+<pre>
+ config = t( {1 2, 1 3, 2 3} );
+</pre>
+ 
+<dt><tt>devtype</tt>  {<em>GF</em> | LR | FT}
+<dd>is a character string which specifies the type of
+            deviations (residuals) to be represented by shading. <tt>
+            devtype='GF'</tt> is the default.
+ 
+            <dl COMPACT>
+            <dt><tt>GF</tt><dd>calculates components of Pearson goodness
+                        of fit chisquare,
+<img src="icons/eq1.gif" align=absmiddle width=129 height=29>
+<!--
+<I>d <sub>ij</sub> = ( f <sub>ij</sub> - m hat <sub>ij</sub> ) / sqrt m hat
+					<sub>ij</sub></I>,
+--> 
+ 
+where <I>m hat <sub>ij</sub></I>
+                        is the estimated expected frequency under the
+                        model.
+            <dt><tt>LR</tt><dd>calculates components of the likelihood
+                        ratio (deviance) chisquare,
+<img src="icons/eq2.gif" align=absmiddle width=137 height=17>
+<!--
+										 <I>d <sub>ij</sub>  =
+					sign ( f <sub>ij</sub> - m hat <sub>ij</sub> )  [ 2
+					| f <sub>ij</sub> log ( f <sub>ij</sub> 
+						/  m hat <sub>ij</sub> ) | +  ( f <sub>ij</sub> - m hat <sub>ij</sub> ) ] <sup> 1 / 2 </sup></I>.
+-->
+            <dt><tt>FT</tt><dd>calculates Freeman-Tukey residuals, 
+<img src="icons/eq3.gif" align=absmiddle width=136 height=28>
+<!--
+					<I>d <sub>ij</sub> = sqrt(f <sub>ij</sub>) + sqrt(f <sub>ij</sub> +1)
+	- sqrt(4#m <sub>ij</sub> hat + 1)</I>
+-->
+            </dl>
+ 
+<dt><tt>fittype</tt>  {<em>JOINT</em> | MUTUAL | CONDIT | PARTIAL | MARKOV | USER}
+<dd>is a character string which specifies the type of
+	sequential log-linear models to fit. <tt>
+	fittype='JOINT'</tt> is the default. For two-way tables,
+	(or two-way margins of larger tables) all fittypes fit the
+	independence model.
+
+	<dl COMPACT>
+	<dt><tt>JOINT<em>k</em></tt><dd>specifies sequential models of joint
+					independence, <I>[A][B], [AB][C]
+					, [ABC][D], ...</I>  These models
+					specify that the last variable in a given
+					plot is independent of all previous variables
+					jointly.
+<p>
+				Optionally, the keyword <tt>JOINT</tt> may be followed by
+				a digit, <em>k</em>, to specify which of the <em>n</em>
+				ordered variables is independent of the rest jointly.
+	<dt><tt>MUTUAL</tt><dd>specifies sequential models of mutual
+					independence, <I>[A][B], [A][B][C]
+					, [A][B][C][D], ...</I>
+	<dt><tt>CONDIT<em>k</em></tt><dd>specifies sequential models of
+					conditional independence which hypothesize
+					that all previous variables are independent,
+					given the last, i.e., <I>[A][B], 
+					[AC][BC], [ A D ] [ B D ] [ C D]
+					, ...</I>  For the 3-way model, A and B are
+					hypothesized to be conditionally independent,
+					given C; for the 4-way model, A, B, and C are
+					conditionally independent, given D.
+<p>
+				Optionally, the keyword <tt>CONDIT</tt> may be followed by
+				a digit, <em>k</em>, to specify which of the <em>n</em>
+				ordered variables is conditioned upon.
+	<dt><tt>PARTIAL</tt><dd>specifies sequential models of partial
+					independence of the first pair of variables,
+					conditioning on all remaining variables one
+					at a time:  <I>[A][B], [AC][BC]
+					, [ A C D ] [ B C D ], ...</I>  For
+					the 3-way model, A and B are hypothesized to
+					be conditionally independent, given C; for
+					the 4-way model, A and B are conditionally
+					independent, given C and D.
+	<dt><tt>MARKOV<em>k</em></tt><dd>specifies a sequential series of Markov chain
+	models fit to the table, whose dimensions are assumed to represent
+	discrete ordered time points, such as lags in a sequential analysis.
+	The keyword <tt>MARKOV</tt> can be optionally followed by a digit to specify
+	the order of the Markov chains, e.g., <tt>fittype='MARKOV2';</tt>
+	specifies a second-order Markov chain.  First-order is assumed if
+	not specified.  Such models assume that the table dimensions are
+	ordered in time, e.g., Lag0, Lag1, Lag2, ...
+	<p>
+	<tt>MARKOV</tt> (or <tt>MARKOV1</tt>) fits the models 
+	<I>[A][B], [AB] [BC], [AB] [BC] [CD], ...</I>, where the categories
+	at each lag are associated only with those at the previous lag.
+	<tt>MARKOV2</tt>  fits the models 
+	<I>[A][B], [A] [B] [C], [ABC] [BCD], [ABC] [BCD] [CDE], ...</I>.
+	
+	<dt><tt>USER</tt><dd>If <tt>fittype='USER'</tt>, specify the
+					hypothesized model in the global matrix <tt>config</tt>.
+					The models for plots of marginal
+					tables are based on reducing the hypothesized
+					configuration, eliminating all variables not
+					participating in the current plot.
+	</dl>
+ 
+<dt><tt>filltype</tt>  {M45 | LR | M0 | GRAY | <em>HLS</em>}
+<dd>is a character vector of one or two elements which
+	specifies the type of fill pattern to use for
+	shading. <tt>filltype[1]</tt> is used for positive
+	residuals; <tt>filltype[2]</tt>, if present, is used for
+	negative residuals.  If only one value is specified, a
+	complementary value for negative residuals is generated
+	internally. <tt>filltype={HLS HLS}</tt> is the default.
+
+	<dl COMPACT>
+	<dt><tt>M45</tt><dd>uses SAS/GRAPH patterns <tt>MdN135</tt>
+					and <tt>Md45</tt> with hatching at 45 and
+					135&#176;. <tt>d</tt> is the density value
+					determined from the residual and the <tt>
+					shade</tt> parameter.
+	<dt><tt>LR</tt><dd>uses SAS/GRAPH patterns <tt>Ld</tt> and
+					<tt>Rd</tt>.
+	<dt><tt>M0</tt><dd>uses SAS/GRAPH patterns <tt>MdN0</tt>
+					and <tt>MdN90</tt> with hatching at 0 and
+					90&#176;.  <em> step</em>
+	<dt><tt>GRAY<em>step</em></tt><dd>uses solid, greyscale fill using the
+					patterns <tt>GRAY<em>nn</em></tt> starting
+					from <tt>GRAYF0</tt> for density=1 and increasing
+					darkness by <em>step</em> for each successive
+					density level.  The default for <em>step</em>
+					is 16, so <tt>'GRAY'</tt> gives <tt>GRAYF0</tt>,
+					<tt>GRAYE0</tt>, <tt>GRAYD0</tt>, and so forth.
+
+	<dt><tt>HLS</tt><dd>uses solid, color-varying fill based on the HLS color
+	scheme.  The colors are selected attempting to vary the lightness
+	in approximately equal steps.  For this option, the
+	<tt>colors</tt> values must be selected from the following hue names:
+	RED GREEN BLUE MAGENTA CYAN YELLOW.
+   </dl>
+ 
+<dt><tt>cellfill</tt>  {<em>NONE</em> | SIGN | SIZE | DEV}
+<dd>Provides the ability to display a symbol in the cell
+            representing the coded value of large residuals.  This is
+            particularly useful for black and white output, where it
+            is difficult to portray both sign and magnitude
+            distinctly.
+ 
+            <dl COMPACT>
+            <dt><tt>NONE</tt><dd>Nothing (default)
+            <dt><tt>SIGN</tt><dd>Draws + or - symbols in the cell, whose
+                        number corresponds to the shading density.
+            <dt><tt>SIZE</tt><dd>Draws + or - symbols in the cell, whose
+                        size corresponds to the shading density.
+            <dt><tt>DEV</tt><dd>Writes the value of the standardized
+                        residual in the cell.
+            </dl>
+ 
+<dt><tt>htext</tt><dd>is a numeric value which specifies the height of text
+            labels, in character cells.  The default is <tt>
+            htext=1.3</tt>.  The program attempts to avoid overlap of
+            category labels, but this cannot always be achieved.
+            Adjust <tt>htext</tt> (or make the labels shorter) if
+            they collide.
+ 
+<dt><tt>legend</tt>  {H | V | <em>NONE</em>}
+<dd>Orientation of legend for shading of residual values
+            in mosaic tiles.  'V' specifies a vertical legend at the
+            right of the display; 'H' specifies a horizontal legend
+            beneath the display.  Default: 'NONE'.
+ 
+<dt><tt>order</tt>   {<em>NONE</em> | [ DEV | JOINT ] | [ ROW | COL ] }
+<dd>Specifies whether and how to perform a correspondence
+				 analysis to assist in reordering the levels of each
+				 factor variable as it is entered into the mosaic display.
+				 Not performed if <tt>order='NONE'</tt>.  Otherwise, order
+				 may be a character vector containing either 'DEV' or 'JOINT'
+				 to specify that the CA is performed on residuals from the
+				 model for the current subtable (DEV) or on residuals from
+				 the model of joint independence for this subtable (JOINT).
+				 In addition, <tt>order</tt> may contain either 'ROW' or
+				 'COL' or both to specify which dimensions of the current
+				 subtable are considered for reordering.  The ususal options
+				 for this reordering are 
+<pre>
+order = {JOINT COL};
+</pre>
+				 <p>
+				 At present this analysis merely produces printed output which
+				 suggests an ordering, but does not actually reorder the table 
+				 or the mosaic display.
+<dt><tt>shade</tt><dd>is a vector of up to 5 values of 
+	<I>| d <sub>ij</sub> |</I>, which specify the boundaries between shading
+            levels. If <tt>shade={2 4}</tt> (the default), then the
+            shading density number <tt>d</tt> is:
+ 
+<pre>
+ 0    <I>0 &lt;= | d <sub>ij</sub> | &lt; 2</I>
+ 1    <I>2 &lt;= | d <sub>ij</sub> | &lt; 4</I>
+ 2    <I>4 &lt;= | d <sub>ij</sub> |</I>
+</pre>
+ 
+            Standardized deviations are often referred to a standard
+            Gaussian distribution; under the assumption that the
+            model fits, these values roughly correspond to two-tailed
+            probabilities <I>p &lt; .05</I> and <I>p &lt; .0001</I> 
+				that a given value of <I>| d <sub>ij</sub> |</I> exceeds
+            2 or 4, respectively.  Use <tt>shade=</tt> a big number
+            to suppress all shading.
+ 
+<dt><tt>space</tt><dd>is a vector of two values which specify the 
+       <I>x, y</I> percent of the plotting area reserved for spacing
+            between the tiles of the mosaic.  The default value is 10
+            times the number of variables allocated to each of the
+            vertical and horizontal directions in the plot.
+ 
+<dt><tt>split</tt><dd>is a character vector consisting of the letters <tt>
+            V</tt> and <tt>H</tt> which specifies the directions in
+            which the variables divide the unit square of the mosaic
+            display.  If <tt>split={H V}</tt> (the default), the
+            mosaic alternates between horizontal and vertical
+            splitting.  If the number of elements in <tt>split</tt>
+            is less than the maximum number in <tt>plots</tt>, the
+            elements in <tt>split</tt> are reused cyclically.
+ 
+<dt><tt>verbose</tt>  {<em>NONE</em> | FIT | BOX}
+<dd>is a character vector of one or more words which
+            controls verbose or detailed output.  If <tt>
+            verbose</tt> contains <tt>'FIT'</tt>, additional details
+            of the fitting process (fitted frequencies, marginal
+            proportions) are printed.  If <tt>verbose</tt> contains
+            <tt>'BOX'</tt>, additional details of the drawing
+            process (tile dimensions, label placement) are printed.
+
+<dt><tt>vlabels</tt><dd>  is an integer from 0 to the number of
+ variables in the table.  It specifies that variable names (in addition
+ to level names) are to be used to label the first <tt>vlabels</tt>
+ variables.  The default is <tt>vlabels=2</tt>, meaning variable names
+ are used in plots of the first two variables only.
+ 
+<dt><tt>zeros</tt><dd>is a matrix of the same size and shape as the input
+            <tt>table</tt> containing entries of 0 or 1, where 0
+            indicates that the corresponding value in table is to
+				be ignored or treated as missing or a structural zero. 
+				<p>
+				Zero entries cause the corresponding cell frequency to be
+				fitted exactly; one degree of freedom is subtracted for each
+				such zero.  The corresponding tile in the mosaic display is
+				outlined in black.
+				<p>
+				If an entry in any marginal subtable in the order [A], [AB],
+				[ABC] ... corresponds to an all-zero margin,  that cell is
+				treated similarly as a structural zero in the model for the
+				corresponding subtable.  Note, however, that tables with
+				zero margins may not always have estimable models.
+				<p>If the <tt>table</tt> contains zero frequencies which
+				should be treated as structural zeros, assign the 
+				<tt>zeros</tt> matrix like this:
+<pre>
+zeros = table > 0;
+</pre>
+				<p>For a square table, to fit a model of quasi-independence
+				ignoring the diagonal entries, assign the 
+				<tt>zeros</tt> matrix like this (assuming a 4 x 4 table):
+<pre>
+zeros = J(4,4) - I(4);
+</pre>
+
+</dl>
+ 
+<p> There is one caveat imposed by this use of global variables:  The
+<tt>mosaic</tt> module should not be called from an IML module with
+its own arguments, since this would cause all variables defined
+within that module to inaccessible as global variables.  The <tt>
+mosaic</tt> module may be called either in immediate mode, as in the
+examples in the next section, or from an IML module defined without
+arguments.
+ 
+<h2><a name="H2_33:GOPTIONS">Graphic options</a></h2>
+ 
+<font face="Arial, Helvetica">MOSAICS</font> assumes that the vertical and horizontal dimensions of the
+plot are equal, so you should include a <tt>goptions</tt> statement
+specifying equal values for <tt>hsize</tt> and <tt>vsize</tt> if
+the default values for your device are unequal.  For example,
+<pre>
+goptions hsize=7 in vsize=7 in;
+</pre>
+ 
+<p> The program uses the colors blue and red to draw the tiles
+corresponding to positive and negative residuals.  You can specify
+the IML global <tt>colors</tt> variable to
+change these assignments if you wish. (Or, change the default
+values in the <tt>globals</tt> module.)
+
+<p>The program cannot access global fonts assigned with the <tt>GOPTION FTEXT=</tt>
+and <tt>HTEXT=</tt> options.  Instead, you may specify a desired font with the
+IML global <tt>font</tt> and <tt>htext</tt> variables.
+For some output devices (e.g., PostScript), specifying a hardware font
+(e.g., <tt>font = 'hwpsl009';</tt> for Helvetica) can yield an enormous
+reduction in the size of the generated graphic output files.
+
+<h3>EPS Output</h3>
+Some output devices, such as Encapsulated Postscript (and GIF)
+require that each figure be written to a separate output file.
+Mosaics contains a <tt>gskip</tt> module which handles this
+automatically for EPS output.
+<p>
+It uses three global SAS macro variables:
+<dl>
+<dt>DEVTYPE<dd>Device type: Use <tt>%let devtype=eps;</tt> for EPS output.
+<dt>DISPLAY<dd>Display option: Use <tt>%let display=ON;</tt> for ordinary
+use.  Setting DISPLAY=OFF suppresses graphic output (for all devices).
+<dt>FIG<dd>Figure number: Initialize to 1 <tt>%let fig=1;</tt>
+</dl>  
+
+Listed below is a macro, EPS, which I use to initialize graphics
+options for EPS output.
+<pre>
+%global fig gsasfile devtype;
+%macro eps;
+   %let devtype = EPS;
+   %let fig=1;
+   %let gsasfile=grfout.eps;
+   %put gsasfile is: "&gsasfile";
+   filename gsasfile  "&gsasfile";
+
+   goptions horigin=.5in vorigin=.5in; *-- override, for BBfix;
+   goptions device=PSLEPSFC gaccess=gsasfile
+       gend='0A'x  gepilog='showpage' '0A'x   /* only for 6.07 */
+       gsflen=80 gsfmode=replace;
+%mend;
+</pre>
+
+<h2><a name="H2_34:Multiple">Multiple calls</a></h2>
+ 
+The <tt>mosaic</tt> module may be called repeatedly in one <tt>proc
+iml</tt> step.  However, global variables which are set in one call
+remain in force.  To restore these values to their default setting,
+use the SAS/IML <tt>free</tt> statement.  For example, to revert to
+the default fit type of joint independence, use the statement,
+ 
+<pre>
+free fittype;
+</pre>
+ 
+before the next <tt>run mosaic</tt> statement.
+
+<h2><a name="readtab">SAS Dataset Input</a></h2>
+
+A contingency table and its index (factor) variables may be read into
+SAS/IML, in the format required for <font face="Arial, Helvetica">MOSAICS</font> using the <tt>readtab</tt>
+module, as shown in the following example.
+The factors in the <I>2 x 3 x 2</I> table are <tt>gender</tt>, <tt>occup</tt>, and <tt>heart</tt>.
+The data set <tt>heart</tt> has 12 observations---one observation per cell.
+<Pre>
+* Sex, Occupation and heart disease [Karger, 1980]; 
+data heart;
+   input gender $ occup $  @;
+   heart='Disease';  input freq @;  output;
+   heart='No Dis';   input freq @;  output;
+cards;
+Male   Unempl     254    759
+Female Unempl     431  10283
+Male   WhiteCol   158   3155
+Female WhiteCol    52   3082
+Male   BlueCol     87   2829
+Female BlueCol     16    416
+;
+proc sort data=heart;
+   by heart occup gender;
+
+proc iml;
+   title  = 'Sex, Occupation, and Heart Disease'; 
+   reset storage=mosaic.mosaic;
+   load module=_all_;
+
+   <b>vnames = {'Gender' 'Occup' 'Heart' };
+   run readtab('heart', 'freq', vnames, table, levels, lnames);</b>
+
+   plots = 2:ncol(levels);
+   run mosaic(levels, table, vnames, lnames, plots, title);
+</Pre>
+
+The <tt>readtab</tt> routine reads the index (factor) variables from the
+input dataset (<tt>heart</tt>), and determines the order of the factor variables
+according to which variable is actually varying most rapidly in the input
+dataset.  The variable names vector (<tt>vnames</tt>) can be given in any
+order;  it is reordered to correspond to the order of observations in the input dataset.
+
+<p>
+Note that if you sort the dataset as in the example above, character-valued
+index variables are arranged in <b>alphabetical order</b>.
+For example, the levels of <tt>occup</tt> are arranged in the order
+<tt>BlueCol, Unempl, WhiteCol</tt>, which may or may not be what you
+want.  The <tt>PROC SORT</tt> step can be omitted, in which case the 
+levels are ordered according to their order in the input dataset.
+
+<p>
+You can also use the <tt>DESCENDING</tt> option in the <tt>PROC SORT</tt>
+step to reverse the order of the levels of a given factor.
+For example, to reverse the levels of the <tt>gender</tt> variable, use
+
+<pre>
+proc sort data=heart;
+   by heart occup <b>descending</b> gender;
+
+</pre>
+[add more description]
+
+<h2>Fitting specialized models</h2>
+For square tables, or tables with ordered factors, a wide variety of
+specialized models are available which cannot be specified
+as any IPF configuration for a hierarchical log-linear model.
+However, many of these models can be fit simply using the
+matrix operations and functions available in SAS/IML.
+
+For example, the model of symmetry for a square table has
+expected frequencies $\hat{m}_{ij} = ( f_{ij} + f_{ji} ) / 2$.
+The fitted frequencies and residuals can be calculated in SAS/IML
+as
+<pre>
+   fit = (f + f`)/2;
+   dev = (f - fit)/sqrt(fit);
+</pre>
+where <tt>f</tt> is a square table of observed frequencies.
+
+<font face="Arial, Helvetica">MOSAICS</font> includes an additional program, <tt>mosaicd.sas</tt>,
+designed for situations such as this, where the fitted values and
+residuals are calculated externally.
+The <tt>mosaicd</tt> is called instead of <tt>mosaic</tt>.
+The residuals are supplied as a <tt>dev</tt> parameter
+(which replaces the <tt>plots</tt> parameter of <tt>mosaic</tt>).
+
+The following example uses <tt>mosaicd</tt> to fit a model
+of symmetry to a $4 \times 4$ table of women classified
+by visual acuity ratings of their left and right eyes.
+<Pre>
+proc iml;
+   dim = { 4 4 };
+   /* Unaided distant vision data Bishop etal p. 284*/
+      /*    Left eye grade */
+   f = {1520   266   124    66,
+         234  1512   432    78,
+         117   362  1772   205,
+          36    82   179   492 };
+   title  = {'Unaided distant vision: Symmetry'};
+   vnames = {'Right Eye','Left Eye'};
+   lnames = { 'High' '2' '3' 'Low',
+              'High' '2' '3' 'Low'};
+   reset storage=mosaic.mosaic;
+   load module=_all_;
+   %include '~/sasuser/mosaics/mosaicd.sas';
+   fit = (f + f`)/2;
+   dev = (f - fit)/sqrt(fit);
+   run mosaicd(dim, f, vnames, lnames, dev, title);
+</Pre>
+The sample program, <tt>moseye.sas</tt>, included in the
+distribution archives, illustrates how
+models of quasi-independence and quasi-symmetry can also be
+fit with <font face="Arial, Helvetica">MOSAICS</font>.
+
+<!-- include:(1) mosaexam -->
+<h1><a name="sec:Macro">4. Macro interface</a></h1>
+[This material has not yet be included in this HTML version.]
+ 
+<h1><a name="sec:Examples">5. Examples</a></h1>
+ 
+<h2><a name="Example1">Example 1</a></h2>
+ 
+The program below shows the use of <font face="Arial, Helvetica">MOSAICS</font> to produce a set of
+different mosaic displays for a <I>4  x  4  x  2</I> table of 592
+people classified by hair color, eye color and sex.
+ 
+<p> The module <tt>haireye</tt> creates the variables <tt>
+table</tt>, <tt>levels</tt>, <tt>vnames</tt>, <tt>lnames</tt>,
+and <tt>title</tt>.  Since the variables are to be entered into the
+mosaic in the order hair color, eye color, and sex, the <tt>
+table</tt> variable is created as a <I>2  x 16</I> matrix with
+hair color varying most rapidly across the columns and sex varying
+down the two rows.  Note that the <tt>lnames</tt> variable is a 
+<I>3  x  4</I> matrix, and the last row contains two blank values.  The
+statement <tt>run haireye;</tt> creates these variables in the
+SAS/IML workspace.
+ 
+<p> The first <tt>run mosaics</tt> statement produces two plots,
+whose tiles show the [Hair][Eye] marginal table and the full
+three-way table.  Since <tt>fittype</tt> is not specified, the model
+[HairEye] [Sex], in which Sex is independent of hair color and eye
+color jointly, is fit to the three-way table.  <tt>split={V H}</tt>
+specifies that the first division of the mosaic is in the vertical
+direction.  The printed output produced from this run is shown in <a
+href="#Fig_demlist"> Figure 1</a>.
+ 
+<p> The second <tt>run mosaics</tt> statement fits the same models,
+but reorders the eye colors in the table to better display the
+pattern of association between hair color and eye color in the
+two-way table.  It is also necessary to rearrange the eye color
+labels in row 2 of <tt>lnames</tt>.  (This reordering is based on a
+correspondence analysis of residuals in the two-way table described
+by Friendly (1994) carried out separately.)  Note that the global
+variables <tt>split</tt> and <tt>htext</tt> specified in the first
+mosaic continue to be used here.  The plots produced from this call
+are shown in <a href="#Fig_mosaicb"> Figure 2 and </a><a
+href="#Fig_mosaicc"> Figure 3</a>.
+ 
+<p> The third <tt>run mosaics</tt> statement plots only the
+three-way display, showing residuals from the model in which hair
+color, eye color and sex are mutually independent.  This plot is
+shown in <a href="#Fig_mosaicd"> Figure 4</a>.
+<!-- include:(2) mosademo -->
+ 
+<Pre>
+goptions vsize=7in hsize=7in ;   *-- square plot environment;
+ 
+proc iml;
+start haireye;
+   *-- Hair color, eye color data;
+  table = {
+  /* ----brown---   -----blue-----   ----hazel---   ---green--- */
+   32  53  10  3   11  50  10  30   10  25  7  5   3  15  7  8,   /* M */
+   36  66  16  4    9  34   7  64    5  29  7  5   2  14  7  8 }; /* F */
+ 
+  levels= { 4 4 2 };
+  vnames = {'Hair' 'Eye' 'Sex' };    /* Variable names */
+  lnames = {                         /* Category names */
+           'Black' 'Brown' 'Red' 'Blond',    /* hair color */
+           'Brown' 'Blue' 'Hazel' 'Green',   /* eye color  */
+           'Male' 'Female' ' '  ' ' };       /* sex        */
+  title  = 'Hair color - Eye color data';
+  finish;
+ 
+  run haireye;
+   reset storage=mosaic.mosaic;
+   load module=_all_;
+   *-- Fit models of joint independence (fittype='JOINT');
+   plots = 2:3;
+   split={V H};
+   htext=1.6;
+   run mosaic(levels, table, vnames, lnames, plots, title);
+ 
+   *-- reorder eye colors (brown, hazel, green, blue);
+   table  = table[,((1:4) || (9:16) || (5:8))];
+   lnames[2,] = lnames[2,{1 3 4 2}];
+   plots=2:3;
+   run mosaic(levels, table, vnames, lnames, plots, title);
+ 
+   plots=3;
+   fittype='MUTUAL';
+   run mosaic(levels, table, vnames, lnames, plots, title);
+quit;
+</Pre>
+ 
+<pre>
++-------------------------------------------------------------------+
+|                                                                   |
+|              +-------------------------------------------+        |
+|              |  Generalized Mosaic Display, Version 2.9  |        |
+|              +-------------------------------------------+        |
+|                                                                   |
+|                       TITLE                                       |
+|                       Hair color - Eye color data                 |
+|                                                                   |
+|             VNAMES     LEVELS    LNAMES                           |
+|             Hair            4    Black  Brown  Red    Blond       |
+|             Eye             4    Brown  Hazel  Green  Blue        |
+|             Sex             2    Male   Female                    |
+|                                                                   |
+|                              Global options                       |
+|                                                                   |
+|               FITTYPE  DEVTYPE  FILLTYPE  SPLIT  SHADE            |
+|               JOINT    GF       M45       V H       2    4        |
+|                                                                   |
+|                          Factor:         1 Hair                   |
+|                                                                   |
+|                             Marginal totals                       |
+|                                                                   |
+|              MARGIN     Black     Brown       Red     Blond       |
+|                                                                   |
+|                           108       286        71       127       |
+|                                                                   |
+|                          Factor:         2 Eye                    |
+|                                                                   |
+|                             Marginal totals                       |
+|                                                                   |
+|              MARGIN     Brown     Hazel     Green      Blue       |
+|                                                                   |
+|              Black         68        15         5        20       |
+|              Brown        119        54        29        84       |
+|              Red           26        14        14        17       |
+|              Blond          7        10        16        94       |
+|                                                                   |
+|                                                                   |
+|             MODEL              DF   CHISQ               PROB      |
+|             {Hair}{Eye}         9   G.F.    138.290   0.0000      |
+|                                     L.R.    146.444   0.0000      |
+|                                                                   |
+|                     Standardized Pearson deviations               |
+|                                                                   |
+|                          Brown    Hazel    Green     Blue         |
+|                                                                   |
+|                Black      4.40    -0.48    -1.95    -3.07         |
+|                Brown      1.23     1.35    -0.35    -1.95         |
+|                Red       -0.07     0.85     2.28    -1.73         |
+|                Blond     -5.85    -2.23     0.61     7.05         |
+|                                                                   |
+|                          Factor:         3 Sex                    |
+|                                                                   |
+|                             Marginal totals                       |
+|                                                                   |
+|                     MARGIN            Male    Female              |
+|                                                                   |
+|                     Black Brown         32        36              |
+|                     Black Hazel         10         5              |
+|                     Black Green          3         2              |
+|                     Black Blue          11         9              |
+|                     Brown Brown         38        81              |
+|                     Brown Hazel         25        29              |
+|                     Brown Green         15        14              |
+|                     Brown Blue          50        34              |
+|                     Red   Brown         10        16              |
+|                     Red   Hazel          7         7              |
+|                     Red   Green          7         7              |
+|                     Red   Blue          10         7              |
+|                     Blond Brown          3         4              |
+|                     Blond Hazel          5         5              |
+|                     Blond Green          8         8              |
+|                     Blond Blue          30        64              |
+|                                                                   |
+|                                                                   |
+|           MODEL                  DF   CHISQ               PROB    |
+|           [Hair,Eye][Sex]        15   G.F.     28.993   0.0161    |
+|                                       L.R.     29.350   0.0145    |
+|                                                                   |
+|                     Standardized Pearson deviations               |
+|                                                                   |
+|                                       Male   Female               |
+|                                                                   |
+|                      Black Brown      0.30    -0.27               |
+|                      Black Hazel      1.28    -1.15               |
+|                      Black Green      0.52    -0.46               |
+|                      Black Blue       0.70    -0.63               |
+|                      Brown Brown     -2.07     1.86               |
+|                      Brown Hazel      0.19    -0.17               |
+|                      Brown Green      0.57    -0.52               |
+|                      Brown Blue       2.05    -1.84               |
+|                      Red   Brown     -0.47     0.42               |
+|                      Red   Hazel      0.30    -0.27               |
+|                      Red   Green      0.30    -0.27               |
+|                      Red   Blue       0.88    -0.79               |
+|                      Blond Brown     -0.07     0.06               |
+|                      Blond Hazel      0.26    -0.23               |
+|                      Blond Green      0.32    -0.29               |
+|                      Blond Blue      -1.84     1.65               |
+|                                                                   |
++-------------------------------------------------------------------+
+</pre>
+ <a name="Fig_demlist"> Figure 1</a>:  Printed output for hair
+ color, eye color data, run 1
+
+<p> 
+<img src="icons/fig2.gif" height=245 width=245 alt="[Fig. 2]"> 
+<a name="Fig_mosaicb"> Figure 2</a>:  Two-way mosaic for hair color
+and eye color.  Positive deviations from independence have solid
+outlines and are shaded blue.  Negative deviations have dashed outlines
+and are shaded red.  The two levels of shading density correspond
+to standardized deviations greater than 2 and 4 in absolute value.
+<p> 
+<img src="icons/fig4.gif" height=245 width=245 alt="[Fig. 3]"> 
+<a name="Fig_mosaicc"> Figure 3</a>:  Mosaic display for hair color,
+eye color, and sex.  The categories of sex are crossed with those of
+hair color, but only the first occurrence is labeled.  Residuals from
+the model <I>[HE] [S]</I> are shown by shading.
+ 
+<p>
+ 
+<img src="icons/mosaic3d.gif" height=211 width=221 alt="[Fig. 4]"><a name="Fig_mosaicd"> Figure 4</a>:  Mosaic display for hair color,
+eye color, and sex, showing residuals from the model of
+complete independence, <I>[H] [E] [S]</I> (This figure was created
+in a separate run, using the LEGEND option.)
+ 
+<h2><a name="Example2">Example 2</a></h2>
+ 
+This example illustrates input of data from a SAS data set and the
+use of <tt>proc sort</tt> to rearrange the variables in a table to
+the order desired in the mosaic displays.
+ 
+<p> The data is a <I>2 <sup> 4</sup></I> table classified by Gender,
+reported Pre-marital sex, Extra-marital sex and Marital Status, read
+in by the DATA step <tt>marital</tt> below.  Note that the variable
+<tt>marital</tt> varies most rapidly and the variable <tt>gender</tt> varies most
+slowly in the observations in the data set.  The desired order of
+the variables in the mosaic is Gender, Pre, Extra, and Marital.  In
+the <tt>table</tt> variable in SAS/IML, the first variable, Gender,
+must vary most rapidly.  This is accomplished by sorting the
+observations with the variables listed in the <b>reverse</b> order on the
+<tt>by</tt> statement in the <tt>proc sort</tt> step.
+ 
+<Pre>
+data marital;
+   input gender $ pre $ extra $ @;
+   marital='Divorced';  input freq @;  output;
+   marital='Married';   input freq @;  output;
+cards;
+Women  Yes  Yes   17   4
+Women  Yes  No    54  25
+Women  No   Yes   36   4
+Women  No   No   214 322
+Men    Yes  Yes   28  11
+Men    Yes  No    60  42
+Men    No   Yes   17   4
+Men    No   No    68 130
+;
+proc sort data=marital;
+   by marital extra pre gender;
+</Pre>
+ 
+<p> In the <tt>proc iml</tt> step, the statement <tt>use
+marital;</tt> accesses the data set.  The variable <tt>freq</tt>
+from the data set is read into the IML <tt>table</tt> variable, a
+<I>16  x  1</I> matrix.  Note that the levels of the character
+variables <tt>gender</tt>, <tt>pre</tt>, and <tt>extra</tt> are
+sorted alphabetically, so the category labels in <tt>lnames</tt>
+must appear in this order.
+ 
+<Pre>
+proc iml;
+   use marital;
+   read all var{freq} into table;
+   levels = { 2 2 2 2 };
+   vnames = {'Gender' 'Pre' 'Extra' 'Marital'};
+   lnames = {'Men      '  'Women     ',
+             'Pre Sex: No'  'Yes',
+             'Extra Sex: No'   'Yes',
+             'Divorced'   'Married' };
+   title  = 'Pre/Extramarital Sex and Marital Status';
+ 
+   reset storage=mosaic.mosaic;
+   load module=_all_;
+   split = {V H};
+   htext=1.6;
+   plots = 2:4;
+   run mosaic(levels, table, vnames, lnames, plots, title);
+ 
+   plots = 4;
+   fittype='USER';
+   title ='Model (GPE, PM, EM)';
+   config = { 1  2  3,
+              2  4  4,
+              3  0  0};
+   run mosaic(levels, table, vnames, lnames, plots, title);
+</Pre>
+ 
+<p> The first <tt>run mosaic</tt> statement produces plots of the
+2-way to 4-way tables, fitting models of joint independence.  The
+second <tt>run mosaic</tt> statement produces a plot of the 4-way
+table, fitting the model [GPE] [PM] [EM] specified by the 
+<tt>config</tt> variable and <tt>fittype='USER';</tt>.
+This model treats G, P, and E as explanatory, and M as a response.
+This is equivalent to the logit model with main effects of
+premarital sex and extramarital sex on marital status. 
+ 
+<p>
+Using the <tt>readtab</tt> routine, this example can be simplified
+as follows.  The routine constructs the <tt>table, levels</tt>,
+and <tt>lnames</tt> variables.  (But note that the values of
+the Pre and Extra variables are both simply 'Yes' or 'No'.)
+
+<Pre>
+proc iml;
+   vnames = {'Gender' 'Pre' 'Extra' 'Marital'};
+	run readtab('marital', 'freq', vnames, table, levels, lnames);
+   title  = 'Pre/Extramarital Sex and Marital Status';
+ 
+   reset storage=mosaic.mosaic;
+   load module=_all_;
+   split = {V H};
+   htext=1.6;
+   plots = 2:4;
+   run mosaic(levels, table, vnames, lnames, plots, title);
+   ... 
+</Pre>
+ 
+
+<h2><a name="Example3">Example 3</a></h2>
+ 
+This example shows the use of SAS/IML itself to reorder the variables
+in a contingency table for the mosaic display.  It uses the same data
+as in the previous example.
+ 
+<p> The variables in a contingency table are reordered by the MARG
+function (which calculates marginal totals) when the model specified
+by the <tt>config</tt> parameter is the saturated model, with the
+variables listed in the desired order.  For example, for the four-way
+table of the previous example, the configuration <tt>{4,3,2,1}</tt>
+gives the same order of the variables created by the <tt>proc
+sort</tt> step.
+ 
+<p> MOSAICS.SAS includes an IML module <tt>reorder</tt> (shown partly
+below) which will reorder the variables in any table.  It also
+rearranges the values in the <tt>levels</tt>, <tt>vnames</tt>,
+and <tt>lnames</tt> variables in the same order.
+ 
+<pre>
+start reorder(dim, table, vnames, lnames, order);
+   *-- reorder the dimensions of an n-way table;
+   if nrow(order) =1 then order=order`;
+   run marg(loc,newtab,dim,table,order);
+   table = newtab;
+   dim = dim[order,];
+   vnames = vnames[order,];
+   lnames = lnames[order,];
+   finish;
+</pre>
+ 
+<p> The data <tt>table</tt> is defined, listing the observations in
+the same order as in the DATA step <tt>marital</tt> shown in Example
+2.  Note that <tt>vnames</tt> and <tt>lnames</tt> conform to this
+order.  After the call to <tt>reorder</tt> the variables <tt>
+table</tt>, <tt>levels</tt>, <tt>vnames</tt>, and <tt>lnames</tt>
+have been rearranged so that Gender is the first variable in the
+mosaic, and Marital status is last.
+ 
+<Pre>
+proc iml;
+  *-- define the data variables;
+  table={ 17   4 ,  /* Women  Yes  Yes  */
+          54  25 ,  /* Women  Yes  No   */
+          36   4 ,  /* Women  No   Yes  */
+         214 322 ,  /* Women  No   No   */
+          28  11 ,  /* Men    Yes  Yes  */
+          60  42 ,  /* Men    Yes  No   */
+          17   4 ,  /* Men    No   Yes  */
+          68 130 }; /* Men    No   No   */
+   levels = { 2 2 2 2 };
+   vnames = {'Marital' 'Extra' 'Pre' 'Gender'};
+   lnames = {'Divorced'   'Married',
+             'Extra Sex: Yes' 'No',
+             'Pre Sex: Yes'   'No',
+             'Women    '      'Men' };
+   title  = 'Pre/Extramarital Sex and Marital Status';
+ 
+   reset storage=mosaic.mosaic;
+   load module=_all_;
+ 
+   order = { 4,3,2,1};
+   run reorder(levels, table, vnames, lnames, order);
+   split = {V H};
+   plots = 2:4;
+   run mosaic(levels, table, vnames, lnames, plots, title);
+quit;
+</Pre>
+
+<h2><a name="sec:mosdata">Sample data sets</a></h2>
+
+A variety of contingency tables are supplied with the <font face="Arial, Helvetica">MOSAICS</font> distribution
+in the file <tt>mosdata.sas</tt>.
+These are listed in the table below, with the
+variable names and dimensions
+given in their order as in <tt>vnames</tt>.
+
+ <center>
+<table border cellpadding=2>
+<a name="tab:datatab"><caption>Mosaics sample data sets</caption></a>
+ <tr><th>Module<br>name </th><th>Ways </th><th> Title<br>Variable names(dimensions)  </tr>
+
+<tr><td><tt>abortion</tt></td><td align=center>        3</td><td><b>Abortion opinion data</b><br> <small> Sex (2)  x Status (2)  x Support Abortion (2) </small> </td></tr>
+
+<tr><td><tt>bartlett</tt></td><td align=center>        3</td><td><b>Bartlett data</b><br> <small> Alive? (2)  x Time (2)  x Length (2) </small> </td></tr>
+
+<tr><td><tt>berkeley</tt></td><td align=center>        3</td><td><b>Berkeley Admissions Data</b><br> <small> Admit (2)  x Gender (2)  x Dept (6) </small> </td></tr>
+
+<tr><td><tt>cancer</tt></td><td align=center>        3</td><td><b>Breast Cancer Patients</b><br> <small> Survival (2)  x Grade (2)  x Center (2) </small> </td></tr>
+
+<tr><td><tt>cesarean</tt></td><td align=center>        4</td><td><b>Risk factors for infection in cesarean births</b><br> <small> Infection (3)  x Risk? (2)  x Antibiotics (2)  x Planned (2) </small> </td></tr>
+
+<tr><td><tt>detergen</tt></td><td align=center>        4</td><td><b>Detergent preference data</b><br> <small> Temperature (2)  x M-User? (2)  x Preference (2)  x Water softness (3) </small> </td></tr>
+
+<tr><td><tt>dyke</tt></td><td align=center>        5</td><td><b>Sources of knowledge of cancer</b><br> <small> Knowledge (2)  x Reading (2)  x Radio (2)  x Lectures (2)  x Newspaper (2) </small> </td></tr>
+
+<tr><td><tt>employ</tt></td><td align=center>        3</td><td><b>Employment Status Data</b><br> <small> EmployStatus (2)  x Layoff (2)  x LengthEmploy (6) </small> </td></tr>
+
+<tr><td><tt>gilby</tt></td><td align=center>        2</td><td><b>Clothing and intelligence rating of children</b><br> <small> Dullness (6)  x Clothing (4) </small> </td></tr>
+
+<tr><td><tt>haireye</tt></td><td align=center>        3</td><td><b>Hair color - Eye color data</b><br> <small> Hair (4)  x Eye (4)  x Sex (2) </small> </td></tr>
+
+<tr><td><tt>heckman</tt></td><td align=center>        5</td><td><b>Labour force participation of married women 1967-1971</b><br> <small> 1971 (2)  x 1970 (2)  x 1969 (2)  x 1968 (2)  x 1967 (2) </small> </td></tr>
+
+<tr><td><tt>hoyt</tt></td><td align=center>        4</td><td><b>Minnesota High School Graduates</b><br> <small> Status (4)  x Rank (3)  x Occupation (7)  x Sex (2) </small> </td></tr>
+
+<tr><td><tt>marital</tt></td><td align=center>        4</td><td><b>Pre/Extramarital Sex and Marital Status</b><br> <small> Marital (2)  x Extra (2)  x Pre (2)  x Gender (2) </small> </td></tr>
+
+<tr><td><tt>mobility</tt></td><td align=center>        2</td><td><b>Social Mobility data</b><br> <small> Son's Occupation (5)  x Father's Occupation (5) </small> </td></tr>
+
+
+<tr><td><tt>suicide</tt></td><td align=center>        3</td><td><b>Suicide data</b><br> <small> Sex (2)  x Age (5)  x Method (6) </small> </td></tr>
+
+<tr><td><tt>titanic</tt></td><td align=center>        4</td><td><b>Survival on the Titanic</b><br> <small> Class (4)  x Sex (2)  x Age (2)  x Survived (2) </small> </td></tr>
+
+<tr><td><tt>victims</tt></td><td align=center>        2</td><td><b>Repeat Victimization Data</b><br> <small> First Victimization (8)  x Second Victimization (8) </small> </td></tr>
+
+</table>
+</center>
+
+Each data set is stored as a SAS/IML module containing definitions
+for the variables
+<tt>title</tt>,
+<tt>dim</tt>,
+<tt>vnames</tt>,
+<tt>lnames</tt>, and
+<tt>table</tt>
+used in the <tt>run mosaics</tt> statement.
+Note that the variable <tt>dim</tt> corresponds to <tt>levels</tt>
+in the arguments to <tt>mosaic</tt>.
+See the module <tt>haireye</tt> in Example 1.
+<p>
+The program <tt>mosdata.sas</tt> is set up so that running it will
+create a SAS/IML storage catalog <tt>MOSDATA</tt> in the
+<tt>MOSAIC</tt> library.
+Once this has been done, any data set may be obtained by loading the
+module
+from <tt>MOSAIC.MOSDATA</tt> and running it.
+For example, the previos example
+could be done using the module <tt>marital</tt>,
+as shown below.
+
+<Pre> 
+proc iml;
+   reset storage=mosaic.mosdata;
+   load module=marital;
+   run marital;
+	
+   reset storage=mosaic.mosaic;
+   load module=_all_;
+ 
+   ord = { 4,3,2,1};
+   run reorder(dim, table, vnames, lnames, ord);
+   split = {V H};
+   plots = 2:4;
+   run mosaic(dim, table, vnames, lnames, plots, title);
+quit;
+</Pre>
+ 
+<!-- include:(1) mosaimpl -->
+ 
+<h1><a name="sec:Implement">6. Implementation</a></h1>
+This section describes the algorithm for the construction of mosaic
+displays and provides some notes on the structure of the program.
+ 
+<h2><a name="H2_51:Algorithm">Algorithm</a></h2>
+ 
+The process is a naturally recursive one which can be implemented
+easily in a language which supports recursion and multi-dimensional
+arrays, such as APL.  <a href="#Wang85">Wang (1985)</a> describes a FORTRAN implementation
+of mosaic displays which simulates multi-dimensional arrays by
+subscripting a vector.  The following algorithm, which uses
+two-dimensional arrays, is much simpler.
+ 
+<ol >
+ 
+<li>Denote the number of levels of the <I>n</I> variables by 
+	<I>l <sub>1</sub> ,  ...  ,  l <sub>n</sub></I>, and let 
+	<I>L <sub> s</sub>  =  Product from i=1 to s  l <sub> i</sub></I>.  At step <I>s  =  0</I>,
+       start with one tile, a square of size <I>100 x 100</I>, and
+       let <I>L <sub> 0</sub>  =  1</I>.
+ 
+<li>The tiles in the mosaic are represented by an array 
+	<I><B> B</B></I> of four columns (called <tt>boxes</tt> in the program).
+       Columns 1 and 2 give the <I>(x ,  y)</I> location of the
+       lower left corner of the tile; columns 3 and 4 give the
+       horizontal and vertical lengths of the tile.  At step 0, <I>
+       B  =  { 0  0  100  100 }</I>.  There is one row
+       for each tile.
+ 
+The following steps are repeated for each variable, <I>s  =  1 ,
+...  ,  n</I>:
+ 
+<li>For variable <I>s</I> find the marginal frequencies of
+       variables <I>1,  ...  ,  s</I>, a vector of length 
+		 <I>L<sub>s</sub></I>, with the levels of variable <I>s</I> varying
+       most rapidly.
+ 
+<li>Reshape this vector row-wise to a matrix <I><B>M</B>  =  { m <sub>
+       gh</sub> }</I> of <I>L <sub> s - 1</sub></I> rows and 
+		 <I>l <sub> s</sub></I>
+       columns.  (The array <I><B>M</B></I> is called <tt>
+       margin</tt> in the program.  See the arrays labelled
+       &quot;Marginal totals&quot; in <a href="#Fig_demlist"> Figure
+       1</a>.)  The rows of <I><B>M</B></I> correspond to the tiles
+       of the previous variables at step <I>s  -  1</I>.
+ 
+<li>Each old tile is then divided vertically (if <I>s</I> is odd)
+       or horizontally (<I>s</I> even) into <I>l sub s</I> tiles,
+       with the width (<I>s</I> odd) or height (<I>s</I> even) of
+       each tile proportional to <I>m <sub> gh</sub>  /  m <sub> g+</sub></I>.
+ 
+</ol>
+ 
+This computational scheme has several desirable properties:
+ 
+<ul >
+ 
+<li>At any stage the division of the tiles for the current variable
+        is in proportion to the entries in each row of 
+		  <I><B>M</B></I> divided by the row totals.
+ 
+<li>We can draw the tiles representing the marginal frequencies at
+        any stage, not just the final stage as Hartigan and Kleiner
+        do.
+ 
+<li>Fitting the model of joint independence of the current variable
+        with all previous variables jointly is equivalent to testing
+        independence of the rows and columns of the matrix <I><B>M</B></I>.
+		  For example, for a three-way table, the expected
+        frequencies under the model <I>[AB] [C]</I> can be
+        expressed in terms of the <I>I J  x  K</I> matrix <I><B>M</B></I> 
+		  as <I>m <sub> (ij)+</sub> m <sub> +k</sub>  /  m <sub> ++</sub></I>.
+ 
+</ul>
+ 
+<h3>Spacing</h3> 
+This procedure gives a mosaic of <I>L <sub>n</sub>  =  l
+<sub>1</sub>  x  l <sub>2</sub>  x   ...   x  l <sub>n</sub></I> tiles with no spacing,
+in which cells with small frequencies are difficult to see.
+Following Hartigan and Kleiner the tiles are separated, with larger
+spacings at the earlier subdivisions, to help preserve the visual
+impact of small counts.  For a four-way table with vertical splitting
+on variables 1 and 3, the divisions of the first variable are spaced
+proportionally to <I>1  /  ( l <sub>1</sub> - 1)</I>; divisions between
+levels of the third variable are spaced proportionally to <I>1  /  (
+l <sub>1</sub> l <sub>3</sub> - 1 )</I>.
+ 
+<p> This spacing of the tiles is accomplished by constructing an
+unspaced mosaic in a reduced area (determined by the <tt>space</tt>
+parameter), then expanding to include the necessary spacing.
+ 
+<h2><a name="H2_52:Program">Program structure</a></h2>
+ 
+MOSAICS.SAS consists of 22 SAS/IML modules (subroutines and
+functions).  The calling structure of the modules is shown in <a
+href="#Fig_mostree"> Figure 5</a>.
+ 
+<pre>
++-------------------------------------------------------------------+
+|                                                                   |
+|   mosaic    *-- check inputs, assign default values;              |
+|   |                                                               |
+|   |-- divide   *-- fit models and draw the mosaic display;        |
+|       |                                                           |
+|       |--reduce   *-- find reduced model for factors 1:f;         |
+|       |                                                           |
+|       |--mfit     *-- fits a specified model;                     |
+|       |                                                           |
+|       |--chisq    *-- calculate chisquares;                       |
+|       |                                                           |
+|       |--df       *-- calculate degrees of freedom;               |
+|       |   |--terms    *-- find all terms in a loglinear model;    |
+|       |       |--vars_in    *-- find variables in a term;         |
+|       |                                                           |
+|       |--modname  *-- expand config into string for model label;  |
+|       |                                                           |
+|       |--divide1  *-- divide the mosaic for the next variable;    |
+|       |                                                           |
+|       |--space    *-- space the tiles in the current display;     |
+|       |                                                           |
+|       |--labels   *-- calculate label placements;                 |
+|       |                                                           |
+|       |--gboxes   *-- draw the current display;                   |
+|          |--fillbox   *-- custom shading;                         |
+|          |--glegend   *-- draw legend;                            |
+|                                                                   |
+|   readtab   *-- read input frequencies, level names;              |
+|   |--readlab   *-- read level names, reorder input                |
+|                                                                   |
+|   reorder   *-- reorder the dimensions of an n-way table;         |
++-------------------------------------------------------------------+
+</pre>
+<a name="Fig_mostree"> Figure 5</a>:  Calling structure of the
+modules in MOSAICS.SAS
+ 
+<p> The top-level module, <tt>mosaic</tt> simply validates the input
+parameters, assigns default values for global variables, and calls
+the module <tt>divide</tt>.  The steps in the algorithm described
+above are carried out by <tt>divide</tt>; the calculation of the new
+tiles in step 5 is performed in <tt>divide1</tt>.
+ 
+<h2><a name="Changes">Changes</a></h2>
+
+<h3>Version 3.5</h3>
+
+<ul COMPACT>
+  <li>  Fixed conflict between the global variable <tt>DEVTYPE</tt> and
+  the macro variable used for graphics device control.
+  <li> Changed circle blanking used for <tt>CELLFILL</tt> to white/black text, depending on shading density.
+  <li> Added control of threshold for <tt>CELLFILL</tt>.  You can now
+  say <tt>CELLFILL = DEV 1.0</tt> and all absolute residuals > 1.0 will have
+  their values written in the tiles.
+  <li> Added calculation and display of adjusted residuals
+  ( <em>= d / \sqrt(1-h) </em>)
+  <li> The default font now depends on device driver, making it easier to
+  get PS/EPS output in Windoze.
+<li>  Added NAME global variable for graph names in the graphics catalog.
+<li>  Fixed a bug in the calculation of adjusted residuals
+<li>  Added CELLFILL='FREQ' to display cell frequency in the tiles.
+  <li> Added ABBREV global to abbreviate variable names in models
+  and titles.
+</ul>
+
+<h3>Version 3.4</h3> 
+<ul COMPACT>
+<li>  Added <tt>vlabels</tt> global variable to control the number of variables for which variable names are used in the display, <tt>fuzz</tt> now sets line style solid.
+<li>  Global variables  are now set in a separate module to make changing defaults easier.
+<li>  In <tt>reorder</tt> module, you can now specify the variable names
+in the new order, rather than indices.
+The <tt>config</tt> configuration may also be specified using variable
+names.
+<li>  Added code for models of joint independence and conditional
+independence in which any variable may be specified at the jointly
+indpendent or conditioning one.
+</ul>
+
+<h3>Version 3.3</h3> 
+<ul COMPACT>
+<li>Added a GSKIP module, for EPS ouput to separately named
+graphics files.  Requires a global macro variable, <tt>&amp;DEVTYPE = EPS</tt>
+</ul>
+
+<h3>Version 3.2</h3> 
+<ul COMPACT>
+<li>Added <tt>zeros=</tt> global input matrix to handle structural zeros.
+<li>Added ability to display chisquare value in the mosaic title for
+each plot, by using '&G2' in the title string.
+<li>Changed default values to filltype={HLS HLS}, colors={BLUE RED}
+since this is what I always use now, except for monochrome output.
+</ul> 
+
+<h3>Version 3.1</h3> 
+<ul COMPACT>
+<li>Added <tt>readtab</tt> routine for easier input from a SAS dataset.
+<li>Added <tt>devtype='FT'</tt> to calculate and display Freeman-Tukey residuals.
+<li>Character values of global input variables no longer need be entered
+in upper case.
+</ul> 
+
+<h3>Version 3.0</h3> 
+<ul COMPACT>
+<li>Added ability to fit a sequence of Markov models (<tt>fittype='MARKOV';</tt>) for lag sequential data.
+<li>Fit the equiprobability model for the display of the first variable.
+</ul>
+
+<h3>Version 2.9</h3>
+ 
+<ul COMPACT>
+<li>Installation simplified by creating a separate file, MOSAICM.SAS,
+        to install IML modules.
+<li>Filltypes changed to allow separate coding for postitive and
+        negative residuals, and to provide grayscale shading levels.
+<li>Added ability (<tt>cellfill</tt>) to print a symbol in the cell
+        symbolizing the value of the residual.
+</ul>
+ 
+<hr>
+<h1><a name="sec:References">References</a></h1>
+ 
+<ul >
+ 
+<li><a name="Friendly91">Friendly, M. (1991).</a> <cite> Mosaic
+       displays for multi-way contingency tables</cite>.  York Univ.:
+       Dept. of Psychology Reports, 1991, No. 195.
+ 
+<li><a name="Friendly92">Friendly, M. (1992).</a> Mosaic displays for
+       loglinear models.  <cite> Proceedings of the Statistical
+       Graphics Section, American Statistical Association</cite>,
+       61-68.
+ 
+<li><a name="Friendly94">Friendly, M. (1994).</a> Mosaic displays for
+       multi-way contingency tables.  <cite> Journal of the American
+       Statistial Association</cite>, <i> 89</i>, 190-200.
+ 
+<li><a name="Friendly98">Friendly, M. (1998).</a> 
+<a href="/papers/drew/">Extending Mosaic Displays: Marginal, Partial,
+       and Conditional Views
+of Categorical Data</a>: Paper presented at the <cite>Workshop on ``Data Visualization in Statistics''</cite>, July 6-10, 1998, held at Drew University.
+[Published in <cite>JCGS</cite>, 1999, 8:373--395.]
+}.
+
+<li><a name="Hartigan81">Hartigan, J. A., and Kleiner, B. (1981),</a>
+       Mosaics for contingency tables.  In W. F. Eddy (Ed.), <cite>
+       Computer Science and Statistics: Proceedings of the 13th
+       Symposium on the Interface</cite>, 268-273.  New York:
+       Springer-Verlag.
+ 
+<li><a name="Wang85">Wang, C. M. (1985).</a> Applications and
+       computing of mosaics.  <cite> Computational Statistics & Data
+       Analysis</cite>, 3, 89-97.
+ 
+</ul>
+ 
+</body>
+</html>
