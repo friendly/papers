@@ -36,6 +36,10 @@ body   <- c(body[seq_len(nav_at - 1)], read(file.path(src, "navbar.php")),
 stopifnot(!any(grepl("<?", body, fixed = TRUE)))
 body <- abs_datavis(body)
 
+# drop a spam "translation" link (Guerry entry) hosted on a car-parts site
+body <- sub('\\s*\\|\\|\\s*<a href="https://www.espertoautoricambi.it/[^"]*">[^<]*</a>', "", body)
+stopifnot(!any(grepl("espertoautoricambi", body)))
+
 page <- c(
   '<!DOCTYPE html>',
   '<html lang="en">',
