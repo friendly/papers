@@ -22,7 +22,13 @@ path_fixes <- c(
   "papers/effect.pdf"    = "papers/effect/effect.pdf",
   "papers/mosahist.pdf"  = "papers/moshist.pdf",
   "papers/Corrgrams.pdf" = "papers/corrgram.pdf",
-  "mosaics/mosaics.pdf"  = "papers/mosaics/mosaics.pdf"
+  "mosaics/mosaics.pdf"  = "papers/mosaics/mosaics.pdf",
+  # old names used in vita.bib (checked against file contents, 2026-11-16)
+  "papers/SMR-1995.pdf"            = "papers/apl2stat/FoxFriendly-SMR-apl2stat.pdf",
+  "papers/GuerryLife.pdf"          = "papers/guerryvie/GuerryLife.pdf",
+  "papers/sugi/sugi17-paper.pdf"   = "papers/sugi/sugi17.pdf",
+  "papers/FriendlyGlucksberg1970"  = "papers/FriendlyGlucksberg1970.pdf",
+  "papers/EqCov.pdf"               = "papers/EqCov-rev3.pdf"
 )
 
 # Published versions, keyed by (fixed) path. DOIs verified against vita.bib, 2026-11-16.
@@ -45,14 +51,14 @@ default_globs <- c("DESCRIPTION", "README.Rmd", "README.md", "NEWS.md", "_pkgdow
 # A datavis.ca URL, any host variant (www., ddar., none), up to a delimiter.
 url_regex <- "https?://([a-z]+\\.)?datavis\\.ca[^][[:space:]<>(){}\"'`|,;]*"
 
-map_datavis_url <- function(url) {
+map_datavis_url <- function(url, use_doi = TRUE) {
   u <- sub("[.]+$", "", url)                       # trailing sentence period
   host <- sub("^https?://([^/]+).*$", "\\1", u)
   if (!host %in% c("datavis.ca", "www.datavis.ca")) return(NA_character_)
   path <- sub("^https?://[^/]+/?", "", u)
   path <- sub("^palers/", "papers/", path)
   if (path %in% names(path_fixes)) path <- path_fixes[[path]]
-  if (path %in% names(doi_map)) {
+  if (use_doi && path %in% names(doi_map)) {
     # encode ( ) so the URL is safe inside markdown links: [text](url)
     doi <- gsub(")", "%29", gsub("(", "%28", doi_map[[path]], fixed = TRUE), fixed = TRUE)
     return(paste0("https://doi.org/", doi))
@@ -71,18 +77,18 @@ target_exists <- function(new) {
   file.exists(p) || file.exists(file.path(p, "index.html"))
 }
 
-rewrite_datavis_urls <- function(dir, dry_run = TRUE, globs = default_globs) {
+rewrite_datavis_urls <- function(dir, dry_run = TRUE, globs = default_globs, use_doi = TRUE) {
   files <- unique(unlist(lapply(file.path(dir, globs), Sys.glob)))
   files <- files[file.exists(files) & !dir.exists(files)]
   out <- list()
   for (f in files) {
-    lines <- readLines(f, warn = FALSE, encoding = "UTF-8")
+    lines <- readLines(f, warn = FALSE, encoding = "bytes")   # byte-exact for any encoding
     changed <- FALSE
-    for (i in grep("datavis\\.ca", lines)) {
-      urls <- unique(regmatches(lines[i], gregexpr(url_regex, lines[i], perl = TRUE))[[1]])
+    for (i in grep("datavis\\.ca", lines, useBytes = TRUE)) {
+      urls <- unique(regmatches(lines[i], gregexpr(url_regex, lines[i], perl = TRUE, useBytes = TRUE))[[1]])
       for (u in urls) {
         old <- sub("[.]+$", "", u)
-        new <- map_datavis_url(old)
+        new <- map_datavis_url(old, use_doi = use_doi)
         # in .bib files % starts a LaTeX comment; raw ( ) are fine inside braces
         if (!is.na(new) && grepl("\\.bib$", f, ignore.case = TRUE))
           new <- gsub("%29", ")", gsub("%28", "(", new, fixed = TRUE), fixed = TRUE)
@@ -94,7 +100,7 @@ rewrite_datavis_urls <- function(dir, dry_run = TRUE, globs = default_globs) {
           # replace whole URLs only: `old` must not be followed by more URL characters
           pat <- paste0(gsub("([][{}()+*^$|\\\\?.])", "\\\\\\1", old),
                         "(?![A-Za-z0-9/_%?#=&~+-]|\\.[A-Za-z0-9])")
-          lines[i] <- gsub(pat, new, lines[i], perl = TRUE)
+          lines[i] <- gsub(pat, new, lines[i], perl = TRUE, useBytes = TRUE)
           changed <- TRUE
         }
       }
