@@ -99,7 +99,14 @@ rewrite_datavis_urls <- function(dir, dry_run = TRUE, globs = default_globs) {
         }
       }
     }
-    if (changed && !dry_run) writeLines(lines, f, useBytes = TRUE)
+    if (changed && !dry_run) {
+      # keep the file's original line endings (CRLF vs LF)
+      raw <- readBin(f, "raw", file.info(f)$size)
+      eol <- if (length(grepRaw("\r\n", raw, fixed = TRUE))) "\r\n" else "\n"
+      con <- file(f, "wb")
+      writeLines(lines, con, sep = eol, useBytes = TRUE)
+      close(con)
+    }
   }
   res <- if (length(out)) do.call(rbind, out) else
     data.frame(file = character(), line = integer(), old = character(),
