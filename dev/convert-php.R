@@ -47,6 +47,8 @@ body <- gsub('<a class="lightbox" href="https://www.datavis.ca/gallery/[^"]*"><i
 # DDAR book: the friendly.github.io Books page has a section for it
 body <- gsub('https://www.datavis.ca/books/#DDAR',
              'https://friendly.github.io/books.html#discrete-data-analysis-with-r', body, fixed = TRUE)
+body <- gsub('https://www.datavis.ca/books/vcd/',
+             'https://friendly.github.io/books.html#visualizing-categorical-data', body, fixed = TRUE)
 
 page <- c(
   '<!DOCTYPE html>',
