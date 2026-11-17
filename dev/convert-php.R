@@ -40,6 +40,10 @@ body <- abs_datavis(body)
 body <- sub('\\s*\\|\\|\\s*<a href="https://www.espertoautoricambi.it/[^"]*">[^<]*</a>', "", body)
 stopifnot(!any(grepl("espertoautoricambi", body)))
 
+# lightbox thumbnails whose full image is on datavis.ca/gallery (offline): show the local thumbnail
+body <- gsub('<a class="lightbox" href="https://www.datavis.ca/gallery/[^"]*"><img src="([^"]+)"',
+             '<a class="lightbox" href="\\1"><img src="\\1"', body)
+
 page <- c(
   '<!DOCTYPE html>',
   '<html lang="en">',
