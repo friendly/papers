@@ -24,6 +24,9 @@ header.site {
 }
 header.site a { color: #fff; font-weight: 600; text-decoration: none; }
 header.site .note { color: #e8eedf; font-size: 0.9em; }
+header.site .crumbs { color: #e8eedf; font-size: 0.9em; }
+header.site .crumbs a { font-weight: 400; text-decoration: underline; }
+header.site .crumbs b { color: #fff; }
 header.site code { color: #fff; }
 
 main { max-width: 60em; margin: 0 auto; padding: 0 16px 3em; }
