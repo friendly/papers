@@ -11,6 +11,10 @@
 #   4. the bare site root                -> https://friendly.github.io/
 #   5. anything else (gallery/, milestones/, books/, online/, sasmac/, ddar.datavis.ca)
 #      is left alone and reported as "unmapped", for a decision by hand.
+#      SAS macro pages (sasmac/<name>.html) can be replaced by the GitHub version, e.g.
+#        http://www.datavis.ca/sasmac/cqplot.html
+#          -> https://github.com/friendly/SAS-macros/blob/master/cqplot.sas
+#      (check the macro file exists there, as names may differ from the old .html page)
 #
 # Only source files are edited; man/*.Rd must then be regenerated with devtools::document().
 
