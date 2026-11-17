@@ -30,11 +30,40 @@ main { max-width: 60em; margin: 0 auto; padding: 0 16px 3em; }
 
 a { color: var(--link); }
 h2 { border-bottom: 1px solid var(--rule); padding-bottom: 0.2em; margin-top: 1.8em; }
-a.target { color: inherit; text-decoration: none; }
+a.target, h2 a[name], h3 a[name] { color: inherit; text-decoration: none; }
 
-table.noBorder { border-collapse: collapse; width: 100%; }
-table.noBorder td { vertical-align: top; }
+/* Each section is a one-row table: a cell of paper lists plus a cell of thumbnails
+   (on the left or right in the original). Lay the row out as two columns, with the
+   thumbnails always in a fixed-width column on the right, stacked vertically. */
+table.noBorder, table.noBorder > tbody { display: block; width: 100%; }
+table.noBorder tr { display: flex; gap: 1.5em; align-items: flex-start; }
+table.noBorder td { display: block; padding: 0; }
+table.noBorder td:not(:has(img.imageRightAlign)) { flex: 1 1 auto; min-width: 0; }
+table.noBorder td:has(img.imageRightAlign) {
+  order: 2;
+  flex: 0 0 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+  padding-top: 1em;
+}
+table.noBorder td:has(img.imageRightAlign) p { margin: 0; }
 
-img.imageRightAlign { float: right; margin: 0 0 0.5em 1em; max-width: 40%; height: auto; }
+img.imageRightAlign {
+  float: none;
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--rule);
+}
+
+/* Phones: thumbnails go below the list, side by side, smaller */
+@media (max-width: 640px) {
+  table.noBorder tr { flex-direction: column; gap: 0.5em; }
+  table.noBorder td:has(img.imageRightAlign) {
+    flex: none; flex-direction: row; flex-wrap: wrap; padding-top: 0;
+  }
+  img.imageRightAlign { width: 140px; }
+}
 li { margin-bottom: 0.35em; }
 ul::after { content: ""; display: block; clear: both; }
