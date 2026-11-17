@@ -44,6 +44,10 @@ stopifnot(!any(grepl("espertoautoricambi", body)))
 body <- gsub('<a class="lightbox" href="https://www.datavis.ca/gallery/[^"]*"><img src="([^"]+)"',
              '<a class="lightbox" href="\\1"><img src="\\1"', body)
 
+# DDAR book: the friendly.github.io Books page has a section for it
+body <- gsub('https://www.datavis.ca/books/#DDAR',
+             'https://friendly.github.io/books.html#discrete-data-analysis-with-r', body, fixed = TRUE)
+
 page <- c(
   '<!DOCTYPE html>',
   '<html lang="en">',
