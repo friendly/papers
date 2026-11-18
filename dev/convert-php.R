@@ -64,7 +64,7 @@ nav_item <- function(href, icon, text)
   sprintf('<li class="nav-item"><a class="nav-link" href="%s"><i class="bi bi-%s"></i> %s</a></li>',
           href, icon, text)
 
-site_head <- c(
+site_head <- function(css = "papers.css") c(
   '<link rel="icon" href="https://friendly.github.io/images/MF-face.png" type="image/png">',
   '<link id="theme-dark" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.1/dist/darkly/bootstrap.min.css">',
   '<link id="theme-light" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.1/dist/cosmo/bootstrap.min.css">',
@@ -85,7 +85,7 @@ site_head <- c(
   '  }',
   '  setScheme(schemeIsDark());',
   '</script>',
-  '<link rel="stylesheet" href="papers.css">'
+  sprintf('<link rel="stylesheet" href="%s">', css)
 )
 
 site_nav <- c(
@@ -135,7 +135,7 @@ page <- c(
   '<meta charset="UTF-8">',
   '<meta name="viewport" content="width=device-width, initial-scale=1">',
   '<title>Michael Friendly: Papers and Presentations</title>',
-  site_head,
+  site_head(),
   jquery_fancybox,
   '<script>$(function(){ $("a.lightbox").fancybox(); });</script>',
   '</head>',
@@ -151,12 +151,41 @@ page <- c(
 write(page, "index.html")
 
 # ---- papers/ellipses/index.php ---------------------------------------------
+# Supplementary materials for the Elliptical Insights paper. Keep the original body
+# (the figure gallery is built by figlist.js) inside the same site navbar, theme and footer.
 ell <- read(file.path(src, "ellipses", "index.php"))
-ell <- ell[-(1:grep("^\\?>", ell)[1])]                    # drop PHP preamble
-ell <- ell[!grepl("head.js.tpl.php|fancybox-1.3.4.css", ell)]
-ins <- grep('<script src="figlist.js">', ell, fixed = TRUE)
-ell <- append(ell, jquery_fancybox, after = ins - 1)     # jQuery before figlist.js
+title    <- sub(".*<title>(.*)</title>.*", "\\1", grep("<title>", ell, value = TRUE)[1])
+kw_start <- grep('<meta name="keywords"', ell, fixed = TRUE)
+kw_end   <- kw_start + grep('">', ell[kw_start:length(ell)], fixed = TRUE)[1] - 1
+keywords <- sub('value=', 'content=', ell[kw_start:kw_end], fixed = TRUE)
+ell <- ell[(grep("<body>", ell, fixed = TRUE) + 1):(grep("</body>", ell, fixed = TRUE) - 1)]
+# drop the "Updated <document.lastModified>" script: on GitHub Pages it is just the serve date
+ell <- strsplit(gsub('(?s)\\s*<script language="JavaScript">.*?</script>', "",
+                     paste(ell, collapse = "\n"), perl = TRUE), "\n")[[1]]
 ell <- gsub("http://www.datavis.ca/papers/ellipses",
             "https://friendly.github.io/papers/ellipses/", ell, fixed = TRUE)
+ell <- gsub("http://i.creativecommons.org/", "https://i.creativecommons.org/", ell, fixed = TRUE)
 stopifnot(!any(grepl("<?", ell, fixed = TRUE)))
-write(abs_datavis(ell), file.path("ellipses", "index.html"))
+
+ell_page <- c(
+  '<!DOCTYPE html>',
+  '<html lang="en">',
+  '<head>',
+  '<meta charset="UTF-8">',
+  '<meta name="viewport" content="width=device-width, initial-scale=1">',
+  sprintf('<title>%s</title>', title),
+  keywords,
+  site_head("../papers.css"),
+  jquery_fancybox,
+  '<script src="figlist.js"></script>',
+  '</head>',
+  '<body>',
+  site_nav,
+  '<main class="ellipses">',
+  abs_datavis(ell),
+  '</main>',
+  site_footer,
+  '</body>',
+  '</html>'
+)
+write(ell_page, file.path("ellipses", "index.html"))
