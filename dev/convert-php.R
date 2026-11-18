@@ -36,6 +36,11 @@ body   <- c(body[seq_len(nav_at - 1)], read(file.path(src, "navbar.php")),
 stopifnot(!any(grepl("<?", body, fixed = TRUE)))
 body <- abs_datavis(body)
 
+# drop the commented-out menus and the stylesheets they used (Font Awesome, navbar.css)
+body <- strsplit(gsub("(?s)<!--.*?-->", "", paste(body, collapse = "\n"), perl = TRUE), "\n")[[1]]
+body <- body[!grepl("font-awesome|navbar[.]css", body)]
+body <- body[!(grepl("^\\s*$", body) & c(FALSE, grepl("^\\s*$", head(body, -1))))]  # collapse blank runs
+
 # drop a spam "translation" link (Guerry entry) hosted on a car-parts site
 body <- sub('\\s*\\|\\|\\s*<a href="https://www.espertoautoricambi.it/[^"]*">[^<]*</a>', "", body)
 stopifnot(!any(grepl("espertoautoricambi", body)))
@@ -50,6 +55,79 @@ body <- gsub('https://www.datavis.ca/books/#DDAR',
 body <- gsub('https://www.datavis.ca/books/vcd/',
              'https://friendly.github.io/books.html#visualizing-categorical-data', body, fixed = TRUE)
 
+# ---- site look: same Bootswatch themes, navbar and footer as friendly.github.io ----
+# The Quarto site uses darkly (default) and cosmo (light), Bootstrap 5.3.1, with a toggle
+# stored in localStorage "quarto-color-scheme" ("alternate" = dark, "default" = light).
+# This page is on the same origin, so it reads and writes the same setting.
+site <- "https://friendly.github.io/"
+nav_item <- function(href, icon, text)
+  sprintf('<li class="nav-item"><a class="nav-link" href="%s"><i class="bi bi-%s"></i> %s</a></li>',
+          href, icon, text)
+
+site_head <- c(
+  '<link rel="icon" href="https://friendly.github.io/images/MF-face.png" type="image/png">',
+  '<link id="theme-dark" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.1/dist/darkly/bootstrap.min.css">',
+  '<link id="theme-light" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.1/dist/cosmo/bootstrap.min.css">',
+  '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">',
+  '<script>',
+  '  function setScheme(dark) {',
+  '    document.getElementById("theme-dark").disabled = !dark;',
+  '    document.getElementById("theme-light").disabled = dark;',
+  '    document.documentElement.classList.toggle("dark", dark);',
+  '  }',
+  '  function schemeIsDark() {',
+  '    try { return localStorage.getItem("quarto-color-scheme") !== "default"; } catch (e) { return true; }',
+  '  }',
+  '  function toggleScheme() {',
+  '    var dark = !schemeIsDark();',
+  '    try { localStorage.setItem("quarto-color-scheme", dark ? "alternate" : "default"); } catch (e) {}',
+  '    setScheme(dark);',
+  '  }',
+  '  setScheme(schemeIsDark());',
+  '</script>',
+  '<link rel="stylesheet" href="papers.css">'
+)
+
+site_nav <- c(
+  '<nav class="navbar navbar-expand-lg bg-primary sticky-top" data-bs-theme="dark">',
+  '<div class="container-fluid">',
+  sprintf('<a class="navbar-brand" href="%s">Michael Friendly</a>', site),
+  '<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>',
+  '<div class="collapse navbar-collapse" id="navbarCollapse">',
+  '<ul class="navbar-nav me-auto">',
+  nav_item(site, "house", "Home"),
+  nav_item(paste0(site, "about.html"), "person", "About"),
+  nav_item(paste0(site, "packages.html"), "box-seam", "R Packages"),
+  '<li class="nav-item dropdown">',
+  '<a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-book"></i> Publications</a>',
+  '<ul class="dropdown-menu">',
+  sprintf('<li><a class="dropdown-item" href="%sbooks.html">Books</a></li>', site),
+  sprintf('<li><a class="dropdown-item active" aria-current="page" href="%spapers/">Papers</a></li>', site),
+  '</ul>',
+  '</li>',
+  nav_item(paste0(site, "courses.html"), "mortarboard", "Courses"),
+  nav_item(paste0(site, "software.html"), "code-slash", "Other Software"),
+  nav_item(paste0(site, "blog/index.html"), "pencil", "Blog"),
+  '</ul>',
+  '<ul class="navbar-nav">',
+  '<li class="nav-item"><a class="nav-link" href="https://github.com/friendly" aria-label="GitHub"><i class="bi bi-github"></i></a></li>',
+  '<li class="nav-item"><a class="nav-link" href="https://bsky.app/profile/datavisfriendly.bsky.social" aria-label="BlueSky"><img src="https://friendly.github.io/images/bluesky-logo.png" alt="" style="height:1.2em; vertical-align:middle;"></a></li>',
+  '<li class="nav-item"><a class="nav-link scheme-toggle" href="#" onclick="toggleScheme(); return false;" title="Toggle dark mode" aria-label="Toggle dark mode"><i class="bi bi-toggle-off"></i><i class="bi bi-toggle-on"></i></a></li>',
+  '</ul>',
+  '</div>',
+  '</div>',
+  '</nav>'
+)
+
+site_footer <- c(
+  '<footer class="site-footer">',
+  '  <span>Copyright 2025, Michael Friendly</span>',
+  '  <span class="footer-note">Papers formerly at <code>datavis.ca/papers/</code></span>',
+  sprintf('  <a href="%s">friendly.github.io/</a>', site),
+  '</footer>',
+  '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>'
+)
+
 page <- c(
   '<!DOCTYPE html>',
   '<html lang="en">',
@@ -57,19 +135,16 @@ page <- c(
   '<meta charset="UTF-8">',
   '<meta name="viewport" content="width=device-width, initial-scale=1">',
   '<title>Michael Friendly: Papers and Presentations</title>',
-  '<link rel="stylesheet" href="papers.css">',
+  site_head,
   jquery_fancybox,
   '<script>$(function(){ $("a.lightbox").fancybox(); });</script>',
   '</head>',
   '<body>',
-  '<header class="site">',
-  '  <a href="https://friendly.github.io/">Michael Friendly</a>',
-  '  <span class="crumbs">Publications: <a href="https://friendly.github.io/books.html">Books</a> | <b>Papers</b></span>',
-  '  <span class="note">Papers formerly at <code>datavis.ca/papers/</code></span>',
-  '</header>',
+  site_nav,
   '<main>',
   body,
   '</main>',
+  site_footer,
   '</body>',
   '</html>'
 )

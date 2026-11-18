@@ -1,39 +1,27 @@
-/* Minimal stand-in for the datavis.ca site styles used by index.html */
-:root {
-  --fg: #222;
-  --bg: #fff;
-  --muted: #666;
-  --link: #3b5e1a;
-  --rule: #ddd;
+/* Styles for friendly.github.io/papers/.
+   Colors, fonts and the navbar come from the same Bootswatch themes as the Quarto site
+   (darkly by default, cosmo for light), loaded in index.html. This file adds only the
+   page layout and a few touches that match the site's styles.css. */
+
+main { max-width: 60em; margin: 0 auto; padding: 1.5rem 16px 3em; }
+
+/* Section headings: like the site's h2 (2px rule in the primary color) */
+h1, h2, h3 { font-weight: 600; }
+h1 { font-size: 2rem; margin-bottom: 0.75rem; }
+h3 { font-size: 1.3rem; }
+h2 {
+  font-size: 1.6rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--bs-primary);
 }
-
-body {
-  margin: 0;
-  color: var(--fg);
-  background: var(--bg);
-  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-}
-
-header.site {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5em 1.5em;
-  align-items: baseline;
-  padding: 0.75em 16px;
-  background: #556b2f;
-}
-header.site a { color: #fff; font-weight: 600; text-decoration: none; }
-header.site .note { color: #e8eedf; font-size: 0.9em; }
-header.site .crumbs { color: #e8eedf; font-size: 0.9em; }
-header.site .crumbs a { font-weight: 400; text-decoration: underline; }
-header.site .crumbs b { color: #fff; }
-header.site code { color: #fff; }
-
-main { max-width: 60em; margin: 0 auto; padding: 0 16px 3em; }
-
-a { color: var(--link); }
-h2 { border-bottom: 1px solid var(--rule); padding-bottom: 0.2em; margin-top: 1.8em; }
+h3 { margin-top: 1.5rem; }
 a.target, h2 a[name], h3 a[name] { color: inherit; text-decoration: none; }
+
+/* Dark-mode toggle: show the icon for the current scheme, as the site does */
+html.dark .scheme-toggle .bi-toggle-off,
+html:not(.dark) .scheme-toggle .bi-toggle-on { display: none; }
 
 /* Each section is a one-row table: a cell of paper lists plus a cell of thumbnails
    (on the left or right in the original). Lay the row out as two columns, with the
@@ -57,7 +45,8 @@ img.imageRightAlign {
   display: block;
   width: 100%;
   height: auto;
-  border: 1px solid var(--rule);
+  border: 1px solid var(--bs-border-color);
+  border-radius: 0.25rem;
 }
 
 /* Phones: thumbnails go below the list, side by side, smaller */
@@ -68,5 +57,20 @@ img.imageRightAlign {
   }
   img.imageRightAlign { width: 140px; }
 }
+
 li { margin-bottom: 0.35em; }
 ul::after { content: ""; display: block; clear: both; }
+
+/* Footer: like the Quarto site footer */
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5em 1.5em;
+  padding: 1rem 16px;
+  border-top: 1px solid var(--bs-border-color);
+  color: var(--bs-secondary-color);
+  font-size: 0.875em;
+}
+.site-footer a { color: inherit; }
+.site-footer code { color: inherit; }

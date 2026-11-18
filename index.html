@@ -4,6 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Michael Friendly: Papers and Presentations</title>
+<link rel="icon" href="https://friendly.github.io/images/MF-face.png" type="image/png">
+<link id="theme-dark" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.1/dist/darkly/bootstrap.min.css">
+<link id="theme-light" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.1/dist/cosmo/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<script>
+  function setScheme(dark) {
+    document.getElementById("theme-dark").disabled = !dark;
+    document.getElementById("theme-light").disabled = dark;
+    document.documentElement.classList.toggle("dark", dark);
+  }
+  function schemeIsDark() {
+    try { return localStorage.getItem("quarto-color-scheme") !== "default"; } catch (e) { return true; }
+  }
+  function toggleScheme() {
+    var dark = !schemeIsDark();
+    try { localStorage.setItem("quarto-color-scheme", dark ? "alternate" : "default"); } catch (e) {}
+    setScheme(dark);
+  }
+  setScheme(schemeIsDark());
+</script>
 <link rel="stylesheet" href="papers.css">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css">
@@ -11,80 +31,37 @@
 <script>$(function(){ $("a.lightbox").fancybox(); });</script>
 </head>
 <body>
-<header class="site">
-  <a href="https://friendly.github.io/">Michael Friendly</a>
-  <span class="crumbs">Publications: <a href="https://friendly.github.io/books.html">Books</a> | <b>Papers</b></span>
-  <span class="note">Papers formerly at <code>datavis.ca/papers/</code></span>
-</header>
+<nav class="navbar navbar-expand-lg bg-primary sticky-top" data-bs-theme="dark">
+<div class="container-fluid">
+<a class="navbar-brand" href="https://friendly.github.io/">Michael Friendly</a>
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+<div class="collapse navbar-collapse" id="navbarCollapse">
+<ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="https://friendly.github.io/"><i class="bi bi-house"></i> Home</a></li>
+<li class="nav-item"><a class="nav-link" href="https://friendly.github.io/about.html"><i class="bi bi-person"></i> About</a></li>
+<li class="nav-item"><a class="nav-link" href="https://friendly.github.io/packages.html"><i class="bi bi-box-seam"></i> R Packages</a></li>
+<li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-book"></i> Publications</a>
+<ul class="dropdown-menu">
+<li><a class="dropdown-item" href="https://friendly.github.io/books.html">Books</a></li>
+<li><a class="dropdown-item active" aria-current="page" href="https://friendly.github.io/papers/">Papers</a></li>
+</ul>
+</li>
+<li class="nav-item"><a class="nav-link" href="https://friendly.github.io/courses.html"><i class="bi bi-mortarboard"></i> Courses</a></li>
+<li class="nav-item"><a class="nav-link" href="https://friendly.github.io/software.html"><i class="bi bi-code-slash"></i> Other Software</a></li>
+<li class="nav-item"><a class="nav-link" href="https://friendly.github.io/blog/index.html"><i class="bi bi-pencil"></i> Blog</a></li>
+</ul>
+<ul class="navbar-nav">
+<li class="nav-item"><a class="nav-link" href="https://github.com/friendly" aria-label="GitHub"><i class="bi bi-github"></i></a></li>
+<li class="nav-item"><a class="nav-link" href="https://bsky.app/profile/datavisfriendly.bsky.social" aria-label="BlueSky"><img src="https://friendly.github.io/images/bluesky-logo.png" alt="" style="height:1.2em; vertical-align:middle;"></a></li>
+<li class="nav-item"><a class="nav-link scheme-toggle" href="#" onclick="toggleScheme(); return false;" title="Toggle dark mode" aria-label="Toggle dark mode"><i class="bi bi-toggle-off"></i><i class="bi bi-toggle-on"></i></a></li>
+</ul>
+</div>
+</div>
+</nav>
 <main>
 					
-				
-
-
 					<h1>Online Papers and Presentations</h1>
-
-					<!-- include the navbar for this file -->
- <!-- Load font awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="navbar.css" type="text/css">
-
-<!-- The navigation menu -->
-
-<!--
-<div class="navbar">
-  <a href="#sugi">SAS SUGI</a>
-  <div class="subnav">
-    <button class="subnavbtn">Graphical methods <i class="fa fa-caret-down"></i></button>
-    <div class="subnav-content">
-      <a href="#cognitive">Cognition</a>
-      <a href="#categorical">Categorical data</a>
-      <a href="#tables">Tables</a>
-      <a href="#software">Software</a>
-    </div>
-  </div>
-  
-  <div class="subnav">
-    <button class="subnavbtn">History of graphics <i class="fa fa-caret-down"></i></button>
-    <div class="subnav-content">
-      <a href="#general">General</a>
-      <a href="#talks">Talks</a>
-      <a href="#visualthinking">Visual thinking</a>
-      <a href="#graph-specific">Graph-specific</a>
-      <a href="#titanic">Titanic data</a>
-      <a href="#minard">C. J. Minard</a>
-      <a href="#guerry">A.-M. Guerry</a>
-      <a href="#langren">M. F. van Langren</a>
-      <a href="#modern">Modern histories</a>
-    </div>
-  </div>
-</div> 
--->
-
-<!-- dropdown buttons -->
-<!--
- <div class="dropdown">
-  <a href="#sugi">SAS SUGI</a>
-  <button class="dropbtn">Graphical methods <i class="fa fa-caret-down"></button>
-  <div class="dropdown-content">
-      <a href="#cognitive">Cognition</a>
-      <a href="#categorical">Categorical data</a>
-      <a href="#tables">Tables</a>
-      <a href="#software">Software</a>
-  </div>
-  <button class="dropbtn">History of graphics <i class="fa fa-caret-down"></button>
-  <div class="dropdown-content">
-      <a href="#general">General</a>
-      <a href="#talks">Talks</a>
-      <a href="#visualthinking">Visual thinking</a>
-      <a href="#graph-specific">Graph-specific</a>
-      <a href="#titanic">Titanic data</a>
-      <a href="#minard">C. J. Minard</a>
-      <a href="#guerry">A.-M. Guerry</a>
-      <a href="#langren">M. F. van Langren</a>
-      <a href="#modern">Modern histories</a>
-  </div>
-</div> 
--->
 
 <div class="links">
 	<b>Topics:</b>
@@ -94,7 +71,6 @@
   <br /><br />
 </div>
   
-
 					<h2><a name="sugi" class="target">SAS SUGI papers</a></h2>
 					<table class="noBorder">
 					<tr>
@@ -126,15 +102,7 @@
 					</table>
 
 					<h2><a name="methods" class="target">Graphical methods</a></h2>
-<!--
-					<table>
-						<tr>
-							<td><img src="images/mosaic9-snip.jpg" height="100" /></td>
-							<td><img src="images/mosmat-snip.jpg" height="100" /></td>
-							<td><img src="images/corrgram2t.gif" height="100" /></td>
-						</tr>
-					</table>
--->
+
 					<h3><a name="cognitive" class="target">Applications to cognitive psychology</a></h3>
 					<table class="noBorder">
 					<tr>
@@ -150,7 +118,6 @@
 						</td>
 					</tr>
 					</table>
-
 
 					<h3><a name="categorical" class="target">Visualizing categorical data: mosaic displays and other methods</a></h3>
 					Various papers and talks on methods for visualizing categorical data.
@@ -178,7 +145,6 @@
 					</td>
 					</tr>
 					</table>
-
 
 					<table class="noBorder">
 					<tr>
@@ -232,9 +198,7 @@
 								<li><a href="http://www.jstatsoft.org/v37/i04/paper">HE plots for Repeated Measures Designs <img src="images/pdf16.jpg" /> (JSS paper)</a></li>
 								<li><a href="Fox+Friendly+Weisberg.pdf">Hypothesis Tests for Multivariate Linear Models Using the car Package <img src="images/pdf16.jpg" /> (R Journal paper)</a></li>
 								<li><a href="ssc2013">Recent Advances in Visualizing Multivariate Linear Models <img src="images/html16.png" /> (Statistics Society of Canada 2013, slides & R)</a></li>
-<!--
-								<li><a href="ToulouseR-2x2.pdf">Visualizing multivariate linear models in R <img src="images/html16.png" /> (Cinquieme Rencontres R, Toulouse, 2016 slides)</a></li>
--->
+
 								<li><a href="useR2019-2x2.pdf">Visualizing multivariate linear models in R <img src="images/html16.png" /> (useR 2019, Toulouse slides)</a> ||
 									<a href="https://www.youtube.com/watch?v=XEaRjvps5aM">YouTube video</a>
 									</li>
@@ -526,7 +490,12 @@
 							</li>
 						</ul>
 					</table>
-
 </main>
+<footer class="site-footer">
+  <span>Copyright 2025, Michael Friendly</span>
+  <span class="footer-note">Papers formerly at <code>datavis.ca/papers/</code></span>
+  <a href="https://friendly.github.io/">friendly.github.io/</a>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
